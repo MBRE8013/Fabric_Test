@@ -1,0 +1,19 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Huddle Report"]
+
+ref table 'Huddle Report'
+ref table DateTableTemplate_2231fcdd-7b0b-442b-85bc-ac1b1017b206
+ref table LocalDateTable_1ae87f80-09b8-403c-9d79-788c8958b611
+ref table LocalDateTable_0d3f7708-eefd-464d-beab-7738049f2c02
+
+ref cultureInfo en-US
+

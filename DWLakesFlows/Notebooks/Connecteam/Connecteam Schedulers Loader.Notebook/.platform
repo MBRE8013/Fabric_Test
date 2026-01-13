@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Connecteam Schedulers Loader"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c67d432e-4ff3-b5b6-4a1c-4e91f6988a1c"
+  }
+}

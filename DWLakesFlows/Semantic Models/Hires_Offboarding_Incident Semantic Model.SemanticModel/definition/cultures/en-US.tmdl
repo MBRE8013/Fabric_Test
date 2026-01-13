@@ -1,0 +1,18 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "1.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "off_boarding.days_employed": {
+			      "Binding": {
+			        "ConceptualEntity": "Off Boarding",
+			        "ConceptualProperty": "Days Employed"
+			      },
+			      "State": "Generated"
+			    }
+			  }
+			}
+		contentType: json
+

@@ -1,0 +1,114 @@
+table PeriodDateBridge
+	lineageTag: 6605335a-afd3-40ae-b4de-f5bad0a0dabd
+
+	column Date
+		formatString: General Date
+		lineageTag: c111d0b8-628b-4e1e-9082-8fb41f31e89c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period
+		lineageTag: f9adee47-fa21-49fe-ae06-143b21686f7a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Period]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PeriodDateBridge = calculated
+		mode: import
+		source =
+				
+				VAR vToday =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsToday] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "Today"
+				    )
+				VAR vYesterday =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsYesterday] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "Yesterday"
+				    )
+				VAR vThisWeek =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsThisWeek] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "This Week"
+				    )
+				VAR vLastFriSun =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsLastFriSun] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "Last Fri-Sun"
+				    )
+				VAR vLastWeek =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsLastWeek] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "Last Week"
+				    )
+				VAR vLast30Days =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsLast30Days] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "Last 30 Days"
+				    )
+				VAR vThisMonth =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsThisMonth] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "This Month"
+				    )
+				VAR vLastMonth =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsLastMonth] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "Last Month"
+				    )
+				VAR vThisQuarter =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsThisQuarter] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "This Quarter"
+				    )
+				VAR vLastQuarter =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsLastQuarter] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "Last Quarter"
+				    )
+				VAR vThisYear =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsThisYear] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "This Year"
+				    )
+				VAR vLastYear =
+				    SELECTCOLUMNS (
+				        FILTER ( 'DateDim', 'DateDim'[IsLastYear] = 1 ),
+				        "Date", 'DateDim'[Date],
+				        "Period", "Last Year"
+				    )
+				RETURN
+				    UNION (
+				        vToday,
+				        vYesterday,
+				        vThisWeek,
+				        vLastFriSun,
+				        vLastWeek,
+				        vLast30Days,
+				        vThisMonth,
+				        vLastMonth,
+				        vThisQuarter,
+				        vLastQuarter,
+				        vThisYear,
+				        vLastYear
+				    )
+
+	annotation PBI_Id = 30a898df85884c25a732e81b0b3b0288
+

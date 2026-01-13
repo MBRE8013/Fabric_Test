@@ -1,0 +1,32 @@
+relationship 87e02dc9-1077-4f2c-a9a8-b3a8117d256a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.'Contact Start Date Time'
+	toColumn: LocalDateTable_c70fa812-e64a-4b9b-a03b-83ebdc8f96b3.Date
+
+relationship a06ed5c4-07f8-4e2f-a0b8-ed61d6e25a34
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.'Contact End Date Time'
+	toColumn: LocalDateTable_f86e0275-dd38-4f90-972e-cd6e0367f964.Date
+
+relationship d2d3fcf1-be10-3297-4980-cf17b4ad7641
+	fromColumn: Data.'Reporting Day'
+	toColumn: 'Day of Week Filter'.'Day Number'
+
+relationship 413e39be-9e8d-4d4b-bbab-f5b5baeec97d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DateDim.Date
+	toColumn: LocalDateTable_d1bdd89e-ad01-43d3-b149-b81e9169a637.Date
+
+relationship aefdb9d2-188a-f2c2-2621-9700925fa3b6
+	fromColumn: Data.'Reporting Date'
+	toColumn: DateDim.Date
+
+relationship 92e7288f-61ab-c40d-ea4d-5448f5a16e41
+	crossFilteringBehavior: bothDirections
+	fromColumn: PeriodDateBridge.Date
+	toColumn: DateDim.Date
+
+relationship 8151e051-1059-76b0-55b7-dd7e8f26ed05
+	fromColumn: PeriodDateBridge.Period
+	toColumn: PeriodParameter.Period
+

@@ -1,0 +1,31 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Action","Customer","IntellaHub Export Data","Nature","Procedure","Team","Dim_Date"]
+
+ref table Action
+ref table Customer
+ref table 'IntellaHub Export Data'
+ref table DateTableTemplate_12603295-afdb-45e3-b2b2-93c0af73b5e5
+ref table LocalDateTable_fc1d42cb-f166-400a-9517-5a846a59b9cd
+ref table LocalDateTable_47473eb1-d00b-4b59-8dd7-e9d5ec73165f
+ref table LocalDateTable_8ecbf741-54c1-4573-b977-ac13395d4606
+ref table LocalDateTable_0acfe599-0c1a-48ec-8f3a-e82371f8f120
+ref table LocalDateTable_c7e90c17-9d23-408e-8dee-8a35f1c1e3fe
+ref table LocalDateTable_4083c110-fd75-4f4e-9a8e-5cdcbb11d575
+ref table Nature
+ref table Procedure
+ref table Team
+ref table Dim_Date
+ref table LocalDateTable_4bad0537-690d-40d1-ac48-1d3370f57a03
+ref table '24x7 Toggle'
+
+ref cultureInfo en-US
+

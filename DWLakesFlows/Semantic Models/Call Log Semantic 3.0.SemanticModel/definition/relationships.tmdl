@@ -1,0 +1,97 @@
+relationship 4b0ea96e-5889-4da7-8e1f-d1ebecd9f417
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.analytics_processed_date
+	toColumn: LocalDateTable_7923faaf-6815-4b50-a1a6-7fbef21d3088.Date
+
+relationship bf2ba4bb-6c66-40d7-9a39-c967856eaef8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.callback_time
+	toColumn: LocalDateTable_7c65e09c-ac53-4f68-b196-4d5555c03078.Date
+
+relationship 92b3b3b1-dd93-4c82-a369-8ed9d36a3034
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.contact_start_date
+	toColumn: LocalDateTable_06419d6d-bcdf-44b3-bf3b-046b59587438.Date
+
+relationship 543ab1a3-19d9-4ee5-852a-4fa64cb9ff05
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.date_a_c_w_warehoused
+	toColumn: LocalDateTable_7e12b328-ee4e-4c63-b7df-e38d70a420a2.Date
+
+relationship 25a7dc4b-0d00-4a29-a48c-f47226a01593
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.date_contact_warehoused
+	toColumn: LocalDateTable_f76fbb4d-b111-4627-92d3-301e2d5fc4ad.Date
+
+relationship 7a944953-2cbe-47e9-afda-edb20c36c3d4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.last_update_time
+	toColumn: LocalDateTable_f4f0db14-8e5d-46e7-a708-956d937f8a02.Date
+
+relationship 211d2589-f63e-45bb-898a-88197792d55f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.refuse_time
+	toColumn: LocalDateTable_8b94a288-1c73-41df-a812-0cf025c8fd4a.Date
+
+relationship 25f1d48f-ac75-4899-a612-c5e17d47f19d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.etl_loaded_datetime
+	toColumn: LocalDateTable_2338578a-f87f-454d-ab02-e0e8399d051e.Date
+
+relationship 7b7bc409-8f09-44f2-b7d2-3c8540953b3a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.window_start
+	toColumn: LocalDateTable_5f892722-1a08-4857-8c65-4aff18873e72.Date
+
+relationship 5e225d83-cd11-45b3-8a69-9236c4feca07
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.window_end
+	toColumn: LocalDateTable_2b4f1fa7-9b17-4404-a18f-29fb02066312.Date
+
+relationship 375dd776-b2a9-4ffc-bbda-8f9a3ac81526
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.contact_date
+	toColumn: LocalDateTable_9b2a59db-8ee5-4468-a299-973a72d1c103.Date
+
+relationship 918102ad-4813-44ef-8702-a21b2cd37972
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_Team.Hour
+	toColumn: LocalDateTable_933904a5-641c-4221-859b-61b414b1cb15.Date
+
+relationship b9b61e8a-27bb-e05e-32ea-709ad5fb16d6
+	fromColumn: fact_nicecxone_completed_contacts.skill_name
+	toColumn: dim_Customer.Queue
+
+relationship 9205a9d2-a347-4978-bb8d-b5b3e231abb5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.Hour
+	toColumn: LocalDateTable_805fbb65-c8b7-4025-80b4-2746212ecf09.Date
+
+relationship 367f1ea5-4b9c-4ce6-9e06-5276d8d6cd0a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.Date
+	toColumn: LocalDateTable_dade5759-66d6-41f2-aec9-8f7ff7bc3d99.Date
+
+relationship 45db137f-9c9c-4c04-8654-a5a54fc5edaf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_nicecxone_completed_contacts.'Hour Nights'
+	toColumn: LocalDateTable_ff9fe155-3a61-418c-8298-acbcc7221a01.Date
+
+relationship 7d64ebcc-9671-4931-a6d0-50a72c5c2c1c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DateDim.Date
+	toColumn: LocalDateTable_dc456b5c-f772-4c35-99e9-bf2b6e7158a0.Date
+
+relationship ba760d2a-0524-4611-0586-4e7f47840dab
+	fromColumn: fact_nicecxone_completed_contacts.'Reporting Date'
+	toColumn: DateDim.Date
+
+relationship 3a01745d-1a61-c85c-1548-a93db416a1d3
+	crossFilteringBehavior: bothDirections
+	fromColumn: PeriodDateBridge.Date
+	toColumn: DateDim.Date
+
+relationship 10bf4452-cf0b-d01c-1dd9-5f4ba227871a
+	fromColumn: PeriodDateBridge.Period
+	toColumn: PeriodParameter.Period
+

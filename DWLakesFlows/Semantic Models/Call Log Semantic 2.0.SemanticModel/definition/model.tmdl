@@ -1,0 +1,40 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Data","DateDim","Customer","Team","Nurse Reference","RangeStart","RangeEnd"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop"]
+
+ref table Data
+ref table Slices
+ref table DateTableTemplate_8a34a348-311a-4490-98b1-8172930e6f87
+ref table LocalDateTable_c70fa812-e64a-4b9b-a03b-83ebdc8f96b3
+ref table LocalDateTable_f86e0275-dd38-4f90-972e-cd6e0367f964
+ref table 'Nurse Call / Hour Goal'
+ref table 'Rounding Threshold'
+ref table 'Day of Week Filter'
+ref table PeriodParameter
+ref table DateDim
+ref table LocalDateTable_d1bdd89e-ad01-43d3-b149-b81e9169a637
+ref table PeriodDateBridge
+ref table LocalDateTable_bcac9e68-85df-4a6e-9c21-384df1bf2533
+ref table LocalDateTable_2e855cd5-4991-4f2c-a648-a77ef837a5c0
+ref table LocalDateTable_c3e8798f-4bb8-47fa-910b-145fbdc2c225
+ref table LocalDateTable_dfb227f2-5d0a-49c9-bd7e-3e301e4fffc7
+ref table LocalDateTable_2d4fa3ff-061e-46b4-a607-0c5963afdc1b
+ref table LocalDateTable_c82dd007-30f6-45cf-b909-857c35e2c646
+ref table LocalDateTable_d23a5366-239d-451b-94ed-82fdb726ed22
+ref table LocalDateTable_aadcbc63-c317-4582-a59b-8b41e5751440
+ref table LocalDateTable_947f377f-1186-4268-a101-894b6f0cbfcb
+ref table LocalDateTable_08b323d6-d081-4b5c-ab89-20720bcf3f9e
+ref table LocalDateTable_e6affc95-4d90-4e53-97fa-e8c4e4503070
+
+ref cultureInfo en-US
+

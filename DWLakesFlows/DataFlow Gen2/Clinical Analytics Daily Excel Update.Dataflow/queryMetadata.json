@@ -1,0 +1,85 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {},
+  "name": "Clinical Analytics Daily Excel Update",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "Team": {
+      "queryId": "3ad866a2-99c0-4dce-9b15-4b7bb1aeeac9",
+      "queryName": "Team"
+    },
+    "Procedure": {
+      "queryId": "b3fb355a-c027-47d6-86a2-265b3de8d0e3",
+      "queryName": "Procedure"
+    },
+    "Action": {
+      "queryId": "e9c6332e-e038-43c8-a182-9fefbdc5e1d9",
+      "queryName": "Action"
+    },
+    "Nature": {
+      "queryId": "608cfd88-4746-45da-b9d5-4acebbaeb089",
+      "queryName": "Nature"
+    },
+    "Customer": {
+      "queryId": "4d1be616-1030-4ad5-abbc-d80d75c3b018",
+      "queryName": "Customer"
+    },
+    "IntellaHub Export Data 2023_2024": {
+      "queryId": "05fe0367-05fc-4313-936c-77ca2a9643fe",
+      "queryName": "IntellaHub Export Data 2023_2024"
+    },
+    "IntellaHub Export Data": {
+      "queryId": "b7a208f3-43c0-467f-a7a4-3625d73556be",
+      "queryName": "IntellaHub Export Data"
+    },
+    "Team_DataDestination": {
+      "queryId": "2cd2d61e-f96b-4054-8222-634a63eba98c",
+      "queryName": "Team_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "Procedure_DataDestination": {
+      "queryId": "91c6d1ab-9ed2-45bf-98ee-9c280c11509e",
+      "queryName": "Procedure_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "Action_DataDestination": {
+      "queryId": "633177aa-574e-44df-8342-ff08a7f6857a",
+      "queryName": "Action_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "Nature_DataDestination": {
+      "queryId": "3f2f95e4-f228-4931-8398-023d72c463fd",
+      "queryName": "Nature_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "Customer_DataDestination": {
+      "queryId": "ad9cd127-ec05-4c74-8667-8f448d07ec65",
+      "queryName": "Customer_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "IntellaHub Export Data_DataDestination": {
+      "queryId": "f14029bf-3a91-47de-b932-d9f9b148a05a",
+      "queryName": "IntellaHub Export Data_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "https://intellatriage.sharepoint.com/sites/PowerBIData",
+      "kind": "SharePoint",
+      "connectionId": "{\"ClusterId\":\"84598d40-9643-4d48-a4d4-ca525ede8f20\",\"DatasourceId\":\"8a9469c7-b584-4960-8b37-249166511e48\"}"
+    },
+    {
+      "path": "Warehouse",
+      "kind": "Warehouse",
+      "connectionId": "{\"ClusterId\":\"84598d40-9643-4d48-a4d4-ca525ede8f20\",\"DatasourceId\":\"87610e3b-cc37-474d-9c21-11172b07ddf5\"}"
+    }
+  ]
+}

@@ -1,0 +1,2108 @@
+table Data
+	lineageTag: 29d8eb2b-aa6c-45c7-bc55-c76b5793b4dc
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 2
+		incrementalGranularity: day
+		incrementalPeriods: 2
+		sourceExpression = ```
+			let
+			    // ========================================================================
+			    // STEP 1: CONNECT TO FABRIC LAKEHOUSE TABLE
+			    // ========================================================================
+			    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+			    IntellaTriageLakehouse = Source{[Name="IntellaTriageLakehouse"]}[Data],
+			    dbo_fact_nicecxone_completed_contacts = IntellaTriageLakehouse{[Schema="dbo",Item="fact_nicecxone_completed_contacts"]}[Data],
+			    
+			    // ========================================================================
+			    // STEP 2: INITIAL TYPE CONVERSIONS ON SOURCE DATA
+			    // ========================================================================
+			    TypedSource = Table.TransformColumnTypes(dbo_fact_nicecxone_completed_contacts, {
+			        {"contact_id", Int64.Type},
+			        {"master_contact_id", Int64.Type},
+			        {"contact_start_date", type datetime},
+			        {"first_name", type text},
+			        {"last_name", type text},
+			        {"media_type_name", type text},
+			        {"skill_name", type text},
+			        {"from_address", type text},
+			        {"to_address", type text},
+			        {"pre_queue_seconds", type number},
+			        {"in_queue_seconds", type number},
+			        {"agent_seconds", type number},
+			        {"acw_seconds", type number},
+			        {"post_queue_seconds", type number},
+			        {"abandon_seconds", type number},
+			        {"total_duration_seconds", type number},
+			        {"abandoned", type logical}
+			    }),
+			    
+			    // ========================================================================
+			    // STEP 3: CREATE HELPER FUNCTION FOR SECONDS TO HH:MM:SS CONVERSION
+			    // ========================================================================
+			SecondsToTime = (seconds as number) as text =>
+			    let
+			        totalSeconds = Number.Round(seconds, 0),
+			        hours = Number.RoundDown(totalSeconds / 3600),
+			        remainingAfterHours = totalSeconds - (hours * 3600),
+			        minutes = Number.RoundDown(remainingAfterHours / 60),
+			        secs = remainingAfterHours - (minutes * 60),
+			        result = 
+			            Text.PadStart(Text.From(Int64.From(hours)), 2, "0") & ":" &
+			            Text.PadStart(Text.From(Int64.From(minutes)), 2, "0") & ":" &
+			            Text.PadStart(Text.From(Int64.From(secs)), 2, "0")
+			    in
+			        result,
+			    
+			    // ========================================================================
+			    // STEP 4: TRANSFORM TO MATCH SAMPLE SCHEMA
+			    // ========================================================================
+			    
+			    // Add Pasted Date
+			    AddedPastedDate = Table.AddColumn(TypedSource, "Pasted Date", 
+			        each Text.From(Date.Year([contact_start_date])) & "/" & 
+			             Text.PadStart(Text.From(Date.Month([contact_start_date])), 2, "0") & "/" & 
+			             Text.PadStart(Text.From(Date.Day([contact_start_date])), 2, "0"), 
+			        type text),
+			    
+			    // Add Contact Agent Name
+			    AddedContactAgentName = Table.AddColumn(AddedPastedDate, "Contact Agent Name",
+			        each if [last_name] <> null and [first_name] <> null 
+			             then [last_name] & ", " & [first_name]
+			             else null,
+			        type text),
+			    
+			    // Add Contact Start Date Time (formatted)
+			    AddedContactStartDateTime = Table.AddColumn(AddedContactAgentName, "Contact Start Date Time",
+			        each Text.From(Date.Year([contact_start_date])) & "/" & 
+			             Text.PadStart(Text.From(Date.Month([contact_start_date])), 2, "0") & "/" & 
+			             Text.PadStart(Text.From(Date.Day([contact_start_date])), 2, "0") & " " &
+			             Text.PadStart(Text.From(Time.Hour([contact_start_date])), 2, "0") & ":" &
+			             Text.PadStart(Text.From(Time.Minute([contact_start_date])), 2, "0") & ":" &
+			             Text.PadStart(Text.From(Time.Second([contact_start_date])), 2, "0"),
+			        type text),
+			    
+			    // Add Contact End Date Time (calculated and formatted)
+			    AddedContactEndDateTime = Table.AddColumn(AddedContactStartDateTime, "Contact End Date Time",
+			        each 
+			            let
+			                endDateTime = [contact_start_date] + #duration(0, 0, 0, [total_duration_seconds])
+			            in
+			                Text.From(Date.Year(endDateTime)) & "/" & 
+			                Text.PadStart(Text.From(Date.Month(endDateTime)), 2, "0") & "/" & 
+			                Text.PadStart(Text.From(Date.Day(endDateTime)), 2, "0") & " " &
+			                Text.PadStart(Text.From(Time.Hour(endDateTime)), 2, "0") & ":" &
+			                Text.PadStart(Text.From(Time.Minute(endDateTime)), 2, "0") & ":" &
+			                Text.PadStart(Text.From(Time.Second(endDateTime)), 2, "0"),
+			        type text),
+			    
+			    // Add Prequeued
+			    AddedPrequeued = Table.AddColumn(AddedContactEndDateTime, "Prequeued",
+			        each if [pre_queue_seconds] > 0 then 1 else null,
+			        type number),
+			    
+			    // Add Prequeue Time
+			    AddedPrequeueTime = Table.AddColumn(AddedPrequeued, "Prequeue Time",
+			        each if [pre_queue_seconds] > 0 then SecondsToTime([pre_queue_seconds]) else null,
+			        type text),
+			    
+			    // Add Prequeue Abandons (always null - not in source)
+			    AddedPrequeueAbandons = Table.AddColumn(AddedPrequeueTime, "Prequeue Abandons", 
+			        each null, 
+			        type number),
+			    
+			    // Add Inqueue Time
+			    AddedInqueueTime = Table.AddColumn(AddedPrequeueAbandons, "Inqueue Time",
+			        each if [in_queue_seconds] > 0 then SecondsToTime([in_queue_seconds]) else null,
+			        type text),
+			    
+			    // Add Talk Time Pasted
+			    AddedTalkTimePasted = Table.AddColumn(AddedInqueueTime, "Talk Time Pasted",
+			        each if [agent_seconds] > 0 then SecondsToTime([agent_seconds]) else null,
+			        type text),
+			    
+			    // Add ACW Time Pasted
+			    AddedACWTimePasted = Table.AddColumn(AddedTalkTimePasted, "ACW Time Pasted",
+			        each if [acw_seconds] > 0 then SecondsToTime([acw_seconds]) else null,
+			        type text),
+			    
+			    // Add Postqueue Time (null to match sample)
+			    AddedPostqueueTime = Table.AddColumn(AddedACWTimePasted, "Postqueue Time", 
+			        each null, 
+			        type number),
+			    
+			    // Add Abandon Time (null to match sample)
+			    AddedAbandonTime = Table.AddColumn(AddedPostqueueTime, "Abandon Time", 
+			        each null, 
+			        type number),
+			    
+			    // Add Abandons (null to match sample)
+			    AddedAbandons = Table.AddColumn(AddedAbandonTime, "Abandons", 
+			        each null, 
+			        type number),
+			    
+			    // Add Contact Duration Pasted
+			    AddedContactDurationPasted = Table.AddColumn(AddedAbandons, "Contact Duration Pasted",
+			        each if [total_duration_seconds] > 0 then SecondsToTime([total_duration_seconds]) else null,
+			        type text),
+			    
+			    // Add Speed Of Answer Pasted
+			    AddedSpeedOfAnswerPasted = Table.AddColumn(AddedContactDurationPasted, "Speed Of Answer Pasted",
+			        each if [in_queue_seconds] > 0 then SecondsToTime([in_queue_seconds]) else null,
+			        type text),
+			    
+			    // Rename columns to match target schema
+			    RenamedToSchema = Table.RenameColumns(AddedSpeedOfAnswerPasted, {
+			        {"media_type_name", "Media Type Name"},
+			        {"from_address", "ANI/From"},
+			        {"contact_id", "Contact ID"},
+			        {"to_address", "DNIS/To"},
+			        {"master_contact_id", "Master Contact ID"},
+			        {"skill_name", "Contact Skill Name"}
+			    }),
+			    
+			    // ========================================================================
+			    // STEP 4.5: REMOVE ONLY THE REDUNDANT COLUMNS (Keep all others!)
+			    // ========================================================================
+			    RemovedRedundantColumns = Table.RemoveColumns(RenamedToSchema, {
+			        "contact_start_date",      // Replaced by "Contact Start Date Time"
+			        "first_name",              // Replaced by "Contact Agent Name"
+			        "last_name",               // Replaced by "Contact Agent Name"
+			        "pre_queue_seconds",       // Replaced by "Prequeue Time"
+			        "in_queue_seconds",        // Replaced by "Inqueue Time"
+			        "agent_seconds",           // Replaced by "Talk Time Pasted"
+			        "acw_seconds",             // Replaced by "ACW Time Pasted"
+			        "total_duration_seconds"   // Replaced by "Contact Duration Pasted"
+			        // KEEPING: post_queue_seconds, abandon_seconds, abandoned (not redundant)
+			        // KEEPING: All other 50+ columns from source
+			    }),
+			    
+			    // ========================================================================
+			    // STEP 5: CONVERT DATETIME TEXT COLUMNS BACK TO DATETIME FOR CALCULATIONS
+			    // ========================================================================
+			    ConvertedDateTimes = Table.TransformColumnTypes(RemovedRedundantColumns, {
+			        {"Contact Start Date Time", type datetime}, 
+			        {"Contact End Date Time", type datetime}
+			    }),
+			    
+			    // ========================================================================
+			    // STEP 6: YOUR EXISTING CALCULATED COLUMNS (STARTING FROM YOUR CODE)
+			    // ========================================================================
+			    
+			    // Buffer lookup tables for performance
+			    BufferedCustomer = Table.Buffer(Table.Distinct(Customer, {"Reference"})),
+			    BufferedNurse = Table.Buffer(Table.Distinct(#"Nurse Reference", {"Log in Reference", "Client"})),
+			    BufferedTeam = Table.Buffer(Table.Distinct(Team, {"Day of Week", "Hour", "Customer Name"})),
+			    
+			    // Add Date
+			    #"Added Date" = Table.AddColumn(ConvertedDateTimes, "Date", 
+			        each Date.From([Contact Start Date Time]), 
+			        type date),
+			    
+			    // Add Day of Week
+			    #"Added Day of Week" = Table.AddColumn(#"Added Date", "Day of Week", 
+			        each try Date.ToText(Date.From([Pasted Date]), "ddd") otherwise null,
+			        type text),
+			    
+			    // Add Time
+			    #"Added Time" = Table.AddColumn(#"Added Day of Week", "Time", 
+			        each Time.From([Contact Start Date Time]), 
+			        type time),
+			    
+			    // Add Hour1
+			    #"Added Hour1" = Table.AddColumn(#"Added Time", "Hour1", 
+			        each Time.Hour([Contact Start Date Time]), 
+			        Int64.Type),
+			    
+			    // Add Hour
+			    #"Added Hour" = Table.AddColumn(#"Added Hour1", "Hour", 
+			        each 
+			            let h = [Hour1]
+			            in if h = 0 then "12 AM"
+			               else if h = 12 then "12 PM"
+			               else if h < 12 then Text.From(h) & " AM"
+			               else Text.From(h - 12) & " PM",
+			        type text),
+			    
+			    // Add Minute
+			    #"Added Minute" = Table.AddColumn(#"Added Hour", "Minute", 
+			        each Time.Minute([Contact Start Date Time]), 
+			        Int64.Type),
+			    
+			    // Add Reporting Date
+			    #"Added Reporting Date" = Table.AddColumn(#"Added Minute", "Reporting Date", 
+			        each if [Hour1] < 5 then Date.AddDays([Date], -1) else [Date],
+			        type date),
+			    
+			    // Add Month
+			    #"Added Month" = Table.AddColumn(#"Added Reporting Date", "Month", 
+			        each Date.Month([Reporting Date]), 
+			        Int64.Type),
+			    
+			    // Rename pasted columns
+			    #"Renamed Pasted Columns" = Table.RenameColumns(#"Added Month", {
+			        {"Talk Time Pasted", "Talk Time"}, 
+			        {"ACW Time Pasted", "ACW Time"}, 
+			        {"Contact Duration Pasted", "Contact Duration"}
+			    }),
+			    
+			// Add Call Result
+			#"Added Call Result" = Table.AddColumn(#"Renamed Pasted Columns", "Call Result", 
+			    each 
+			        let
+			            skill = try [Contact Skill Name] otherwise "",
+			            abandonedFlag = try [abandoned] otherwise false,
+			            abandonSeconds = try [abandon_seconds] otherwise 0,
+			            talkTime = try [Talk Time] otherwise null,
+			            hasAbandoned = (abandonedFlag = true) or (abandonSeconds > 0),
+			            hasTalkTime = (talkTime <> null) and (talkTime <> "")
+			        in
+			            if skill = "Manual Outbound" then "Outbound"
+			            else if hasAbandoned then "Abandoned"
+			            else if hasTalkTime then "Answered"
+			            else "Abandoned",  // No talk time = Abandoned
+			    type text),
+			    
+			// Add Speed of Answer
+			#"Added Speed of Answer" = Table.AddColumn(#"Added Call Result", "Speed of Answer", 
+			    each 
+			        let
+			            callResult = try [Call Result] otherwise null,
+			            speedPasted = try [Speed Of Answer Pasted] otherwise null,
+			            inqueuePasted = try [Inqueue Time] otherwise null,
+			            contactDuration = try [Contact Duration] otherwise null,
+			            
+			            durationValue = 
+			                if callResult = "Answered" and speedPasted <> null then 
+			                    try Duration.From(speedPasted) otherwise null
+			                else if callResult = "Abandoned" and contactDuration <> null then 
+			                    try Duration.From(contactDuration) otherwise null
+			                else if callResult = "Abandoned" and inqueuePasted <> null then 
+			                    try Duration.From(inqueuePasted) otherwise null
+			                else if callResult = "Outbound" and contactDuration <> null then 
+			                    try Duration.From(contactDuration) otherwise null
+			                else null
+			        in
+			            if durationValue = null then null
+			            else #datetime(1899, 12, 31, 0, 0, 0) + durationValue),
+			    
+			    // Add Under 60
+			    #"Added Under 60" = Table.AddColumn(#"Added Speed of Answer", "Under 60", 
+			        each 
+			            let
+			                speed = try [Speed of Answer] otherwise null,
+			                baseDateTime = #datetime(1899, 12, 31, 0, 0, 0),
+			                oneMinuteDateTime = #datetime(1899, 12, 31, 0, 1, 0)
+			            in
+			                if speed = null then null
+			                else if speed < oneMinuteDateTime then 1
+			                else 0),
+			    
+			    // Merge Customer
+			    #"Merged Customer" = Table.NestedJoin(#"Added Under 60", {"Contact Skill Name"}, BufferedCustomer, {"Reference"}, "Customer", JoinKind.LeftOuter),
+			    #"Expanded Customer" = Table.ExpandTableColumn(#"Merged Customer", "Customer", {"Customer", "Program", "Service Line", "Skilled"}, {"Customer", "Program", "Service Line", "Skilled"}),
+			    
+			    // Merge Nurse
+			    #"Merged Nurse" = Table.NestedJoin(#"Expanded Customer", {"Contact Agent Name", "Customer"}, BufferedNurse, {"Log in Reference", "Client"}, "Nurse Reference", JoinKind.LeftOuter),
+			    #"Expanded Nurse" = Table.ExpandTableColumn(#"Merged Nurse", "Nurse Reference", {"Skill Reference"}, {"New Skilled"}),
+			    
+			    // Add New New Skilled
+			    #"Added New New Skilled" = Table.AddColumn(#"Expanded Nurse", "New New Skilled", 
+			        each 
+			            try (
+			                if [Skilled] = false then 1
+			                else if [Skilled] = "ELSE" then 2
+			                else if [Skilled] = true and [New Skilled] = 1 then 1
+			                else 3
+			            ) otherwise 3,
+			        Int64.Type),
+			    
+			    // Merge Team
+			    #"Merged Team" = Table.NestedJoin(#"Added New New Skilled", {"Day of Week", "Hour1", "Customer"}, Team, {"Day of Week", "Hour", "Customer Name"}, "Team", JoinKind.LeftOuter),
+			    #"Expanded Team" = Table.ExpandTableColumn(#"Merged Team", "Team", {"Team"}, {"Team"}),
+			    
+			    // Add Team Sort Order
+			    #"Added Team Sort" = Table.AddColumn(#"Expanded Team", "Team Sort Order", 
+			        each 
+			            let t = [Team]
+			            in
+			                // Standard Teams
+			                if t = "Team 1" then 1
+			                else if t = "Team 2" then 2
+			                else if t = "Team 3" then 3
+			                else if t = "Team 4" then 4
+			                else if t = "Team 5" then 5
+			                else if t = "Team 6" then 6
+			                else if t = "Team 7" then 7
+			                else if t = "Team 8" then 8
+			                else if t = "Team 9" then 9
+			                else if t = "Team 10" then 10
+			                else if t = "Team 11" then 11
+			                else if t = "Team 12" then 12
+			                // NAL Weekend Teams
+			                else if t = "NAL Weekend Morning" then 20
+			                else if t = "NAL Weekend Day" then 21
+			                else if t = "NAL Weekend Evening" then 22
+			                else if t = "NAL Weekend Overnight" then 23
+			                // WED## Teams
+			                else if t = "WED1" then 101
+			                else if t = "WED2" then 102
+			                else if t = "WED3" then 103
+			                else if t = "WED4" then 104
+			                else if t = "WED5" then 105
+			                else if t = "WED6" then 106
+			                else if t = "WED7" then 107
+			                else if t = "WED8" then 108
+			                else if t = "WED9" then 109
+			                else if t = "WED10" then 110
+			                else if t = "WED11" then 111
+			                else if t = "WED12" then 112
+			                // WEM## Teams
+			                else if t = "WEM1" then 121
+			                else if t = "WEM2" then 122
+			                else if t = "WEM3" then 123
+			                else if t = "WEM4" then 124
+			                else if t = "WEM5" then 125
+			                else if t = "WEM6" then 126
+			                else if t = "WEM7" then 127
+			                else if t = "WEM8" then 128
+			                else if t = "WEM9" then 129
+			                else if t = "WEM10" then 130
+			                else if t = "WEM11" then 131
+			                else if t = "WEM12" then 132
+			                // WEE## Teams
+			                else if t = "WEE1" then 141
+			                else if t = "WEE2" then 142
+			                else if t = "WEE3" then 143
+			                else if t = "WEE4" then 144
+			                else if t = "WEE5" then 145
+			                else if t = "WEE6" then 146
+			                else if t = "WEE7" then 147
+			                else if t = "WEE8" then 148
+			                else if t = "WEE9" then 149
+			                else if t = "WEE10" then 150
+			                else if t = "WEE11" then 151
+			                else if t = "WEE12" then 152
+			                else 999,
+			        Int64.Type),
+			    
+			    // Add Hour Nights
+			    #"Added Hour Nights" = Table.AddColumn(#"Added Team Sort", "Hour Nights", 
+			        each [Hour], 
+			        type text),
+			    
+			    // Add Hour Nights Sort
+			    #"Added Hour Nights Sort" = Table.AddColumn(#"Added Hour Nights", "Hour Nights Sort", 
+			        each 
+			            let h = [Hour Nights]
+			            in
+			                if h = "11 PM" then 1
+			                else if h = "12 AM" then 2
+			                else if h = "1 AM" then 3
+			                else if h = "2 AM" then 4
+			                else if h = "3 AM" then 5
+			                else if h = "4 AM" then 6
+			                else if h = "5 AM" then 7
+			                else if h = "6 AM" then 8
+			                else if h = "7 AM" then 9
+			                else 999,
+			        Int64.Type),
+			    
+			    // Add Reporting Day
+			    #"Added Custom" = Table.AddColumn(#"Added Hour Nights Sort", "Reporting Day", 
+			        each try Date.DayOfWeek([Reporting Date], Day.Sunday) + 1 otherwise null),
+			    
+			    // Rename Customer to Customer Name
+			    #"Renamed Columns" = Table.RenameColumns(#"Added Custom", {{"Customer", "Customer Name"}}),
+			    
+			    // Final type conversion
+			    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns", {{"New New Skilled", type text}}),
+			    #"Filtered Rows" = Table.SelectRows(#"Changed Type1", each [Contact Start Date Time] >= RangeStart and [Contact Start Date Time] < RangeEnd)
+			in
+			    #"Filtered Rows"
+			```
+
+	measure 'Avg Speed to Answer' = AVERAGEX('Data', Data[Wait Seconds])
+		lineageTag: 78087a67-f65f-4895-a06c-8c26080dbb48
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG Speed' =
+			
+			VAR TotalSeconds = [Avg Speed to Answer]
+			VAR Minutes = INT (TotalSeconds / 60)
+			VAR Seconds = ROUND(MOD(Totalseconds,60),0)
+			RETURN
+			FORMAT (Minutes, "0") &":"& FORMAT(Seconds, "00")
+		lineageTag: 76a846f2-2d4e-4d05-8f9e-bcf61d5c6232
+
+	measure 'Longest Wait Time' =
+			
+			VAR TotalSeconds = [Longest Speed to Answer]
+			VAR Minutes = INT (TotalSeconds / 60)
+			VAR Seconds = ROUND(MOD(Totalseconds,60),0)
+			RETURN
+			FORMAT (Minutes, "0") &":"& FORMAT(Seconds, "00")
+		lineageTag: d4f21a01-57aa-4471-8c07-3df2b8c6844d
+
+	measure 'Longest Speed to Answer' = MAXX('Data', Data[Wait Seconds])
+		lineageTag: 301f39b8-642b-4d0e-b1d2-acd36060e035
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Talk Time' = AVERAGEX('Data', Data[Talk Seconds])
+		lineageTag: c48f8611-4cdd-47d1-9a0f-9183a9d2e805
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG Talk' =
+			
+			VAR TotalSeconds = [Avg Talk Time]
+			VAR Minutes = INT (TotalSeconds / 60)
+			VAR Seconds = ROUND(MOD(Totalseconds,60),0)
+			RETURN
+			FORMAT (Minutes, "0") &":"& FORMAT(Seconds, "00")
+		lineageTag: fd18b651-1378-4e5d-acec-5845f83ceb99
+
+	measure Pct_Under60 = ```
+			
+			VAR TotalCalls = COUNTROWS(Data)
+			VAR CallsUnder60 = CALCULATE(COUNTROWS(Data), 'Data'[Wait Seconds] < 60)
+			RETURN
+			DIVIDE(CallsUnder60, TotalCalls)
+			
+			```
+		lineageTag: ff497cb0-5651-4299-ae3c-75841f8cb1f8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Donut Value' =
+			
+			VAR lbl = SELECTEDVALUE ( Slices[Label] )
+			RETURN
+			SWITCH (
+			    TRUE(),
+			    lbl = "Filled",     [Pct_Under60],
+			    lbl = "Remaining",  1 - [Pct_Under60],
+			    BLANK()
+			)
+		lineageTag: 4be085a3-c505-4289-931b-18f55c55bd0c
+
+	measure 'Donut Color' =
+			
+			VAR lbl = SELECTEDVALUE ( Slices[Label] )
+			RETURN
+			IF (
+			    lbl = "Remaining",
+			    "#E5E5E5",                                 -- light gray
+			    SWITCH (
+			        TRUE(),
+			        [Pct_Under60] >= 0.8, "#107C10",       -- green
+			        [Pct_Under60] >= 0.7, "#FFB900",       -- yellow
+			        "#E81123"                              -- red
+			    )
+			)
+		lineageTag: 8096893e-0542-4005-87cb-6f8f9f8c87e8
+
+	measure 'Under 60 Seconds' = SUM(talk)
+		lineageTag: bff0b47f-5c09-4160-8c38-5f2e50da6a0e
+
+	measure Calls_Under60 = ```
+			
+			CALCULATE (
+			    COUNTROWS ( 'Data' ),
+			    'Data'[Wait Seconds] < 60
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 641dc754-a7e3-4e0c-ae60-98c0da02e47a
+
+	measure Calls_Above60 =
+			
+			CALCULATE (
+			    COUNTROWS ( 'Data' ),
+			    'Data'[Wait Seconds] >= 60
+			)
+		formatString: 0
+		lineageTag: e9d0ba6c-75bd-4744-8d57-686754821796
+
+	measure 'Yellow Below 60' = IF(AND([Pct_Under60]<0.8,[Pct_Under60]>=0.6),[Calls_Under60])
+		formatString: 0
+		lineageTag: 6ffca25b-368f-4ad0-8cf6-52d32fb4e0b7
+
+	measure 'Green Below 60' = IF([Pct_Under60]>=0.8,[Calls_Under60])
+		formatString: 0
+		lineageTag: 127e1bf1-a5e9-47a6-947f-08c4219d9ffa
+
+	measure 'Red Below 60' = IF([Pct_Under60]<0.6,[Calls_Under60])
+		formatString: 0
+		lineageTag: a1b52a21-68ec-48cf-836a-8f643d972ba3
+
+	measure 'Row Count' = COUnTROWS(Data)
+		formatString: 0
+		lineageTag: 054dd849-e464-4785-ba56-5ed986c9343a
+
+	measure 'New New is 3' =
+			
+			CALCULATE(
+			    COUNTROWS('Data'),
+			    'Data'[New New Skilled] = "3"
+			)
+		formatString: 0
+		lineageTag: 370a43ea-d767-4f37-a4bc-c2ee7893319a
+
+	measure 'New New is 1' =
+			
+			CALCULATE(
+			    COUNTROWS('Data'),
+			    'Data'[New New Skilled] = "1"
+			)
+		formatString: 0
+		lineageTag: 95d9d36f-a84c-41a4-8ed8-248b17183b6d
+
+	measure '%New New is 1' =
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS('Data'),
+			        'Data'[New New Skilled] = "1"
+			    ),
+			    COUNTROWS('Data'),
+			    0
+			)
+		formatString: 0
+		lineageTag: 80fa36de-55b7-462c-ae39-84a9f29eb535
+
+	measure 'Green New New' = IF([%New New is 1]>=.8,[New New is 1])
+		formatString: 0
+		lineageTag: 4ea704af-e232-4fba-8cd6-4f1c57195695
+
+	measure 'Yellow New New' = IF(AND([%New New is 1]<0.8,[%New New is 1]>=.7),[New New is 1])
+		formatString: 0
+		lineageTag: ffadc944-d22a-40d5-81bc-2cb54b6fb327
+
+	measure 'Red New New' = IF([%New New is 1]<.7,[New New is 1])
+		formatString: 0
+		lineageTag: c981861b-a0c9-4ceb-b7eb-933de4760a2e
+
+	measure '% Abandoned Calls' =
+			
+			[Abandoned Count]/([Answer Count]+[Abandoned Count])
+		lineageTag: 63cf1c93-e414-473e-91e4-9b485ef58df8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Answer Count' =
+			
+			CALCULATE(
+			    COUNTROWS('Data'),
+			    'Data'[Call Result] = "Answered"
+			)
+		formatString: 0
+		lineageTag: 3f466d66-5990-4104-8d00-6de4e843fcb6
+
+	measure 'Abandoned Count' =
+			
+			CALCULATE(
+			    COUNTROWS('Data'),
+			    'Data'[Call Result] = "Abandoned",
+			    'Data'[Under 60] = "0"
+			)
+		formatString: 0
+		lineageTag: ddf8f436-6a4b-405b-9c3f-8dbffaa7d179
+
+	measure 'Green Abdondon' = IF([% Abandoned Calls]<=.04,[Abandoned Count])
+		formatString: 0
+		lineageTag: 6ff796b3-64bc-47f3-80f1-590a2bbdf4bd
+
+	measure 'Yellow Abdondon' = IF(AND([% Abandoned Calls]>.04,[% Abandoned Calls]<=0.06),[Abandoned Count])
+		formatString: 0
+		lineageTag: 7db6f092-0114-40c6-81eb-e8a681774d28
+
+	measure 'Red Abdondon' = IF([% Abandoned Calls]>.06,[Abandoned Count])
+		formatString: 0
+		lineageTag: d3191cd7-c667-4d12-8c5e-18a0bd94156c
+
+	measure 'AVG Wait Time' =
+			
+			TIME(0, 0, AVERAGE('Data'[Speed of Answer]))
+		formatString: General Date
+		lineageTag: 0fc4c0b7-0bd6-4834-8b8b-4cf470e230c5
+
+	measure 'AVG Speed to Answer Minutes' = [Avg Speed to Answer]/60
+		lineageTag: 084f4c6f-6bef-403d-bcdd-ebb2749f0315
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Longest Speed to Answer Minutes' = MAXX('Data', Data[Wait Seconds])/60
+		lineageTag: 006208c6-f3b7-4c92-9ff5-8755f4763f6b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Longest Talk Time' =
+			
+			MAXX('Data', 'Data'[Talk Seconds])
+		lineageTag: 61dafe29-3cb9-41ae-9db3-57b3aefea7b5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Longest Talk' =
+			
+			VAR TotalSeconds = [Longest Talk Time]  // Reference the measure directly
+			VAR Minutes = QUOTIENT(TotalSeconds, 60)
+			VAR Seconds = MOD(TotalSeconds, 60)
+			RETURN
+			    IF(
+			        NOT ISBLANK(TotalSeconds),
+			        FORMAT(Minutes, "0") & ":" & FORMAT(Seconds, "00"),
+			        BLANK()
+			    )
+		lineageTag: 26502c3a-fb30-4d9f-9921-3e1ca7236c54
+
+	column 'Pasted Date'
+		dataType: string
+		lineageTag: d9847ef4-0649-412c-b19a-cf17d224eca1
+		summarizeBy: none
+		sourceColumn: Pasted Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Agent Name'
+		dataType: string
+		lineageTag: d578232d-3e68-4bcb-9ec1-99697041bf41
+		summarizeBy: none
+		sourceColumn: Contact Agent Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Start Date Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1ca067d0-caee-4556-8b3f-dfc92f2929d4
+		summarizeBy: none
+		sourceColumn: Contact Start Date Time
+
+		variation Variation
+			isDefault
+			relationship: 87e02dc9-1077-4f2c-a9a8-b3a8117d256a
+			defaultHierarchy: LocalDateTable_c70fa812-e64a-4b9b-a03b-83ebdc8f96b3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact End Date Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b716ec13-221d-43d2-a9b1-d16b0852abf9
+		summarizeBy: none
+		sourceColumn: Contact End Date Time
+
+		variation Variation
+			isDefault
+			relationship: a06ed5c4-07f8-4e2f-a0b8-ed61d6e25a34
+			defaultHierarchy: LocalDateTable_f86e0275-dd38-4f90-972e-cd6e0367f964.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Prequeued
+		dataType: double
+		lineageTag: cb9dacec-2e88-475a-b073-b575b914a8cd
+		summarizeBy: sum
+		sourceColumn: Prequeued
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Prequeue Time'
+		dataType: string
+		lineageTag: fe471cdb-3822-439b-b1e8-c788e75c1350
+		summarizeBy: none
+		sourceColumn: Prequeue Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prequeue Abandons'
+		dataType: double
+		lineageTag: b194dd40-657d-458e-9304-1f20fe70dbe2
+		summarizeBy: sum
+		sourceColumn: Prequeue Abandons
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Inqueue Time'
+		dataType: string
+		lineageTag: a8d4723b-b78e-4353-8ebb-dd39212f3dad
+		summarizeBy: none
+		sourceColumn: Inqueue Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Talk Time'
+		dataType: string
+		lineageTag: 2666f946-427a-4bc3-a966-35371f6caeee
+		summarizeBy: none
+		sourceColumn: Talk Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ACW Time'
+		dataType: string
+		lineageTag: befcc2c4-5be7-4ee0-a41e-d91c0233fea6
+		summarizeBy: none
+		sourceColumn: ACW Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Postqueue Time'
+		dataType: double
+		lineageTag: 9d71a41f-bc00-4ce4-b095-1a1d4dffde00
+		summarizeBy: sum
+		sourceColumn: Postqueue Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Abandon Time'
+		dataType: double
+		lineageTag: 113da68e-5ad5-410b-a6a9-35ab3f1bdeb1
+		summarizeBy: sum
+		sourceColumn: Abandon Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Abandons
+		dataType: double
+		lineageTag: 697584fd-8f69-4361-b699-40c6b3f77633
+		summarizeBy: sum
+		sourceColumn: Abandons
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Contact Duration'
+		dataType: string
+		lineageTag: df9c3cc2-92fb-4625-a6bd-6cd2ec68e53e
+		summarizeBy: none
+		sourceColumn: Contact Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Speed Of Answer Pasted'
+		dataType: string
+		lineageTag: c4d83356-3ef9-4628-af26-329248966fd6
+		summarizeBy: none
+		sourceColumn: Speed Of Answer Pasted
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wait Seconds' = (Data[Speed of Answer]-1)*86400
+		dataType: double
+		lineageTag: 481b8161-159b-49a8-9fc5-61115821ca48
+		summarizeBy: sum
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Talk Seconds' = HOUR(Data[Talk Time]) * 3600 + MINUTE(Data[Talk Time]) * 60 + SECOND(Data[Talk Time])
+		lineageTag: cd8b49a5-0aae-4da4-ad21-b5b8c17b353e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Hour Sort Order' =
+			
+			IF(VALUE('Data'[Hour1]) >= 5, VALUE('Data'[Hour1]) - 5, VALUE('Data'[Hour1]) + 19)
+		lineageTag: d3136285-0162-416b-b8d8-651e276b3d8c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Abv Day of Week' = FORMAT('Data'[Reporting Date], "ddd")
+		lineageTag: e2e9bf4a-cace-4e91-b90a-d067ecf3ca97
+		summarizeBy: none
+		sortByColumn: 'Abv Day Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Abv Day Sort' = WEEKDAY('Data'[Reporting Date], 2)
+		formatString: 0
+		lineageTag: 463116d3-9043-41ff-9d7b-ad5c69628539
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Conatins ROQ?' =
+			
+			IF(
+			    CONTAINSSTRING(Data[Contact Skill Name], "ROQ"),
+			    "Y",
+			    "N"
+			)
+		lineageTag: fcd9dc83-cf32-4a0f-9668-3c02f31ef290
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team Sort Order'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c2c0c96-2096-42b0-ac5d-c3ccc4145be3
+		summarizeBy: sum
+		sourceColumn: Team Sort Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Nights Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: ee1792bf-b122-4f68-8bf4-f24791f64b49
+		summarizeBy: sum
+		sourceColumn: Hour Nights Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column PeriodFlag =
+			
+			VAR CurrentDate = Data[Reporting Date]
+			VAR TodayDate = TODAY()
+			VAR ThisWeekStart = TodayDate - WEEKDAY(TodayDate, 2) + 1
+			VAR ThisWeekEnd = ThisWeekStart + 6
+			VAR LastFriday = TodayDate - WEEKDAY(TodayDate, 2) - 2
+			VAR LastSunday = LastFriday + 2
+			VAR LastWeekStart = ThisWeekStart - 7
+			VAR LastWeekEnd = ThisWeekStart - 1
+			
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        CurrentDate >= ThisWeekStart && CurrentDate <= ThisWeekEnd, "This Week",
+			        CurrentDate >= LastFriday && CurrentDate <= LastSunday, "Last Fri-Sun",
+			        CurrentDate >= LastWeekStart && CurrentDate <= LastWeekEnd, "Last Week",
+			        CurrentDate >= DATE(YEAR(TodayDate), MONTH(TodayDate), 1) && CurrentDate <= EOMONTH(TodayDate, 0), "This Month",
+			        CurrentDate >= DATE(YEAR(EOMONTH(TodayDate, -1)), MONTH(EOMONTH(TodayDate, -1)), 1) && CurrentDate <= EOMONTH(TodayDate, -1), "Last Month",
+			        CurrentDate >= DATE(YEAR(TodayDate), (QUARTER(TodayDate) - 1) * 3 + 1, 1) && CurrentDate <= EOMONTH(DATE(YEAR(TodayDate), (QUARTER(TodayDate) - 1) * 3 + 1, 1), 2), "This Quarter",
+			        CurrentDate >= DATE(YEAR(EOMONTH(TodayDate, -3)), MONTH(EOMONTH(TodayDate, -3)) - 2, 1) && CurrentDate <= EOMONTH(TodayDate, -3), "Last Quarter",
+			        CurrentDate >= DATE(YEAR(TodayDate), 1, 1) && CurrentDate <= DATE(YEAR(TodayDate), 12, 31), "This Year",
+			        CurrentDate >= DATE(YEAR(TodayDate) - 1, 1, 1) && CurrentDate <= DATE(YEAR(TodayDate) - 1, 12, 31), "Last Year",
+			        BLANK()
+			    )
+		lineageTag: 0cf6b377-8120-4d1f-98ba-dca3d0ae97ef
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day - Hour' = 'Data'[Day of Week] & " - " & FORMAT('Data'[Hour], "0")
+		lineageTag: cc240a0f-4e03-4887-bbd4-cf32d73aa359
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Time of Day Sort' =
+			
+			VAR dt = 'Data'[Contact Start Date Time]
+			VAR h = HOUR(dt)
+			VAR m = MINUTE(dt)
+			VAR RoundedMin = FLOOR(m, 15)
+			VAR SlotInDay = h * 4 + RoundedMin / 15
+			VAR AdjustedSlot = MOD(SlotInDay - 20, 96) + 1
+			RETURN
+			    AdjustedSlot
+		lineageTag: 271f930d-4e52-4eab-bc10-a6beb5efb21d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Call Result'
+		dataType: string
+		lineageTag: 21f50863-bf48-422a-a51f-34b1fb2f7572
+		summarizeBy: none
+		sourceColumn: Call Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2f376d72-088d-4767-a430-667c84614f2f
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 5f12166f-3e2b-4b04-b4e1-15d33ea448e0
+			defaultHierarchy: LocalDateTable_bcac9e68-85df-4a6e-9c21-384df1bf2533.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: c547897b-cdeb-4776-afb7-e8f2001c5dcd
+		summarizeBy: none
+		sourceColumn: Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column Hour1
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b5bffee-88d0-42c5-bcd8-709af500bdef
+		summarizeBy: sum
+		sourceColumn: Hour1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hour
+		dataType: string
+		lineageTag: 21a297ab-557a-4785-9b42-2984d80e434b
+		summarizeBy: none
+		sourceColumn: Hour
+		sortByColumn: 'Hour Sort Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Minute
+		dataType: int64
+		formatString: 0
+		lineageTag: 40d1fc1c-537d-499e-a0cc-0f5d9f816816
+		summarizeBy: sum
+		sourceColumn: Minute
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Speed of Answer'
+		dataType: dateTime
+		formatString: h:nn
+		lineageTag: ff286f3a-798f-4dce-a792-c904ea10f6df
+		summarizeBy: none
+		sourceColumn: Speed of Answer
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Under 60'
+		dataType: string
+		lineageTag: 61dbf90b-0146-4cc6-8582-983fb1a8d96b
+		summarizeBy: none
+		sourceColumn: Under 60
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Reporting Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0f606553-baa7-4a3c-a444-4901da3982a0
+		summarizeBy: none
+		sourceColumn: Reporting Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 963b19ad-55ab-483c-8db9-36bef938d34a
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'New New Skilled'
+		dataType: string
+		lineageTag: 2c1b1f08-3a10-4794-8cc5-7e938500b4b2
+		summarizeBy: none
+		sourceColumn: New New Skilled
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: string
+		lineageTag: 8f198ae8-75f9-4d04-a3e9-06718999a707
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: 8037cb43-a60d-475c-8440-63018fcd1c22
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Program
+		dataType: string
+		lineageTag: 8d8cd283-3c74-4929-898f-9e84389971b4
+		summarizeBy: none
+		sourceColumn: Program
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		dataType: string
+		lineageTag: 8209aa14-76e2-436a-9987-ecbfd430d1d0
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skilled
+		dataType: string
+		lineageTag: b39405e6-1925-4586-b078-6eda07c5e77c
+		summarizeBy: none
+		sourceColumn: Skilled
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'New Skilled'
+		dataType: string
+		lineageTag: 3f27ff41-0e27-4651-b063-ac3cde1f7360
+		summarizeBy: none
+		sourceColumn: New Skilled
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		lineageTag: d4f62980-0614-4087-8ede-fa5fca2e740c
+		summarizeBy: none
+		sourceColumn: Team
+		sortByColumn: 'Team Sort Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Nights'
+		dataType: string
+		lineageTag: 62241de0-7722-4dbe-b388-7434e7cd5f30
+		summarizeBy: none
+		sourceColumn: Hour Nights
+		sortByColumn: 'Hour Nights Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Reporting Day'
+		dataType: string
+		lineageTag: 4f70b24b-766a-4758-a23b-719716e47a82
+		summarizeBy: none
+		sourceColumn: Reporting Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Time of Day' =
+			
+			VAR dt = 'Data'[Contact Start Date Time]
+			VAR h = HOUR(dt)
+			VAR m = MINUTE(dt)
+			VAR RoundedMin = FLOOR(m, 15)
+			VAR h12 = IF(MOD(h, 12) = 0, 12, MOD(h, 12))
+			VAR ampm = IF(h < 12, "a", "p")
+			VAR minText = IF(RoundedMin = 0, ":00", ":" & FORMAT(RoundedMin, "00"))
+			RETURN
+			    h12 & minText & ampm
+		lineageTag: 540d09d2-ae31-4fea-b487-b0146a2fe1cb
+		summarizeBy: none
+		sortByColumn: 'Time of Day Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column abandoned
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c11fab89-08fd-450e-8541-6ba9f0b7c796
+		summarizeBy: none
+		sourceColumn: abandoned
+
+		annotation SummarizationSetBy = Automatic
+
+	column abandon_seconds
+		dataType: double
+		lineageTag: f03743ee-0e67-4f29-ad64-020a8b11e75a
+		summarizeBy: sum
+		sourceColumn: abandon_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column agent_id
+		dataType: double
+		lineageTag: e80f5cc6-8c8d-44fc-827e-675b5607cb31
+		summarizeBy: sum
+		sourceColumn: agent_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column campaign_id
+		dataType: int64
+		formatString: 0
+		lineageTag: addf7f1a-08a2-4888-8444-83b2081f2e41
+		summarizeBy: sum
+		sourceColumn: campaign_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_name
+		dataType: string
+		lineageTag: 03932ac3-c5fe-4cad-bcd5-cecc679c4500
+		summarizeBy: none
+		sourceColumn: campaign_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column conference_seconds
+		dataType: double
+		lineageTag: 8da70206-af24-4e29-bd7b-2d0d424f9c0f
+		summarizeBy: sum
+		sourceColumn: conference_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Contact ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 84867a23-45dc-4ed4-aed1-a39324d0485b
+		summarizeBy: count
+		sourceColumn: Contact ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column disposition_notes
+		dataType: string
+		lineageTag: 7d568427-5bee-4ffd-a7d4-5e39c5d0f9e3
+		summarizeBy: none
+		sourceColumn: disposition_notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_reason
+		dataType: string
+		lineageTag: 97c7d61c-6f46-4cbf-a317-4a9d823aa238
+		summarizeBy: none
+		sourceColumn: end_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column ANI/From
+		dataType: string
+		lineageTag: c82e74b8-120e-49d6-8095-d7df78b4582d
+		summarizeBy: none
+		sourceColumn: ANI/From
+
+		annotation SummarizationSetBy = Automatic
+
+	column high_proficiency
+		dataType: int64
+		formatString: 0
+		lineageTag: 74a732e4-11cd-47fa-8943-860ecbfb13ce
+		summarizeBy: sum
+		sourceColumn: high_proficiency
+
+		annotation SummarizationSetBy = Automatic
+
+	column hold_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 05fe2ad1-bf6e-4f71-9426-3ab15ec0e45e
+		summarizeBy: sum
+		sourceColumn: hold_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column hold_seconds
+		dataType: double
+		lineageTag: fa029857-9436-4e12-b767-1dcd4beae02f
+		summarizeBy: sum
+		sourceColumn: hold_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column is_analytics_processed
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: efdfe639-cd71-427e-889d-0e18a3154cf4
+		summarizeBy: none
+		sourceColumn: is_analytics_processed
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_logged
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4f19fa05-89cb-4baa-bafe-7a521ba21987
+		summarizeBy: none
+		sourceColumn: is_logged
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_outbound
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c15000e4-5e5e-4f26-893e-dfd411cfa510
+		summarizeBy: none
+		sourceColumn: is_outbound
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_refused
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: db85f8ba-3847-4515-bc93-a01ff9aafdbc
+		summarizeBy: none
+		sourceColumn: is_refused
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_short_abandon
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 9d256672-9dfc-42b0-827c-6ef271955133
+		summarizeBy: none
+		sourceColumn: is_short_abandon
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_takeover
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ff370132-2801-4722-826b-0f4e4abe07bf
+		summarizeBy: none
+		sourceColumn: is_takeover
+
+		annotation SummarizationSetBy = Automatic
+
+	column low_proficiency
+		dataType: int64
+		formatString: 0
+		lineageTag: 4340fe52-cb92-4543-a14a-8b1d4d1d3ee3
+		summarizeBy: sum
+		sourceColumn: low_proficiency
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Master Contact ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b6f6911-e941-41ae-91c9-34a74443cf5a
+		summarizeBy: count
+		sourceColumn: Master Contact ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column media_sub_type_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 86da01dc-4dbb-4eca-92f2-585d0acf96d5
+		summarizeBy: sum
+		sourceColumn: media_sub_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column media_sub_type_name
+		dataType: string
+		lineageTag: c0132200-6e34-401d-821d-305ed934ba67
+		summarizeBy: none
+		sourceColumn: media_sub_type_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column media_type_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b331c7c7-dd3f-4d29-ade3-700e31a03bf2
+		summarizeBy: sum
+		sourceColumn: media_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Media Type Name'
+		dataType: string
+		lineageTag: b25608b8-7958-45bc-97f9-2cbd078aeb01
+		summarizeBy: none
+		sourceColumn: Media Type Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column point_of_contact_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b141fd20-3813-45c9-b548-68f9d0b815d6
+		summarizeBy: sum
+		sourceColumn: point_of_contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column point_of_contact_name
+		dataType: string
+		lineageTag: 793db06b-4fdc-4f7a-9723-c1fb78619990
+		summarizeBy: none
+		sourceColumn: point_of_contact_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column post_queue_seconds
+		dataType: double
+		lineageTag: 905fb962-f19b-4b14-b85d-cc31c3ae3d2b
+		summarizeBy: sum
+		sourceColumn: post_queue_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column primary_disposition_id
+		dataType: double
+		lineageTag: 4e9c7436-5b96-4226-b6b9-b4a3ef44a99c
+		summarizeBy: sum
+		sourceColumn: primary_disposition_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column refuse_reason
+		dataType: string
+		lineageTag: e2bbb9dd-0c97-4b69-8215-1c3a66852c15
+		summarizeBy: none
+		sourceColumn: refuse_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column release_seconds
+		dataType: double
+		lineageTag: c79adf91-9444-4321-97ec-6627a61d84f8
+		summarizeBy: sum
+		sourceColumn: release_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column routing_attribute
+		dataType: int64
+		formatString: 0
+		lineageTag: 394c21ad-e844-4ae1-8368-55d2dda57ac5
+		summarizeBy: sum
+		sourceColumn: routing_attribute
+
+		annotation SummarizationSetBy = Automatic
+
+	column routing_time
+		dataType: int64
+		formatString: 0
+		lineageTag: 0eb4b590-94e5-431e-92ae-b34020cba062
+		summarizeBy: sum
+		sourceColumn: routing_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column secondary_disposition_id
+		dataType: double
+		lineageTag: b3c0bcc9-37c9-47d2-a949-6d9ed31fee48
+		summarizeBy: sum
+		sourceColumn: secondary_disposition_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column service_level_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: cff7af2a-7c6c-4e95-867f-91d228ec7e6b
+		summarizeBy: sum
+		sourceColumn: service_level_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7740e208-abca-4013-8d89-ea24970d3284
+		summarizeBy: sum
+		sourceColumn: skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Skill Name'
+		dataType: string
+		lineageTag: 284f9432-dffa-49ca-990b-5d6e82e6b372
+		summarizeBy: none
+		sourceColumn: Contact Skill Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_id
+		dataType: double
+		lineageTag: 51ae5924-4ddc-40b6-8de6-d5fd8279cf23
+		summarizeBy: sum
+		sourceColumn: team_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column team_name
+		dataType: string
+		lineageTag: a5914786-1613-43b8-8d3e-5997407c35c0
+		summarizeBy: none
+		sourceColumn: team_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column DNIS/To
+		dataType: string
+		lineageTag: 0de56b2d-5de6-4086-a4a5-6888486b3f27
+		summarizeBy: none
+		sourceColumn: DNIS/To
+
+		annotation SummarizationSetBy = Automatic
+
+	column transfer_indicator_id
+		dataType: int64
+		formatString: 0
+		lineageTag: bf7c57f8-9d39-4486-82e3-2bc8b640bf17
+		summarizeBy: sum
+		sourceColumn: transfer_indicator_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column transfer_indicator_name
+		dataType: string
+		lineageTag: 4524aa01-4ee5-428a-8af9-bfcadb258551
+		summarizeBy: none
+		sourceColumn: transfer_indicator_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column analytics_processed_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c402c6cc-920d-4dfa-8a79-cf3dcd455975
+		summarizeBy: none
+		sourceColumn: analytics_processed_date
+
+		variation Variation
+			isDefault
+			relationship: 01e2ec31-c56d-4efb-9680-25e74f6ccd61
+			defaultHierarchy: LocalDateTable_2e855cd5-4991-4f2c-a648-a77ef837a5c0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column callback_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 551ca79b-d4d1-48ce-9d75-d31066b34eb4
+		summarizeBy: none
+		sourceColumn: callback_time
+
+		variation Variation
+			isDefault
+			relationship: 176b5dad-0c14-49ec-973e-effedcc68a6a
+			defaultHierarchy: LocalDateTable_c3e8798f-4bb8-47fa-910b-145fbdc2c225.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_a_c_w_warehoused
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 07894136-b4a2-441b-b70b-9b3cb8659a0e
+		summarizeBy: none
+		sourceColumn: date_a_c_w_warehoused
+
+		variation Variation
+			isDefault
+			relationship: 25e6e9a6-2b8b-463a-9f45-25aea8901720
+			defaultHierarchy: LocalDateTable_dfb227f2-5d0a-49c9-bd7e-3e301e4fffc7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_contact_warehoused
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f2c981ed-ccc5-4a3d-86a9-815b35c67a46
+		summarizeBy: none
+		sourceColumn: date_contact_warehoused
+
+		variation Variation
+			isDefault
+			relationship: 42ed49cd-a080-4b52-8bdd-9fc844cbfd1c
+			defaultHierarchy: LocalDateTable_2d4fa3ff-061e-46b4-a607-0c5963afdc1b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_update_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 69935195-fb58-46b3-b0db-0303902c848f
+		summarizeBy: none
+		sourceColumn: last_update_time
+
+		variation Variation
+			isDefault
+			relationship: f0a6670c-e7e6-4532-936f-862169b497cc
+			defaultHierarchy: LocalDateTable_c82dd007-30f6-45cf-b909-857c35e2c646.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column refuse_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 57bf58e2-c5e8-4fbe-bdcb-00b9eba23a1c
+		summarizeBy: none
+		sourceColumn: refuse_time
+
+		variation Variation
+			isDefault
+			relationship: e810e9b1-6b49-4093-8b1f-c68f6665d615
+			defaultHierarchy: LocalDateTable_d23a5366-239d-451b-94ed-82fdb726ed22.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column etl_loaded_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0b764284-43d4-4d9e-b3c8-d52dfdbc2ff4
+		summarizeBy: none
+		sourceColumn: etl_loaded_datetime
+
+		variation Variation
+			isDefault
+			relationship: 1436d58f-c2e8-4c58-8327-c7e2344a5f44
+			defaultHierarchy: LocalDateTable_aadcbc63-c317-4582-a59b-8b41e5751440.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_start
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4be74992-e11d-4e9e-af80-64a8f457976e
+		summarizeBy: none
+		sourceColumn: window_start
+
+		variation Variation
+			isDefault
+			relationship: cc7fa555-2858-4564-9065-6888356d05ff
+			defaultHierarchy: LocalDateTable_947f377f-1186-4268-a101-894b6f0cbfcb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_end
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7ad4bd33-2b5b-4913-9646-33a6f10893b6
+		summarizeBy: none
+		sourceColumn: window_end
+
+		variation Variation
+			isDefault
+			relationship: f2b265a2-5149-467a-855e-99d607d5ada6
+			defaultHierarchy: LocalDateTable_08b323d6-d081-4b5c-ab89-20720bcf3f9e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7f20cf0a-bd86-468f-a5bd-37ebce31bf1a
+		summarizeBy: none
+		sourceColumn: contact_date
+
+		variation Variation
+			isDefault
+			relationship: 42dc3fd4-583b-4504-9e36-1cc44e3946b3
+			defaultHierarchy: LocalDateTable_e6affc95-4d90-4e53-97fa-e8c4e4503070.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Wait Time Formatted' =
+			
+			VAR TotalSeconds = ROUND('Data'[Wait Seconds], 0)
+			VAR Minutes = INT(TotalSeconds / 60)
+			VAR Seconds = TotalSeconds - (Minutes * 60)
+			RETURN
+			    Minutes & "m" & Seconds & "s"
+		lineageTag: fe88431e-509a-4538-a906-84cddfc08cff
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Hour Hierarchy'
+		lineageTag: 29292e15-38ec-474a-82ce-fcb7c44867bb
+
+		level Hour
+			lineageTag: fe3387b4-2fe8-4ea9-b90a-06560aac8324
+			column: Hour
+
+		level 'Time of Day'
+			lineageTag: 86e87407-1e3f-4f4e-8e9b-b18a3d14ba11
+			column: 'Time of Day'
+
+	partition Data = m
+		mode: import
+		source = ```
+				let
+				    // ========================================================================
+				    // STEP 1: CONNECT TO FABRIC LAKEHOUSE TABLE
+				    // ========================================================================
+				    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+				    IntellaTriageLakehouse = Source{[Name="IntellaTriageLakehouse"]}[Data],
+				    dbo_fact_nicecxone_completed_contacts = IntellaTriageLakehouse{[Schema="dbo",Item="fact_nicecxone_completed_contacts"]}[Data],
+				    
+				    // ========================================================================
+				    // STEP 2: INITIAL TYPE CONVERSIONS ON SOURCE DATA
+				    // ========================================================================
+				    TypedSource = Table.TransformColumnTypes(dbo_fact_nicecxone_completed_contacts, {
+				        {"contact_id", Int64.Type},
+				        {"master_contact_id", Int64.Type},
+				        {"contact_start_date", type datetime},
+				        {"first_name", type text},
+				        {"last_name", type text},
+				        {"media_type_name", type text},
+				        {"skill_name", type text},
+				        {"from_address", type text},
+				        {"to_address", type text},
+				        {"pre_queue_seconds", type number},
+				        {"in_queue_seconds", type number},
+				        {"agent_seconds", type number},
+				        {"acw_seconds", type number},
+				        {"post_queue_seconds", type number},
+				        {"abandon_seconds", type number},
+				        {"total_duration_seconds", type number},
+				        {"abandoned", type logical}
+				    }),
+				    
+				    // ========================================================================
+				    // STEP 3: CREATE HELPER FUNCTION FOR SECONDS TO HH:MM:SS CONVERSION
+				    // ========================================================================
+				SecondsToTime = (seconds as number) as text =>
+				    let
+				        totalSeconds = Number.Round(seconds, 0),
+				        hours = Number.RoundDown(totalSeconds / 3600),
+				        remainingAfterHours = totalSeconds - (hours * 3600),
+				        minutes = Number.RoundDown(remainingAfterHours / 60),
+				        secs = remainingAfterHours - (minutes * 60),
+				        result = 
+				            Text.PadStart(Text.From(Int64.From(hours)), 2, "0") & ":" &
+				            Text.PadStart(Text.From(Int64.From(minutes)), 2, "0") & ":" &
+				            Text.PadStart(Text.From(Int64.From(secs)), 2, "0")
+				    in
+				        result,
+				    
+				    // ========================================================================
+				    // STEP 4: TRANSFORM TO MATCH SAMPLE SCHEMA
+				    // ========================================================================
+				    
+				    // Add Pasted Date
+				    AddedPastedDate = Table.AddColumn(TypedSource, "Pasted Date", 
+				        each Text.From(Date.Year([contact_start_date])) & "/" & 
+				             Text.PadStart(Text.From(Date.Month([contact_start_date])), 2, "0") & "/" & 
+				             Text.PadStart(Text.From(Date.Day([contact_start_date])), 2, "0"), 
+				        type text),
+				    
+				    // Add Contact Agent Name
+				    AddedContactAgentName = Table.AddColumn(AddedPastedDate, "Contact Agent Name",
+				        each if [last_name] <> null and [first_name] <> null 
+				             then [last_name] & ", " & [first_name]
+				             else null,
+				        type text),
+				    
+				    // Add Contact Start Date Time (formatted)
+				    AddedContactStartDateTime = Table.AddColumn(AddedContactAgentName, "Contact Start Date Time",
+				        each Text.From(Date.Year([contact_start_date])) & "/" & 
+				             Text.PadStart(Text.From(Date.Month([contact_start_date])), 2, "0") & "/" & 
+				             Text.PadStart(Text.From(Date.Day([contact_start_date])), 2, "0") & " " &
+				             Text.PadStart(Text.From(Time.Hour([contact_start_date])), 2, "0") & ":" &
+				             Text.PadStart(Text.From(Time.Minute([contact_start_date])), 2, "0") & ":" &
+				             Text.PadStart(Text.From(Time.Second([contact_start_date])), 2, "0"),
+				        type text),
+				    
+				    // Add Contact End Date Time (calculated and formatted)
+				    AddedContactEndDateTime = Table.AddColumn(AddedContactStartDateTime, "Contact End Date Time",
+				        each 
+				            let
+				                endDateTime = [contact_start_date] + #duration(0, 0, 0, [total_duration_seconds])
+				            in
+				                Text.From(Date.Year(endDateTime)) & "/" & 
+				                Text.PadStart(Text.From(Date.Month(endDateTime)), 2, "0") & "/" & 
+				                Text.PadStart(Text.From(Date.Day(endDateTime)), 2, "0") & " " &
+				                Text.PadStart(Text.From(Time.Hour(endDateTime)), 2, "0") & ":" &
+				                Text.PadStart(Text.From(Time.Minute(endDateTime)), 2, "0") & ":" &
+				                Text.PadStart(Text.From(Time.Second(endDateTime)), 2, "0"),
+				        type text),
+				    
+				    // Add Prequeued
+				    AddedPrequeued = Table.AddColumn(AddedContactEndDateTime, "Prequeued",
+				        each if [pre_queue_seconds] > 0 then 1 else null,
+				        type number),
+				    
+				    // Add Prequeue Time
+				    AddedPrequeueTime = Table.AddColumn(AddedPrequeued, "Prequeue Time",
+				        each if [pre_queue_seconds] > 0 then SecondsToTime([pre_queue_seconds]) else null,
+				        type text),
+				    
+				    // Add Prequeue Abandons (always null - not in source)
+				    AddedPrequeueAbandons = Table.AddColumn(AddedPrequeueTime, "Prequeue Abandons", 
+				        each null, 
+				        type number),
+				    
+				    // Add Inqueue Time
+				    AddedInqueueTime = Table.AddColumn(AddedPrequeueAbandons, "Inqueue Time",
+				        each if [in_queue_seconds] > 0 then SecondsToTime([in_queue_seconds]) else null,
+				        type text),
+				    
+				    // Add Talk Time Pasted
+				    AddedTalkTimePasted = Table.AddColumn(AddedInqueueTime, "Talk Time Pasted",
+				        each if [agent_seconds] > 0 then SecondsToTime([agent_seconds]) else null,
+				        type text),
+				    
+				    // Add ACW Time Pasted
+				    AddedACWTimePasted = Table.AddColumn(AddedTalkTimePasted, "ACW Time Pasted",
+				        each if [acw_seconds] > 0 then SecondsToTime([acw_seconds]) else null,
+				        type text),
+				    
+				    // Add Postqueue Time (null to match sample)
+				    AddedPostqueueTime = Table.AddColumn(AddedACWTimePasted, "Postqueue Time", 
+				        each null, 
+				        type number),
+				    
+				    // Add Abandon Time (null to match sample)
+				    AddedAbandonTime = Table.AddColumn(AddedPostqueueTime, "Abandon Time", 
+				        each null, 
+				        type number),
+				    
+				    // Add Abandons (null to match sample)
+				    AddedAbandons = Table.AddColumn(AddedAbandonTime, "Abandons", 
+				        each null, 
+				        type number),
+				    
+				    // Add Contact Duration Pasted
+				    AddedContactDurationPasted = Table.AddColumn(AddedAbandons, "Contact Duration Pasted",
+				        each if [total_duration_seconds] > 0 then SecondsToTime([total_duration_seconds]) else null,
+				        type text),
+				    
+				    // Add Speed Of Answer Pasted
+				    AddedSpeedOfAnswerPasted = Table.AddColumn(AddedContactDurationPasted, "Speed Of Answer Pasted",
+				        each if [in_queue_seconds] > 0 then SecondsToTime([in_queue_seconds]) else null,
+				        type text),
+				    
+				    // Rename columns to match target schema
+				    RenamedToSchema = Table.RenameColumns(AddedSpeedOfAnswerPasted, {
+				        {"media_type_name", "Media Type Name"},
+				        {"from_address", "ANI/From"},
+				        {"contact_id", "Contact ID"},
+				        {"to_address", "DNIS/To"},
+				        {"master_contact_id", "Master Contact ID"},
+				        {"skill_name", "Contact Skill Name"}
+				    }),
+				    
+				    // ========================================================================
+				    // STEP 4.5: REMOVE ONLY THE REDUNDANT COLUMNS (Keep all others!)
+				    // ========================================================================
+				    RemovedRedundantColumns = Table.RemoveColumns(RenamedToSchema, {
+				        "contact_start_date",      // Replaced by "Contact Start Date Time"
+				        "first_name",              // Replaced by "Contact Agent Name"
+				        "last_name",               // Replaced by "Contact Agent Name"
+				        "pre_queue_seconds",       // Replaced by "Prequeue Time"
+				        "in_queue_seconds",        // Replaced by "Inqueue Time"
+				        "agent_seconds",           // Replaced by "Talk Time Pasted"
+				        "acw_seconds",             // Replaced by "ACW Time Pasted"
+				        "total_duration_seconds"   // Replaced by "Contact Duration Pasted"
+				        // KEEPING: post_queue_seconds, abandon_seconds, abandoned (not redundant)
+				        // KEEPING: All other 50+ columns from source
+				    }),
+				    
+				    // ========================================================================
+				    // STEP 5: CONVERT DATETIME TEXT COLUMNS BACK TO DATETIME FOR CALCULATIONS
+				    // ========================================================================
+				    ConvertedDateTimes = Table.TransformColumnTypes(RemovedRedundantColumns, {
+				        {"Contact Start Date Time", type datetime}, 
+				        {"Contact End Date Time", type datetime}
+				    }),
+				    
+				    // ========================================================================
+				    // STEP 6: YOUR EXISTING CALCULATED COLUMNS (STARTING FROM YOUR CODE)
+				    // ========================================================================
+				    
+				    // Buffer lookup tables for performance
+				    BufferedCustomer = Table.Buffer(Table.Distinct(Customer, {"Reference"})),
+				    BufferedNurse = Table.Buffer(Table.Distinct(#"Nurse Reference", {"Log in Reference", "Client"})),
+				    BufferedTeam = Table.Buffer(Table.Distinct(Team, {"Day of Week", "Hour", "Customer Name"})),
+				    
+				    // Add Date
+				    #"Added Date" = Table.AddColumn(ConvertedDateTimes, "Date", 
+				        each Date.From([Contact Start Date Time]), 
+				        type date),
+				    
+				    // Add Day of Week
+				    #"Added Day of Week" = Table.AddColumn(#"Added Date", "Day of Week", 
+				        each try Date.ToText(Date.From([Pasted Date]), "ddd") otherwise null,
+				        type text),
+				    
+				    // Add Time
+				    #"Added Time" = Table.AddColumn(#"Added Day of Week", "Time", 
+				        each Time.From([Contact Start Date Time]), 
+				        type time),
+				    
+				    // Add Hour1
+				    #"Added Hour1" = Table.AddColumn(#"Added Time", "Hour1", 
+				        each Time.Hour([Contact Start Date Time]), 
+				        Int64.Type),
+				    
+				    // Add Hour
+				    #"Added Hour" = Table.AddColumn(#"Added Hour1", "Hour", 
+				        each 
+				            let h = [Hour1]
+				            in if h = 0 then "12 AM"
+				               else if h = 12 then "12 PM"
+				               else if h < 12 then Text.From(h) & " AM"
+				               else Text.From(h - 12) & " PM",
+				        type text),
+				    
+				    // Add Minute
+				    #"Added Minute" = Table.AddColumn(#"Added Hour", "Minute", 
+				        each Time.Minute([Contact Start Date Time]), 
+				        Int64.Type),
+				    
+				    // Add Reporting Date
+				    #"Added Reporting Date" = Table.AddColumn(#"Added Minute", "Reporting Date", 
+				        each if [Hour1] < 5 then Date.AddDays([Date], -1) else [Date],
+				        type date),
+				    
+				    // Add Month
+				    #"Added Month" = Table.AddColumn(#"Added Reporting Date", "Month", 
+				        each Date.Month([Reporting Date]), 
+				        Int64.Type),
+				    
+				    // Rename pasted columns
+				    #"Renamed Pasted Columns" = Table.RenameColumns(#"Added Month", {
+				        {"Talk Time Pasted", "Talk Time"}, 
+				        {"ACW Time Pasted", "ACW Time"}, 
+				        {"Contact Duration Pasted", "Contact Duration"}
+				    }),
+				    
+				// Add Call Result
+				#"Added Call Result" = Table.AddColumn(#"Renamed Pasted Columns", "Call Result", 
+				    each 
+				        let
+				            skill = try [Contact Skill Name] otherwise "",
+				            abandonedFlag = try [abandoned] otherwise false,
+				            abandonSeconds = try [abandon_seconds] otherwise 0,
+				            talkTime = try [Talk Time] otherwise null,
+				            hasAbandoned = (abandonedFlag = true) or (abandonSeconds > 0),
+				            hasTalkTime = (talkTime <> null) and (talkTime <> "")
+				        in
+				            if skill = "Manual Outbound" then "Outbound"
+				            else if hasAbandoned then "Abandoned"
+				            else if hasTalkTime then "Answered"
+				            else "Abandoned",  // No talk time = Abandoned
+				    type text),
+				    
+				// Add Speed of Answer
+				#"Added Speed of Answer" = Table.AddColumn(#"Added Call Result", "Speed of Answer", 
+				    each 
+				        let
+				            callResult = try [Call Result] otherwise null,
+				            speedPasted = try [Speed Of Answer Pasted] otherwise null,
+				            inqueuePasted = try [Inqueue Time] otherwise null,
+				            contactDuration = try [Contact Duration] otherwise null,
+				            
+				            durationValue = 
+				                if callResult = "Answered" and speedPasted <> null then 
+				                    try Duration.From(speedPasted) otherwise null
+				                else if callResult = "Abandoned" and contactDuration <> null then 
+				                    try Duration.From(contactDuration) otherwise null
+				                else if callResult = "Abandoned" and inqueuePasted <> null then 
+				                    try Duration.From(inqueuePasted) otherwise null
+				                else if callResult = "Outbound" and contactDuration <> null then 
+				                    try Duration.From(contactDuration) otherwise null
+				                else null
+				        in
+				            if durationValue = null then null
+				            else #datetime(1899, 12, 31, 0, 0, 0) + durationValue),
+				    
+				    // Add Under 60
+				    #"Added Under 60" = Table.AddColumn(#"Added Speed of Answer", "Under 60", 
+				        each 
+				            let
+				                speed = try [Speed of Answer] otherwise null,
+				                baseDateTime = #datetime(1899, 12, 31, 0, 0, 0),
+				                oneMinuteDateTime = #datetime(1899, 12, 31, 0, 1, 0)
+				            in
+				                if speed = null then null
+				                else if speed < oneMinuteDateTime then 1
+				                else 0),
+				    
+				    // Merge Customer
+				    #"Merged Customer" = Table.NestedJoin(#"Added Under 60", {"Contact Skill Name"}, BufferedCustomer, {"Reference"}, "Customer", JoinKind.LeftOuter),
+				    #"Expanded Customer" = Table.ExpandTableColumn(#"Merged Customer", "Customer", {"Customer", "Program", "Service Line", "Skilled"}, {"Customer", "Program", "Service Line", "Skilled"}),
+				    
+				    // Merge Nurse
+				    #"Merged Nurse" = Table.NestedJoin(#"Expanded Customer", {"Contact Agent Name", "Customer"}, BufferedNurse, {"Log in Reference", "Client"}, "Nurse Reference", JoinKind.LeftOuter),
+				    #"Expanded Nurse" = Table.ExpandTableColumn(#"Merged Nurse", "Nurse Reference", {"Skill Reference"}, {"New Skilled"}),
+				    
+				    // Add New New Skilled
+				    #"Added New New Skilled" = Table.AddColumn(#"Expanded Nurse", "New New Skilled", 
+				        each 
+				            try (
+				                if [Skilled] = false then 1
+				                else if [Skilled] = "ELSE" then 2
+				                else if [Skilled] = true and [New Skilled] = 1 then 1
+				                else 3
+				            ) otherwise 3,
+				        Int64.Type),
+				    
+				    // Merge Team
+				    #"Merged Team" = Table.NestedJoin(#"Added New New Skilled", {"Day of Week", "Hour1", "Customer"}, Team, {"Day of Week", "Hour", "Customer Name"}, "Team", JoinKind.LeftOuter),
+				    #"Expanded Team" = Table.ExpandTableColumn(#"Merged Team", "Team", {"Team"}, {"Team"}),
+				    
+				    // Add Team Sort Order
+				    #"Added Team Sort" = Table.AddColumn(#"Expanded Team", "Team Sort Order", 
+				        each 
+				            let t = [Team]
+				            in
+				                // Standard Teams
+				                if t = "Team 1" then 1
+				                else if t = "Team 2" then 2
+				                else if t = "Team 3" then 3
+				                else if t = "Team 4" then 4
+				                else if t = "Team 5" then 5
+				                else if t = "Team 6" then 6
+				                else if t = "Team 7" then 7
+				                else if t = "Team 8" then 8
+				                else if t = "Team 9" then 9
+				                else if t = "Team 10" then 10
+				                else if t = "Team 11" then 11
+				                else if t = "Team 12" then 12
+				                // NAL Weekend Teams
+				                else if t = "NAL Weekend Morning" then 20
+				                else if t = "NAL Weekend Day" then 21
+				                else if t = "NAL Weekend Evening" then 22
+				                else if t = "NAL Weekend Overnight" then 23
+				                // WED## Teams
+				                else if t = "WED1" then 101
+				                else if t = "WED2" then 102
+				                else if t = "WED3" then 103
+				                else if t = "WED4" then 104
+				                else if t = "WED5" then 105
+				                else if t = "WED6" then 106
+				                else if t = "WED7" then 107
+				                else if t = "WED8" then 108
+				                else if t = "WED9" then 109
+				                else if t = "WED10" then 110
+				                else if t = "WED11" then 111
+				                else if t = "WED12" then 112
+				                // WEM## Teams
+				                else if t = "WEM1" then 121
+				                else if t = "WEM2" then 122
+				                else if t = "WEM3" then 123
+				                else if t = "WEM4" then 124
+				                else if t = "WEM5" then 125
+				                else if t = "WEM6" then 126
+				                else if t = "WEM7" then 127
+				                else if t = "WEM8" then 128
+				                else if t = "WEM9" then 129
+				                else if t = "WEM10" then 130
+				                else if t = "WEM11" then 131
+				                else if t = "WEM12" then 132
+				                // WEE## Teams
+				                else if t = "WEE1" then 141
+				                else if t = "WEE2" then 142
+				                else if t = "WEE3" then 143
+				                else if t = "WEE4" then 144
+				                else if t = "WEE5" then 145
+				                else if t = "WEE6" then 146
+				                else if t = "WEE7" then 147
+				                else if t = "WEE8" then 148
+				                else if t = "WEE9" then 149
+				                else if t = "WEE10" then 150
+				                else if t = "WEE11" then 151
+				                else if t = "WEE12" then 152
+				                else 999,
+				        Int64.Type),
+				    
+				    // Add Hour Nights
+				    #"Added Hour Nights" = Table.AddColumn(#"Added Team Sort", "Hour Nights", 
+				        each [Hour], 
+				        type text),
+				    
+				    // Add Hour Nights Sort
+				    #"Added Hour Nights Sort" = Table.AddColumn(#"Added Hour Nights", "Hour Nights Sort", 
+				        each 
+				            let h = [Hour Nights]
+				            in
+				                if h = "11 PM" then 1
+				                else if h = "12 AM" then 2
+				                else if h = "1 AM" then 3
+				                else if h = "2 AM" then 4
+				                else if h = "3 AM" then 5
+				                else if h = "4 AM" then 6
+				                else if h = "5 AM" then 7
+				                else if h = "6 AM" then 8
+				                else if h = "7 AM" then 9
+				                else 999,
+				        Int64.Type),
+				    
+				    // Add Reporting Day
+				    #"Added Custom" = Table.AddColumn(#"Added Hour Nights Sort", "Reporting Day", 
+				        each try Date.DayOfWeek([Reporting Date], Day.Sunday) + 1 otherwise null),
+				    
+				    // Rename Customer to Customer Name
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom", {{"Customer", "Customer Name"}}),
+				    
+				    // Final type conversion
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns", {{"New New Skilled", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type1", each [Contact Start Date Time] >= RangeStart and [Contact Start Date Time] < RangeEnd)
+				in
+				    #"Filtered Rows"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

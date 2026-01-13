@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "NICEinContact Completed Contacts"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "24eba0d9-7a33-a48d-460d-fe54bc394c45"
+  }
+}

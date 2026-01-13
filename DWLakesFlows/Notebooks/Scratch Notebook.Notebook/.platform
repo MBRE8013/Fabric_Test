@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Scratch Notebook"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5063f8c2-9083-8b69-4f01-193827349806"
+  }
+}

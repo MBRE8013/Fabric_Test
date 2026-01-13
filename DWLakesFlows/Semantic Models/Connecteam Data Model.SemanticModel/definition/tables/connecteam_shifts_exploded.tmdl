@@ -1,0 +1,471 @@
+table connecteam_shifts_exploded
+	lineageTag: 40f55f0b-c2f3-4e14-8a2e-5670db18106d
+
+	measure 'Avg Days Shift Last Updated to Start' =
+			
+			AVERAGEX(
+			    connecteam_shifts_exploded,
+			    DATEDIFF(
+			        connecteam_shifts_exploded[updated_datetime],
+			        connecteam_shifts_exploded[shift_start_datetime],
+			        DAY
+			    )
+			)
+		formatString: 0
+		lineageTag: f48ac09e-bfab-408c-93df-7ef8be701f60
+
+	measure 'Shift Date Range Short' =
+			
+			VAR MinDate = MIN(connecteam_shifts_exploded[shift_date])
+			VAR MaxDate = MAX(connecteam_shifts_exploded[shift_date])
+			RETURN
+			IF(
+			    MinDate = MaxDate,
+			    FORMAT(MinDate, "M/D/YY"),
+			    FORMAT(MinDate, "M/D/YY") & " - " & FORMAT(MaxDate, "M/D/YY")
+			)
+		lineageTag: 7228aaff-e70a-488d-8660-0f4ee47e349f
+
+	column scheduler_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c236ef5f-21f2-4a3e-a840-0f9e864fde49
+		summarizeBy: sum
+		sourceColumn: scheduler_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduler_name
+		dataType: string
+		lineageTag: 62ba26fb-00b6-416d-b76b-676dbf6f1ce1
+		summarizeBy: none
+		sourceColumn: scheduler_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_id
+		dataType: string
+		lineageTag: a779fbc9-e03a-4aba-b3a0-18e14eb83550
+		summarizeBy: none
+		sourceColumn: shift_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_title
+		dataType: string
+		lineageTag: 6f1f4e22-dcbb-41dd-9005-8d34397bbfbf
+		summarizeBy: none
+		sourceColumn: shift_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_start_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0540c390-4661-4725-8be4-074aed7fa3ff
+		summarizeBy: none
+		sourceColumn: shift_start_datetime
+
+		variation Variation
+			isDefault
+			relationship: 00ab539f-31a3-4e07-ba7e-69866c15d2cc
+			defaultHierarchy: LocalDateTable_433ddaf1-1364-4e80-8c3b-29d12249b2b2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_end_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b064d7b8-60ba-4f48-b4bd-dfd637ee98da
+		summarizeBy: none
+		sourceColumn: shift_end_datetime
+
+		variation Variation
+			isDefault
+			relationship: 01bbd626-12b4-4563-8b00-3bf9ec2593bf
+			defaultHierarchy: LocalDateTable_4d24db97-a780-4f4b-a269-2f39071b92e7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a0db5d2d-481b-4364-8e09-fc9639b4a1af
+		summarizeBy: none
+		sourceColumn: created_datetime
+
+		variation Variation
+			isDefault
+			relationship: 3c415f40-b9c6-4699-b772-85cf8acabf3f
+			defaultHierarchy: LocalDateTable_df3fe303-5834-4e53-a776-8846d3ea5925.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f4458d36-3300-42da-a55b-e60cdb8070a6
+		summarizeBy: none
+		sourceColumn: updated_datetime
+
+		variation Variation
+			isDefault
+			relationship: c9b02382-5244-4248-9d99-64c0ee869349
+			defaultHierarchy: LocalDateTable_067e3a36-c245-4a14-b9b1-dfe91a8b66de.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_duration_hours
+		dataType: double
+		lineageTag: 957de0e8-fa9a-4b71-bbf5-27f38b884064
+		summarizeBy: sum
+		sourceColumn: shift_duration_hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column job_id
+		dataType: string
+		lineageTag: 6de08088-5484-4904-bf8c-7dfacb1b2fe7
+		summarizeBy: none
+		sourceColumn: job_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column timezone
+		dataType: string
+		lineageTag: a84d680a-6694-4c67-902d-0e955bc3934c
+		summarizeBy: none
+		sourceColumn: timezone
+
+		annotation SummarizationSetBy = Automatic
+
+	column location_address
+		dataType: string
+		lineageTag: 82fac376-3418-4a92-a09d-18dede400394
+		summarizeBy: none
+		sourceColumn: location_address
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_open_shift
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ff415a74-be7d-4817-9274-449216028b2d
+		summarizeBy: none
+		sourceColumn: is_open_shift
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_published
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8524e50f-62b9-42c6-bb94-040e313ac410
+		summarizeBy: none
+		sourceColumn: is_published
+
+		annotation SummarizationSetBy = Automatic
+
+	column requires_admin_approval
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d49d743f-fb6d-426c-8384-bf20816deaf7
+		summarizeBy: none
+		sourceColumn: requires_admin_approval
+
+		annotation SummarizationSetBy = Automatic
+
+	column open_spots
+		dataType: double
+		formatString: 0
+		lineageTag: 990f7b68-b8ce-4473-be48-a90b8c57c224
+		summarizeBy: none
+		sourceColumn: open_spots
+
+		annotation SummarizationSetBy = User
+
+	column color
+		dataType: string
+		lineageTag: 1cf45043-2a7d-412f-bb1c-ead24c1790b4
+		summarizeBy: none
+		sourceColumn: color
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_user_count
+		dataType: int64
+		formatString: 0
+		lineageTag: f94f2d1d-6d0b-4446-be40-433f199e2b63
+		summarizeBy: sum
+		sourceColumn: assigned_user_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_count
+		dataType: int64
+		formatString: 0
+		lineageTag: f8bc59cb-9063-4f60-a32d-134190ff124f
+		summarizeBy: sum
+		sourceColumn: status_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column break_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 676cc5d7-e6b0-4dd8-937a-c076e4ec3da2
+		summarizeBy: sum
+		sourceColumn: break_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_user_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6341c06f-0d79-43fb-a7a1-5a626f7b3703
+		summarizeBy: none
+		sourceColumn: assigned_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d7897406-ba3c-4504-bdda-17faecd98670
+		summarizeBy: none
+		sourceColumn: shift_date
+
+		variation Variation
+			isDefault
+			relationship: e95f73aa-24fd-43e0-9943-4843db0d34fc
+			defaultHierarchy: LocalDateTable_0d65bb25-ef42-4466-a8e5-6b9694ef3de6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column shift_start_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: f8d4989d-0984-4700-aaa1-82aff474e735
+		summarizeBy: sum
+		sourceColumn: shift_start_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column etl_loaded_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9bcfb5eb-4abb-460b-b974-a9748775bb6f
+		summarizeBy: none
+		sourceColumn: etl_loaded_datetime
+
+		variation Variation
+			isDefault
+			relationship: 9767aacb-1b8c-4788-9081-b41691587927
+			defaultHierarchy: LocalDateTable_75bfe2f6-fc43-40e6-a19a-00dd527bcad5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_start
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1c2df26b-b5af-421f-9fb1-21091adc5b25
+		summarizeBy: none
+		sourceColumn: window_start
+
+		variation Variation
+			isDefault
+			relationship: 4db42ffe-dfeb-4c43-bb28-641f2b1ac7cb
+			defaultHierarchy: LocalDateTable_baefcff6-8519-447a-9f80-35f1d0f05861.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_end
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9d8dcc15-e5cc-438f-b2ce-74250459fae2
+		summarizeBy: none
+		sourceColumn: window_end
+
+		variation Variation
+			isDefault
+			relationship: 7dc231f3-905a-4334-8271-18e515276058
+			defaultHierarchy: LocalDateTable_7bca4731-e432-4529-8f57-8e2155a23ac1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_overnight_shift
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 45c4e501-0f27-40f0-8341-93030b6e6a44
+		summarizeBy: none
+		sourceColumn: is_overnight_shift
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_type
+		dataType: string
+		lineageTag: 71abc91a-33d7-43d7-8ee3-618ed3354fc2
+		summarizeBy: none
+		sourceColumn: shift_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_assignment_key
+		dataType: string
+		lineageTag: fd1826a4-06ad-4bc2-899c-9873d1e0923e
+		summarizeBy: none
+		sourceColumn: shift_assignment_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Display Color' =
+			
+			VAR ShiftColor = connecteam_shifts_exploded[color]
+			VAR JobColor = RELATED(dim_connecteam_jobs[job_color])
+			RETURN
+			IF(
+			    NOT(ISBLANK(ShiftColor)) && ShiftColor <> "",
+			    ShiftColor,
+			    JobColor
+			)
+		lineageTag: 847c7f2f-a434-40f4-a658-7951bb83052a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Shift Updated to Shift Start Bucket' =
+			
+			VAR Days = connecteam_shifts_exploded[Days Shift Last Updated to Start]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(Days), "Unknown",
+			    Days < 1, "Less than 1 day",
+			    Days < 3, "1-2 days",
+			    Days < 5, "3-4 days",
+			    Days < 8, "5-7 days",
+			    Days < 15, "8-14 days",
+			    Days < 22, "15-21 days",
+			    Days >= 22, "Greater than 21 days",
+			    "Unknown"
+			)
+		lineageTag: c40a5721-c3c2-4ef5-9716-e53d8f84a0a0
+		summarizeBy: none
+		sortByColumn: 'Shift Updated to Shift Start Bucket Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Shift Updated to Shift Start Bucket Sort' =
+			
+			VAR Days = connecteam_shifts_exploded[Days Shift Last Updated to Start]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(Days), 99,
+			    Days < 1, 1,
+			    Days < 3, 2,
+			    Days < 5, 3,
+			    Days < 8, 4,
+			    Days < 15, 5,
+			    Days < 22, 6,
+			    Days >= 22, 7,
+			    99
+			)
+		formatString: 0
+		lineageTag: 177930ce-072b-4af7-9557-a921b999b943
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days Shift Last Updated to Start' =
+			
+			DIVIDE(
+			    DATEDIFF(
+			        connecteam_shifts_exploded[updated_datetime],
+			        connecteam_shifts_exploded[shift_start_datetime],
+			        HOUR
+			    ),
+			    24
+			)
+		formatString: 0
+		lineageTag: a0152823-60c3-4c04-af6c-5e1e378f2118
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"connecteam_shifts_exploded","TableItemName":"Days Shift Last Updated to Start (bins)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column 'Open Shift Status' =
+			
+			IF(
+			    OR(
+			        ISBLANK(connecteam_shifts_exploded[open_spots]),
+			        connecteam_shifts_exploded[open_spots] = 0
+			    ),
+			    "Not Open",
+			    "Open"
+			)
+		lineageTag: c27daf49-5385-400e-81f5-d4118d271727
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days Shift Last Updated to Start (bins)' =
+			IF(
+				ISBLANK('connecteam_shifts_exploded'[Days Shift Last Updated to Start]),
+				BLANK(),
+				IF(
+					'connecteam_shifts_exploded'[Days Shift Last Updated to Start] >= 0,
+					ROUNDDOWN('connecteam_shifts_exploded'[Days Shift Last Updated to Start], 0),
+					ROUNDUP('connecteam_shifts_exploded'[Days Shift Last Updated to Start], 0)
+				)
+			)
+		formatString: 0
+		lineageTag: 897ca72f-35ce-4628-8a24-20c4964b7e45
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "connecteam_shifts_exploded"
+				          }
+				        },
+				        "Property": "Days Shift Last Updated to Start"
+				      }
+				    }
+				  ],
+				  "binningMetadata": {
+				    "binSize": {
+				      "value": 1.0,
+				      "unit": 0
+				    }
+				  }
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"c","Entity":"connecteam_shifts_exploded"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"c"}},"Property":"Days Shift Last Updated to Start"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"c"}},"Property":"Days Shift Last Updated to Start"}},"Size":1.0}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+	partition connecteam_shifts_exploded = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com", "IntellaTriageLakehouse"),
+				    dbo_connecteam_shifts_exploded = Source{[Schema="dbo",Item="connecteam_shifts_exploded"]}[Data]
+				in
+				    dbo_connecteam_shifts_exploded
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

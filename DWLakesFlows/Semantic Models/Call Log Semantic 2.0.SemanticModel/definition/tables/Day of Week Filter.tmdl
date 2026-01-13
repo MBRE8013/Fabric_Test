@@ -1,0 +1,41 @@
+table 'Day of Week Filter'
+	lineageTag: cb921ff7-386f-4c1e-b839-f90c45302dff
+
+	column 'Day Name'
+		lineageTag: 6cfacaa5-4968-4aff-a766-a135b4933b82
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day Name]
+		sortByColumn: 'Day Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Number'
+		formatString: 0
+		lineageTag: 83569ee7-48d4-47fc-8b9a-ccbfa592fc1b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Day of Week Filter' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Day Name", STRING,
+				    "Day Number", INTEGER,
+				    {
+				        {"Sun", 1},
+				        {"Mon", 2},
+				        {"Tue", 3},
+				        {"Wed", 4},
+				        {"Thu", 5},
+				        {"Fri", 6},
+				        {"Sat", 7}
+				    }
+				)
+
+	annotation PBI_Id = 79b27ba0eae1466284d1133eef494354
+

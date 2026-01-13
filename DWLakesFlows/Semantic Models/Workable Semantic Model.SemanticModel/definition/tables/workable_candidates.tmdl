@@ -1,0 +1,597 @@
+table workable_candidates
+	lineageTag: e93b7379-6a5f-447a-aa90-6079d2ef6204
+
+	measure 'Flow Count' = COUNTROWS('workable_candidates')
+		formatString: 0
+		lineageTag: 84607ab7-49f6-4740-bcda-84ce671f411f
+
+	measure 'Funnel Count' = ```
+			
+			VAR SelectedStage = SELECTEDVALUE('Funnel Stages'[Funnel Stage])
+			
+			// Base counts from stage group
+			VAR TotalApplied = COUNTROWS('workable_candidates')
+			VAR RejectedCount = 
+			    CALCULATE(COUNTROWS('workable_candidates'), 'workable_candidates'[stage group] = "Rejected")
+			VAR AutoDisqualifyCount = 
+			    CALCULATE(COUNTROWS('workable_candidates'), 'workable_candidates'[stage group] = "Auto Disqualify")
+			VAR NoResponseCount = 
+			    CALCULATE(COUNTROWS('workable_candidates'), 'workable_candidates'[stage group] = "No Response")
+			VAR AcceptedNoShowCount = 
+			    CALCULATE(COUNTROWS('workable_candidates'), 'workable_candidates'[stage group] = "Accepted - No Show")
+			VAR FailedScreenCount = 
+			    CALCULATE(COUNTROWS('workable_candidates'), 'workable_candidates'[stage group] = "Failed Screen")
+			VAR PendingAcceptanceCount = 
+			    CALCULATE(COUNTROWS('workable_candidates'), 'workable_candidates'[stage group] = "Pending Acceptance")
+			VAR DeclinedCount = 
+			    CALCULATE(COUNTROWS('workable_candidates'), 'workable_candidates'[stage group] = "Declined")
+			VAR HiredCount = 
+			    CALCULATE(COUNTROWS('workable_candidates'), 'workable_candidates'[stage group] = "Hired")
+			
+			// Calculated stages
+			VAR PhoneScreenInviteCount = TotalApplied - RejectedCount - AutoDisqualifyCount
+			VAR PSConductedCount = PhoneScreenInviteCount - NoResponseCount - AcceptedNoShowCount
+			VAR OfferSentCount = PSConductedCount - FailedScreenCount
+			VAR RescindedCount = OfferSentCount - PendingAcceptanceCount - DeclinedCount - HiredCount
+			
+			RETURN
+			    SWITCH(
+			        SelectedStage,
+			        "Applied", TotalApplied,
+			        "Rejected", RejectedCount,
+			        "Auto Disqualify", AutoDisqualifyCount,
+			        "Phone Screen Invite", PhoneScreenInviteCount,
+			        "No Response", NoResponseCount,
+			        "Accepted - No Show", AcceptedNoShowCount,
+			        "PS Conducted", PSConductedCount,
+			        "Failed Screen", FailedScreenCount,
+			        "Offer Sent", OfferSentCount,
+			        "Rescinded", RescindedCount,
+			        "Pending Acceptance", PendingAcceptanceCount,
+			        "Declined", DeclinedCount,
+			        "Hired", HiredCount,
+			        BLANK()
+			    )
+			```
+		formatString: 0
+		lineageTag: 902da3f9-507b-4020-9bf5-a51dddaf887d
+
+	column candidate_id
+		dataType: string
+		lineageTag: d792c01c-bf0a-47d1-9bd1-7160e985dadd
+		summarizeBy: none
+		sourceColumn: candidate_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_shortcode
+		dataType: string
+		lineageTag: 3f15c13c-0558-470c-83bf-495269c8cee1
+		summarizeBy: none
+		sourceColumn: job_shortcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column candidate_name
+		dataType: string
+		lineageTag: 9000e176-31a5-4e6c-9587-c3e11cea8d93
+		summarizeBy: none
+		sourceColumn: candidate_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column firstname
+		dataType: string
+		lineageTag: f9507671-90d2-4180-80fb-637ab1123559
+		summarizeBy: none
+		sourceColumn: firstname
+
+		annotation SummarizationSetBy = Automatic
+
+	column lastname
+		dataType: string
+		lineageTag: e2105fc9-265e-4ebf-9629-1bc35ba63012
+		summarizeBy: none
+		sourceColumn: lastname
+
+		annotation SummarizationSetBy = Automatic
+
+	column headline
+		dataType: string
+		lineageTag: 56818f51-1117-47bd-aa03-c81daa48fbf0
+		summarizeBy: none
+		sourceColumn: headline
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: 4ff4d6eb-2c74-45a6-92db-d28a3a0b34d7
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column address
+		dataType: string
+		lineageTag: 64a2fe5b-e03f-4958-b400-834689d3c35d
+		summarizeBy: none
+		sourceColumn: address
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_subdomain
+		dataType: string
+		lineageTag: 83fe6117-9938-4ec5-aa8d-aecc732e8f6c
+		summarizeBy: none
+		sourceColumn: account_subdomain
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_name
+		dataType: string
+		lineageTag: 0caffe78-994d-4ab2-8523-9a6aaf0dc12b
+		summarizeBy: none
+		sourceColumn: account_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_title
+		dataType: string
+		lineageTag: 97b47c78-e9ce-4a28-bb04-3aa7ce4f5576
+		summarizeBy: none
+		sourceColumn: job_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage
+		dataType: string
+		lineageTag: d2020d08-8459-4819-8b8d-f38acacc0e50
+		summarizeBy: none
+		sourceColumn: stage
+		sortByColumn: 'Stage Sort Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage_kind
+		dataType: string
+		lineageTag: eb36271a-da99-4cdb-8f23-712ab66fc452
+		summarizeBy: none
+		sourceColumn: stage_kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column disqualified
+		dataType: string
+		lineageTag: b88b9fae-f25f-4579-b709-03006c0c058d
+		summarizeBy: none
+		sourceColumn: disqualified
+
+		annotation SummarizationSetBy = Automatic
+
+	column disqualification_reason
+		dataType: string
+		lineageTag: 5685701c-a969-419e-9f02-5249b9235c4d
+		summarizeBy: none
+		sourceColumn: disqualification_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_at
+		dataType: string
+		lineageTag: 882fd440-89f2-4763-acfa-16bcb87383dc
+		summarizeBy: none
+		sourceColumn: updated_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column hired_at
+		dataType: string
+		lineageTag: 2380fa19-34bc-49a2-9c60-887f239e7dd6
+		summarizeBy: none
+		sourceColumn: hired_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column sourced
+		dataType: string
+		lineageTag: 7050adc7-fd02-45d3-bf92-8c8e7947b826
+		summarizeBy: none
+		sourceColumn: sourced
+
+		annotation SummarizationSetBy = Automatic
+
+	column domain
+		dataType: string
+		lineageTag: f48e2846-3607-4292-9abb-5b5d7f4c3015
+		summarizeBy: none
+		sourceColumn: domain
+
+		annotation SummarizationSetBy = Automatic
+
+	column profile_url
+		dataType: string
+		lineageTag: 3ebb5411-098c-40d6-8c90-1cc7ef45861d
+		summarizeBy: none
+		sourceColumn: profile_url
+
+		annotation SummarizationSetBy = Automatic
+
+	column etl_loaded_at
+		dataType: string
+		lineageTag: 11dffd2c-2af1-4027-a2bf-6c27e40671fe
+		summarizeBy: none
+		sourceColumn: etl_loaded_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_start
+		dataType: string
+		lineageTag: 221e5bb6-fd9b-4a96-8ac2-0eccfedf1ce7
+		summarizeBy: none
+		sourceColumn: window_start
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_end
+		dataType: string
+		lineageTag: 400fa042-c340-44d4-9d25-126b7670e095
+		summarizeBy: none
+		sourceColumn: window_end
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_hired
+		dataType: string
+		lineageTag: f86303d2-f4e3-41f8-b7f3-e2a520006d11
+		summarizeBy: none
+		sourceColumn: is_hired
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_since_created
+		dataType: string
+		lineageTag: 35539807-2498-4635-8b82-23e0e4ad55c6
+		summarizeBy: none
+		sourceColumn: days_since_created
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_since_updated
+		dataType: string
+		lineageTag: 9c70d736-7696-4a9f-a72c-fc294c4d43f7
+		summarizeBy: none
+		sourceColumn: days_since_updated
+
+		annotation SummarizationSetBy = Automatic
+
+	column candidate_job_key
+		dataType: string
+		lineageTag: 32779734-83a9-4f0f-93ac-2cc8b57a6d84
+		summarizeBy: none
+		sourceColumn: candidate_job_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_at_date = DATEVALUE(workable_candidates[created_at])
+		formatString: General Date
+		lineageTag: 4b23f7fc-16c8-4417-8fa3-9f8f00d02aaf
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 28c9a75e-6dd1-4ad6-9b8f-1bdea2e2a7be
+			defaultHierarchy: LocalDateTable_637072a7-0031-4b63-8a29-523d0d0d91fb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: ea4cc4ff-bc04-42df-874d-24808b456886
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stage Sort Order'
+		dataType: int64
+		formatString: 0
+		lineageTag: aac19b39-282c-4133-8106-abb87a72274e
+		summarizeBy: sum
+		sourceColumn: Stage Sort Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'stage group'
+		dataType: string
+		lineageTag: 2f564a07-f502-4032-9d4e-e58bea71dae2
+		summarizeBy: none
+		sourceColumn: stage group
+		sortByColumn: 'stage group custom sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'stage group custom sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: f65b4cb7-bd5d-4af1-a2a7-aa5dabf85ed0
+		summarizeBy: sum
+		sourceColumn: stage group custom sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created Date' = 'workable_candidates'[created_at]
+		formatString: Long Date
+		lineageTag: a3cd217f-51ba-4c17-b37d-3b5f0a940d45
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: d6435fa3-03ea-401a-9af0-89efeb17510a
+			defaultHierarchy: LocalDateTable_91351c13-ba84-410e-b266-aed0d7d05cfa.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column created_at_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e05ec21e-1615-4604-a702-85120c8f57ba
+		summarizeBy: none
+		sourceColumn: created_at_datetime
+
+		variation Variation
+			isDefault
+			relationship: fa864e9d-c803-430c-b6f2-27e14dcf33ed
+			defaultHierarchy: LocalDateTable_964ecc38-f14b-4505-a9ec-481e97d94b7c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_at
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 28456269-e947-450b-8653-3a865fda6eb8
+		summarizeBy: none
+		sourceColumn: created_at
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Quarter
+		dataType: string
+		lineageTag: 89dd74d7-15dc-4ae7-a002-9aa01ad6e411
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week = ```
+			
+			VAR d = workable_candidates[created_at_date]
+			RETURN
+			    d - WEEKDAY(d, 2) + 1
+			
+			```
+		formatString: General Date
+		lineageTag: 372d61af-5086-49f6-ad9c-713b96427171
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 67e48a37-6abb-4098-aeb9-a84cc28ef4dc
+			defaultHierarchy: LocalDateTable_e3998d9d-d0d2-4e8f-a3d7-6a1228bcff02.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition workable_candidates = m
+		mode: import
+		source = ```
+				let
+				    Source = Sql.Database(
+				        "xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com", 
+				        "IntellaTriageLakehouse"
+				    ),
+				    dbo_workable_candidates = Source{[Schema="dbo",Item="workable_candidates"]}[Data],
+				
+				// Filter out excluded job titles early in the process
+				#"Filtered Job Titles" = Table.SelectRows(dbo_workable_candidates, each 
+				    [job_title] <> "Clinical Care Manager" and
+				    [job_title] <> "IT Service Desk - 2nd Shift - M-F" and
+				    [job_title] <> "Operations Administrative Assistant" and
+				    [job_title] <> "Operations Assistant" and
+				    [job_title] <> "Remote Clinical Support Specialist PM shift with rotating Sat & Sun"
+				),
+				
+				    #"Added Custom" = Table.AddColumn(#"Filtered Job Titles", "Stage Sort Order", each 
+				        if [stage] = "Sourced" then 23
+				        else if [stage] = "Applied" then 22
+				        else if [stage] = "No Invitation Sent" then 21
+				        else if [stage] = "Phone Screen Invitation Sent" then 20
+				        else if [stage] = "Candidate Never Scheduled" then 19
+				        else if [stage] = "Speed & Ping Not Received/Failed" then 18
+				        else if [stage] = "Phone Screen Scheduled" then 17
+				        else if [stage] = "No Show Phone Screen" then 16
+				        else if [stage] = "No Show, Rescheduled/Cancelled" then 15
+				        else if [stage] = "I.No Show, Rescheduled/Cancelled" then 14
+				        else if [stage] = "Failed Phone Screen" then 13
+				        else if [stage] = "HOLD" then 12
+				        else if [stage] = "No Show Interview" then 11
+				        else if [stage] = "Interview" then 10
+				        else if [stage] = "Clinical Interview" then 9
+				        else if [stage] = "Failed Interview" then 8
+				        else if [stage] = "Failed Clinical Interview" then 7
+				        else if [stage] = "Offer Pending" then 6
+				        else if [stage] = "Offer" then 5
+				        else if [stage] = "Declined Offer" then 4
+				        else if [stage] = "Hired" then 1
+				        else if [stage] = "Duplicate Candidate" then 999
+				        else if [stage] = "Phone Screen" then 999
+				        else if [stage] = "Phone Screen Never Scheduled" then 999
+				        else if [stage] = "Phone Screen Schedule Request" then 999
+				        else if [stage] = "Reviewed" then 999
+				        else 999
+				    ),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"Stage Sort Order", Int64.Type}}),
+				
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type", "stage group", each 
+				        if [stage] = "Applied" then "Auto Disqualify"
+				        else if [stage] = "Candidate Never Scheduled" then "No Response"
+				        else if [stage] = "Clinical Interview" then "Failed Screen"
+				        else if [stage] = "Declined Offer" then "Declined"
+				        else if [stage] = "Duplicate Candidate" then "Duplicate"
+				        else if [stage] = "Failed Clinical Interview" then "Failed Screen"
+				        else if [stage] = "Failed Interview" then "Failed Screen"
+				        else if [stage] = "Failed Phone Screen" then "Failed Screen"
+				        else if [stage] = "Hired" then "Hired"
+				        else if [stage] = "HOLD" then "Failed Screen"
+				        else if [stage] = "I.No Show, Rescheduled/Cancelled" then "Accepted - No Show"
+				        else if [stage] = "Interview" then "Failed Screen"
+				        else if [stage] = "No Invitation Sent" then "Rejected"
+				        else if [stage] = "No Show Interview" then "Accepted - No Show"
+				        else if [stage] = "No Show Phone Screen" then "Accepted - No Show"
+				        else if [stage] = "No Show, Rescheduled/Cancelled" then "Accepted - No Show"
+				        else if [stage] = "Offer" then "Pending Acceptance"
+				        else if [stage] = "Offer Pending" then "Pending Acceptance"
+				        else if [stage] = "Phone Screen" then "Accepted - No Show"
+				        else if [stage] = "Phone Screen Invitation Sent" then "No Response"
+				        else if [stage] = "Phone Screen Never Scheduled" then "No Response"
+				        else if [stage] = "Phone Screen Schedule Request" then "No Response"
+				        else if [stage] = "Phone Screen Scheduled" then "Accepted - No Show"
+				        else if [stage] = "Reviewed" then "Rejected"
+				        else if [stage] = "Sourced" then "Rejected"
+				        else if [stage] = "Speed & Ping Not Received/Failed" then "Accepted - No Show"
+				        else null
+				    ),
+				
+				    #"Added Custom2" = Table.AddColumn(#"Added Custom1", "stage group custom sort", each 
+				        if [stage group] = "Hired" then 1
+				        else if [stage group] = "Declined" then 2
+				        else if [stage group] = "Pending Acceptance" then 3
+				        else if [stage group] = "Failed Screen" then 4
+				        else if [stage group] = "Accepted - No Show" then 5
+				        else if [stage group] = "No Response" then 6
+				        else if [stage group] = "Rejected" then 7
+				        else if [stage group] = "Auto Disqualify" then 8
+				        else null
+				    ),
+				    
+				    // Convert created_at from UTC to Central Time with automatic DST handling
+				    #"Add created_at_datetime" = Table.AddColumn(
+				        #"Added Custom2",
+				        "created_at_datetime",
+				        each 
+				            let
+				                utcDateTime = [created_at],
+				                year = Date.Year(utcDateTime),
+				                
+				                // Calculate 2nd Sunday in March (DST starts at 2 AM)
+				                marchFirst = #date(year, 3, 1),
+				                marchFirstDayOfWeek = Date.DayOfWeek(marchFirst, Day.Sunday),
+				                dstStart = #datetime(year, 3, 8 + (7 - marchFirstDayOfWeek), 2, 0, 0),
+				                
+				                // Calculate 1st Sunday in November (DST ends at 2 AM)
+				                novemberFirst = #date(year, 11, 1),
+				                novemberFirstDayOfWeek = Date.DayOfWeek(novemberFirst, Day.Sunday),
+				                dstEnd = #datetime(year, 11, 1 + (7 - novemberFirstDayOfWeek), 2, 0, 0),
+				                
+				                // Determine if we're in DST period
+				                isDST = utcDateTime >= dstStart and utcDateTime < dstEnd,
+				                
+				                // Apply appropriate offset
+				                offset = if isDST then -5 else -6
+				            in
+				                utcDateTime + #duration(0, offset, 0, 0),
+				        type datetime
+				    ),
+				    
+				    // Convert created_at to date only
+				    #"Convert created_at to Date" = Table.AddColumn(
+				        #"Add created_at_datetime",
+				        "created_at_date",
+				        each Date.From([created_at_datetime]),
+				        type date
+				    ),
+				    
+				    // Remove the original created_at and rename created_at_date to created_at
+				    #"Remove Original created_at" = Table.RemoveColumns(#"Convert created_at to Date", {"created_at"}),
+				    #"Rename to created_at" = Table.RenameColumns(#"Remove Original created_at", {{"created_at_date", "created_at"}}),
+				    
+				    // Filter out null/empty created_at values before adding quarter
+				    #"Filtered Rows Early" = Table.SelectRows(#"Rename to created_at", each [created_at] <> null and [created_at] <> ""),
+				    
+				    // Add Quarter column based on created_at
+				    #"Add Quarter" = Table.AddColumn(
+				        #"Filtered Rows Early",
+				        "Quarter",
+				        each 
+				            let
+				                theDate = [created_at],
+				                year = Date.Year(theDate),
+				                month = Date.Month(theDate),
+				                quarter = 
+				                    if month >= 1 and month <= 3 then "Q1"
+				                    else if month >= 4 and month <= 6 then "Q2"
+				                    else if month >= 7 and month <= 9 then "Q3"
+				                    else "Q4",
+				                quarterYear = Text.From(year) & " " & quarter
+				            in
+				                quarterYear,
+				        type text
+				    ),
+				    
+				    // Group by email and Quarter, then select the best record per group
+				    #"Grouped Rows" = Table.Group(
+				        #"Add Quarter",
+				        {"email", "Quarter"},
+				        {
+				            {"BestRecord", (grp) =>
+				                let
+				                    // Sort by Stage Sort Order (ascending), then by created_at (descending)
+				                    sorted = Table.Sort(grp, {{"Stage Sort Order", Order.Ascending}, {"created_at", Order.Descending}}),
+				                    // Take the first row (lowest Stage Sort Order, and if tied, latest created_at)
+				                    firstRow = Table.FirstN(sorted, 1)
+				                in
+				                    firstRow,
+				                type table
+				            }
+				        }
+				    ),
+				    
+				    // Expand the BestRecord column to get all original columns back
+				    #"Expanded BestRecord" = Table.ExpandTableColumn(
+				        #"Grouped Rows",
+				        "BestRecord",
+				        List.Difference(
+				            Table.ColumnNames(#"Add Quarter"),
+				            {"email", "Quarter"}
+				        )
+				    ),
+				
+				    // Apply final type conversions
+				    #"Changed Type Final" = Table.TransformColumnTypes(
+				        #"Expanded BestRecord",
+				        {
+				            {"created_at", type date},
+				            {"created_at_datetime", type datetime},
+				            {"stage group custom sort", Int64.Type}, 
+				            {"Stage Sort Order", Int64.Type}
+				        }
+				    )
+				
+				in
+				    #"Changed Type Final"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,192 @@
+table connecteam_shift_statuses
+	lineageTag: 55f59208-7239-4cba-bdc8-a676db38dd0c
+
+	column scheduler_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 92f44c37-d863-47a0-89cf-90a0afc586fc
+		summarizeBy: sum
+		sourceColumn: scheduler_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduler_name
+		dataType: string
+		lineageTag: f95279fc-01f9-45e3-bb9b-b011caed50bd
+		summarizeBy: none
+		sourceColumn: scheduler_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_id
+		dataType: string
+		lineageTag: 4b4ab482-c487-4312-ba37-231d2c7967fe
+		summarizeBy: none
+		sourceColumn: shift_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_id
+		dataType: string
+		lineageTag: 704596e0-fed9-474d-8a27-cdbcae37d06f
+		summarizeBy: none
+		sourceColumn: status_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 98c19fe7-87d4-477a-aed5-da443da66325
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column creation_time
+		dataType: int64
+		formatString: 0
+		lineageTag: 31e6c9b5-fbee-4ac0-882c-92fcc6d190b6
+		summarizeBy: sum
+		sourceColumn: creation_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column update_time
+		dataType: int64
+		formatString: 0
+		lineageTag: aeec1422-4a67-44b6-b0ef-37d31d533774
+		summarizeBy: sum
+		sourceColumn: update_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column creating_user_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ad5cb91f-1241-4632-8a71-da498afb8bfc
+		summarizeBy: sum
+		sourceColumn: creating_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column modifying_user_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 96adfb70-ef61-4c96-b865-a52a4b2ce36e
+		summarizeBy: sum
+		sourceColumn: modifying_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_user_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c8888a4-8821-41e2-ac9c-2c5092aee5cc
+		summarizeBy: sum
+		sourceColumn: assigned_user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column creation_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 14ce7f35-961b-499f-a057-4d4820711ed2
+		summarizeBy: none
+		sourceColumn: creation_datetime
+
+		variation Variation
+			isDefault
+			relationship: 6e5745b1-3303-4e24-9cbd-bce3fc1fb35c
+			defaultHierarchy: LocalDateTable_be1905b0-4b5a-4fd7-9d53-03e377595f8d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column update_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 56187bef-047f-4dcf-aedf-7ca1db0c11c0
+		summarizeBy: none
+		sourceColumn: update_datetime
+
+		variation Variation
+			isDefault
+			relationship: fed58ae5-f2fd-4181-94ed-402e4e1b9eae
+			defaultHierarchy: LocalDateTable_cee7895c-932a-489b-89ec-b2093ce3427e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_start
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 638af941-863d-4d3f-87af-59e106aae95f
+		summarizeBy: none
+		sourceColumn: window_start
+
+		variation Variation
+			isDefault
+			relationship: 3c87eec8-0ac0-45fc-a587-05465b5bddb0
+			defaultHierarchy: LocalDateTable_46b041e2-d815-4d13-a5a2-9cf1c81a754f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_end
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8fa156e6-5b38-421a-b168-6c8b37426ca7
+		summarizeBy: none
+		sourceColumn: window_end
+
+		variation Variation
+			isDefault
+			relationship: 8e6f4ca8-05e3-46de-a4b6-3cf40cde22be
+			defaultHierarchy: LocalDateTable_d53ac5f4-af9f-4a95-b60d-fbc1b6504e18.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_key
+		dataType: string
+		lineageTag: f808786f-3f53-4eb6-95f3-d0f9c49fb47f
+		summarizeBy: none
+		sourceColumn: status_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column shift_assignment_key
+		dataType: string
+		lineageTag: 1c184356-6804-4c93-905d-26e99d5ad1f4
+		summarizeBy: none
+		sourceColumn: shift_assignment_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_sequence
+		dataType: int64
+		formatString: 0
+		lineageTag: 4fbe02e3-a7a4-467f-abaa-8a9374b28f2d
+		summarizeBy: sum
+		sourceColumn: status_sequence
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_latest_for_shift_user
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ae49d8c3-cdf5-405e-beb1-bc79b40be222
+		summarizeBy: none
+		sourceColumn: is_latest_for_shift_user
+
+		annotation SummarizationSetBy = Automatic
+
+	partition connecteam_shift_statuses = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com", "IntellaTriageLakehouse"),
+				    dbo_connecteam_shift_statuses = Source{[Schema="dbo",Item="connecteam_shift_statuses"]}[Data]
+				in
+				    dbo_connecteam_shift_statuses
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

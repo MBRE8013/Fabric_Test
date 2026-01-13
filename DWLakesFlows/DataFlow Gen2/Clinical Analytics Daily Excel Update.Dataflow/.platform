@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "Clinical Analytics Daily Excel Update"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4957fb11-db5e-9a3e-43e9-7e981bb3ef9a"
+  }
+}

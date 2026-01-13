@@ -1,0 +1,549 @@
+table 'New Hire Tracking'
+	lineageTag: a8ded9c9-2c87-484c-a20e-cc848fcd5120
+
+	column 'first name'
+		dataType: string
+		lineageTag: ba5a3f2b-3888-4a38-ac6a-0f95a3604dc3
+		summarizeBy: none
+		sourceColumn: first name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'last name'
+		dataType: string
+		lineageTag: 7ae458fd-ec92-45a3-bc95-8be8e3b453ae
+		summarizeBy: none
+		sourceColumn: last name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Middle Name/Initial'
+		dataType: string
+		lineageTag: e17e4e34-31eb-448d-a4a7-42b5b3d663ce
+		summarizeBy: none
+		sourceColumn: Middle Name/Initial
+
+		annotation SummarizationSetBy = Automatic
+
+	column address
+		dataType: string
+		lineageTag: 1742401b-59a9-4931-ac61-ecc4e5071cbb
+		summarizeBy: none
+		sourceColumn: address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Address Line 2'
+		dataType: string
+		lineageTag: bd65afd4-3227-47dc-9125-8fc599bb64ce
+		summarizeBy: none
+		sourceColumn: Address Line 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: d1b9cd2c-7585-43d9-8adb-2b7718d5d7e7
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: 3612396d-3011-4bbf-869c-55eed46a1101
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Line'
+		dataType: string
+		lineageTag: 26155d82-6d14-45ac-bf2b-cd305b4ed06e
+		summarizeBy: none
+		sourceColumn: Business Line
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: b1d65c37-7288-4be8-8ded-495e57b96f0f
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		lineageTag: e70ad6e8-cfae-4ffd-8e0b-f35ed7e6261c
+		summarizeBy: none
+		sourceColumn: Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weekend
+		dataType: string
+		lineageTag: 0db50ee5-0c10-4040-982b-94cef5a7b128
+		summarizeBy: none
+		sourceColumn: Weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column Baylor
+		dataType: string
+		lineageTag: 10e5527a-c202-4021-b783-7e2407b7de11
+		summarizeBy: none
+		sourceColumn: Baylor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weekday Shift'
+		dataType: string
+		lineageTag: bfd1ad34-44d8-4805-874e-378c790e72c5
+		summarizeBy: none
+		sourceColumn: Weekday Shift
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weekend Shift'
+		dataType: string
+		lineageTag: 5797fdfb-78d6-4c6f-a87e-8f3650dfc9e6
+		summarizeBy: none
+		sourceColumn: Weekend Shift
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Schedule Type'
+		dataType: string
+		lineageTag: 6fd4484c-856d-4a9e-a740-737886c8e165
+		summarizeBy: none
+		sourceColumn: Schedule Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Set Schedule'
+		dataType: string
+		lineageTag: e303ce7d-a41f-48cb-ba34-3d0ec94ce7da
+		summarizeBy: none
+		sourceColumn: Set Schedule
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9f676eb6-5af7-4f38-9a7c-f357d2c7f5e1
+		summarizeBy: none
+		sourceColumn: Start Date
+
+		variation Variation
+			isDefault
+			relationship: 1a01086d-2c1b-42cd-bbf3-1e83d1c6ff6b
+			defaultHierarchy: LocalDateTable_b7a53b36-adbe-4f47-82cc-663840353b6c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Graduation Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3802ea60-049d-4306-81e2-7070ecff8f2c
+		summarizeBy: none
+		sourceColumn: Graduation Date
+
+		variation Variation
+			isDefault
+			relationship: b886cb82-0098-49fc-bc1b-6a23ab546458
+			defaultHierarchy: LocalDateTable_a5f0c277-cdaf-4efe-afd3-dc3d51e0fc03.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column zip
+		dataType: string
+		lineageTag: a5e7a87c-f0ba-4c48-8c61-41ba8dd6b765
+		summarizeBy: none
+		sourceColumn: zip
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: 62f08258-6e8f-4ba4-a220-fe5925a77e11
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 258c47b2-75bb-4df8-aba5-35dabe27fb01
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Comments
+		dataType: string
+		lineageTag: 217e3660-8ced-472b-9503-ce1b4e87ea84
+		summarizeBy: none
+		sourceColumn: Comments
+
+		annotation SummarizationSetBy = Automatic
+
+	column HR
+		dataType: string
+		lineageTag: 8c5da9cd-31bb-447c-88ec-3c198f772889
+		summarizeBy: none
+		sourceColumn: HR
+
+		annotation SummarizationSetBy = Automatic
+
+	column I-9
+		dataType: string
+		lineageTag: e6d732c0-942a-4596-aee9-b6f6939fbc75
+		summarizeBy: none
+		sourceColumn: I-9
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FedEx tracking'
+		dataType: string
+		lineageTag: 56e7d0bf-7d9d-4e3a-8a10-59300fdce69a
+		summarizeBy: none
+		sourceColumn: FedEx tracking
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fedex Return Label'
+		dataType: string
+		lineageTag: 45d4cd8b-0980-4e4a-b2a2-009c79c86530
+		summarizeBy: none
+		sourceColumn: Fedex Return Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Status'
+		dataType: string
+		lineageTag: 56b0e0e7-b945-4520-be4c-c97e255587a2
+		summarizeBy: none
+		sourceColumn: Employee Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Record Key'
+		dataType: string
+		lineageTag: 45bba141-6658-44e4-9497-225d38edae91
+		summarizeBy: none
+		sourceColumn: Record Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bf5c9006-bd0a-4d3b-8ea7-16061ecadd7a
+		summarizeBy: none
+		sourceColumn: Created
+
+		variation Variation
+			isDefault
+			relationship: 8b82ecc2-c1f7-4c01-9558-dc869c4007c6
+			defaultHierarchy: LocalDateTable_9c842cec-f0ff-4ccf-b0c6-5517c42baab0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created By'
+		dataType: string
+		lineageTag: 39899317-4157-4289-808c-65b769b49a71
+		summarizeBy: none
+		sourceColumn: Created By
+
+		annotation SummarizationSetBy = Automatic
+
+	column Modified
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8dbac5a3-49b5-4086-9afe-88504baedc57
+		summarizeBy: none
+		sourceColumn: Modified
+
+		variation Variation
+			isDefault
+			relationship: f3ca4c67-6d76-4273-8467-ae59ac033c9b
+			defaultHierarchy: LocalDateTable_8e910357-2b94-47ae-8a55-f54c535c8936.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Modified By'
+		dataType: string
+		lineageTag: f158e791-2b06-4ba2-9c73-fa2d507297ff
+		summarizeBy: none
+		sourceColumn: Modified By
+
+		annotation SummarizationSetBy = Automatic
+
+	column SSN
+		dataType: string
+		lineageTag: f904f791-32a9-4110-a7ab-4229697b7323
+		summarizeBy: none
+		sourceColumn: SSN
+
+		annotation SummarizationSetBy = Automatic
+
+	column Outlook
+		dataType: string
+		lineageTag: 32937d63-6af8-4b4b-a1b1-00b6fa40e2d3
+		summarizeBy: none
+		sourceColumn: Outlook
+
+		annotation SummarizationSetBy = Automatic
+
+	column nursegrid
+		dataType: string
+		lineageTag: 0608cdb0-a951-44d2-a846-c833f6c507b0
+		summarizeBy: none
+		sourceColumn: nursegrid
+
+		annotation SummarizationSetBy = Automatic
+
+	column portal
+		dataType: string
+		lineageTag: f1136d78-87f1-4e03-9654-8c2a11a3274e
+		summarizeBy: none
+		sourceColumn: portal
+
+		annotation SummarizationSetBy = Automatic
+
+	column RingCentral
+		dataType: string
+		lineageTag: c1e8a7f5-7fd8-4c9f-9944-aabaa0a2053c
+		summarizeBy: none
+		sourceColumn: RingCentral
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Center'
+		dataType: string
+		lineageTag: d33859d1-7bdf-4ced-82b5-05c7ccd9429b
+		summarizeBy: none
+		sourceColumn: Contact Center
+
+		annotation SummarizationSetBy = Automatic
+
+	column Genie
+		dataType: string
+		lineageTag: e5b107bf-e369-4b7d-9dda-61a03379a397
+		summarizeBy: none
+		sourceColumn: Genie
+
+		annotation SummarizationSetBy = Automatic
+
+	column PC
+		dataType: string
+		lineageTag: db92045d-809d-475a-9227-787bb4e64a7d
+		summarizeBy: none
+		sourceColumn: PC
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'One Drive'
+		dataType: string
+		lineageTag: dce45268-2c5c-4c3d-9977-47e98fd5d37a
+		summarizeBy: none
+		sourceColumn: One Drive
+
+		annotation SummarizationSetBy = Automatic
+
+	column Headset
+		dataType: string
+		lineageTag: 270feb5f-6bb9-4b0b-8bc4-077eeba1613f
+		summarizeBy: none
+		sourceColumn: Headset
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MFA Set-up'
+		dataType: string
+		lineageTag: 5f678879-3944-4db8-a084-7e69de1df660
+		summarizeBy: none
+		sourceColumn: MFA Set-up
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Phone List'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4f840266-c225-47b9-89ef-65951542e54a
+		summarizeBy: none
+		sourceColumn: Phone List
+
+		annotation SummarizationSetBy = Automatic
+
+	column Monitor
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 211347bf-e962-4b98-9d7d-972bb705675d
+		summarizeBy: none
+		sourceColumn: Monitor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Compliance Asset Id'
+		dataType: string
+		lineageTag: 998494c7-f0d9-4d18-91b6-798ec16d7794
+		summarizeBy: none
+		sourceColumn: Compliance Asset Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Color Tag'
+		dataType: string
+		lineageTag: 09ee2ee6-4794-4f66-85ec-c555e3ba5a28
+		summarizeBy: none
+		sourceColumn: Color Tag
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 26ce7943-cd3f-4a44-9895-3b944c654ac0
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Content Type'
+		dataType: string
+		lineageTag: fe001b49-53c3-4da4-8a1a-2022cf18ec72
+		summarizeBy: none
+		sourceColumn: Content Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Version
+		dataType: string
+		lineageTag: d22b999a-eb0a-4595-a31d-9bdd179b64c2
+		summarizeBy: none
+		sourceColumn: Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attachments
+		dataType: string
+		lineageTag: 72bb3cb2-46af-4d0d-8054-d6c6dd7d95bd
+		summarizeBy: none
+		sourceColumn: Attachments
+
+		annotation SummarizationSetBy = Automatic
+
+	column Edit
+		dataType: string
+		lineageTag: fec1331d-7244-4f2d-b503-c1f3efad3008
+		summarizeBy: none
+		sourceColumn: Edit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: a60031f6-a100-4eed-8f2b-e1bd721764b0
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Item Child Count'
+		dataType: string
+		lineageTag: 289dfc9c-72bb-41ba-93bd-f06c2724ab86
+		summarizeBy: none
+		sourceColumn: Item Child Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder Child Count'
+		dataType: string
+		lineageTag: 365d50de-7dc8-4fe3-8b59-8273963c1848
+		summarizeBy: none
+		sourceColumn: Folder Child Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Label setting'
+		dataType: string
+		lineageTag: 62b25271-8119-4a5b-a072-dffa15394d2c
+		summarizeBy: none
+		sourceColumn: Label setting
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Retention label'
+		dataType: string
+		lineageTag: f4a074b8-4d2a-495f-ae1e-d982d8fe0e41
+		summarizeBy: none
+		sourceColumn: Retention label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Retention label Applied'
+		dataType: string
+		lineageTag: 36eb80ec-25bc-46ba-97c3-72d68efb8b2b
+		summarizeBy: none
+		sourceColumn: Retention label Applied
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Label applied by'
+		dataType: string
+		lineageTag: 6651c33f-b89b-4d52-88b4-0dce40011eae
+		summarizeBy: none
+		sourceColumn: Label applied by
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Item is a Record'
+		dataType: string
+		lineageTag: bc0ccdb1-742c-4fb3-ad4a-7f81d0cb3422
+		summarizeBy: none
+		sourceColumn: Item is a Record
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'App Created By'
+		dataType: string
+		lineageTag: cd592307-06be-4194-af82-39e2c89122d3
+		summarizeBy: none
+		sourceColumn: App Created By
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'App Modified By'
+		dataType: string
+		lineageTag: 60ba7374-24de-4fad-a972-03099184d990
+		summarizeBy: none
+		sourceColumn: App Modified By
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstNameStartDateConcat
+		dataType: string
+		lineageTag: d2f3954d-50c8-492b-91cb-9a3bcd74133e
+		summarizeBy: none
+		sourceColumn: FirstNameStartDateConcat
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'New Hire Tracking' = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Tables("https://intellatriage.sharepoint.com/sites/PeoplePrograms", [Implementation="2.0", ViewMode="All"]),
+				    #"5c1d2338-24d8-4e2d-a101-2d2770aafdde" = Source{[Id="5c1d2338-24d8-4e2d-a101-2d2770aafdde"]}[Items],
+				    #"Added Custom" = Table.AddColumn(#"5c1d2338-24d8-4e2d-a101-2d2770aafdde", "FirstNameStartDateConcat", each [first name] & DateTime.ToText([Start Date],"MM/dd/yyyy")),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom",{{"FirstNameStartDateConcat", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

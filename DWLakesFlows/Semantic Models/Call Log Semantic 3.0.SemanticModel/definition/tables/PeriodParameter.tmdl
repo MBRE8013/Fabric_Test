@@ -1,0 +1,45 @@
+table PeriodParameter
+	lineageTag: 28d08f0d-66bc-46ae-8d20-87d02bcc97a1
+
+	column Period
+		lineageTag: e0ab9422-dd56-4720-a844-2933898b1e0a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Period]
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortOrder
+		formatString: 0
+		lineageTag: ef6f0a2d-b991-4fd5-8ccd-d8812fde6415
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [SortOrder]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PeriodParameter = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Period", STRING,
+				    "SortOrder", INTEGER,
+				    {
+				        {"Today", 1},
+				        {"Yesterday", 2},
+				        {"This Week", 3},
+				        {"Last Fri-Sun", 4},
+				        {"Last Week", 5},
+				        {"Last 30 Days", 6},
+				        {"This Month", 7},
+				        {"Last Month", 8},
+				        {"This Quarter", 9},
+				        {"Last Quarter", 10},
+				        {"This Year", 11},
+				        {"Last Year", 12}
+				    }
+				)
+
+	annotation PBI_Id = 6b93ce28eb454d88be92fd7970ec8db8
+

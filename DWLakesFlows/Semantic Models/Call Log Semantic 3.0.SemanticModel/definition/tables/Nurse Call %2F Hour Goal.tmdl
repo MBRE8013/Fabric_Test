@@ -1,0 +1,24 @@
+table 'Nurse Call / Hour Goal'
+	lineageTag: 84f4e5d3-3da9-42e5-8709-7d0cbcc7f60d
+
+	column 'Nurse Call / Hour Goal'
+		lineageTag: e0cad37d-2373-4a0f-9daf-d6795f9bd2b8
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Nurse Call / Hour Goal]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Nurse Call / Hour Goal' = calculated
+		mode: import
+		source =
+				
+				SELECTCOLUMNS(
+				    GENERATESERIES(1, 20, 0.5),
+				    "Nurse Call / Hour Goal", [Value]
+				)
+
+	annotation PBI_Id = e556b76c34c4405dbc7657b928bfcc9f
+

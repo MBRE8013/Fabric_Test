@@ -1,0 +1,103 @@
+table Nature
+	lineageTag: 96b3c6c2-d64a-43dc-a853-98eb98d964ed
+
+	column Nature
+		dataType: string
+		lineageTag: c9f2fd8e-f489-4a0a-be7b-d2a3946a71da
+		summarizeBy: none
+		sourceColumn: Nature
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DAR Category'
+		dataType: string
+		lineageTag: 0b1eb19a-faff-4298-85d5-f7f439819862
+		summarizeBy: none
+		sourceColumn: DAR Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: ed90858b-61e0-4f20-8eb2-89b558497e4c
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Protocol Notification'
+		dataType: string
+		lineageTag: 901ef75b-cb66-4571-8c99-be9d9572d951
+		summarizeBy: none
+		sourceColumn: Protocol Notification
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nature Sort Order' =
+			
+			SWITCH(
+			    'Nature'[Nature],
+			    "Clinical - Actively Dying", 1,
+			    "Clinical - Anxiety/Agitation", 2,
+			    "Clinical - Bowel/Bladder/GI", 3,
+			    "Clinical - Cardiac", 4,
+			    "Clinical - Change in Condition", 5,
+			    "Clinical - Decreased appetite/swallowing/Oral issues", 6,
+			    "Clinical - Dental", 7,
+			    "Clinical - Fall", 8,
+			    "Clinical - Fever", 9,
+			    "Clinical - IV", 10,
+			    "Clinical - Nausea/Vomiting", 11,
+			    "Clinical - Neurological", 12,
+			    "Clinical - Pain", 13,
+			    "Clinical - Respiratory", 14,
+			    "Clinical - Skin/Wound", 15,
+			    "Client Complaint", 16,
+			    "Death", 17,
+			    "Death Follow-Up", 18,
+			    "DME", 19,
+			    "Lab Results", 20,
+			    "Medication - Information", 21,
+			    "Medication - Refill", 22,
+			    "Notification of Hospitalization", 23,
+			    "Physician", 24,
+			    "Referral", 25,
+			    "Returning Call - Patient", 26,
+			    "Administrative Calls", 27,
+			    "Client Staff Call", 28,
+			    "Supplies", 29,
+			    "Support Services", 30,
+			    "Tuck-In Call", 31,
+			    "Visit Change/Inquiry", 32,
+			    "Visit Request", 33,
+			    9999
+			)
+		formatString: 0
+		lineageTag: 74bc56a3-0296-42cc-8ca1-a71fad3248d2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nature Copy' = 'Nature'[Nature]
+		lineageTag: 551caf80-4f1d-47fd-9d1a-a221798ddddb
+		summarizeBy: none
+		sortByColumn: 'Nature Sort Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Nature = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+				    #"IntellaTriage DW" = Source{[Name="IntellaTriage DW"]}[Data],
+				    dbo_Nature = #"IntellaTriage DW"{[Schema="dbo",Item="Nature"]}[Data]
+				in
+				    dbo_Nature
+
+	annotation PBI_ResultType = Table
+

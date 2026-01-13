@@ -1,0 +1,53 @@
+table Team
+	lineageTag: b92f3e35-6ece-4315-8ae3-2bbb3b6262f2
+
+	column 'Reporting Day of Week'
+		dataType: double
+		lineageTag: 3eda6a10-150d-4dbd-908a-7a7e9da1901c
+		summarizeBy: sum
+		sourceColumn: Reporting Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Hour
+		dataType: double
+		lineageTag: 22451ebb-2326-40c5-8634-7a140c129401
+		summarizeBy: sum
+		sourceColumn: Hour
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Organization
+		dataType: string
+		lineageTag: 34f615ba-601a-42fc-a8dd-f80c5d9e50dd
+		summarizeBy: none
+		sourceColumn: Organization
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team Code'
+		dataType: string
+		lineageTag: af3327ed-e354-4a40-b6cd-1d00ae084830
+		summarizeBy: none
+		sourceColumn: Team Code
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Team = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+				    #"IntellaTriage DW" = Source{[Name="IntellaTriage DW"]}[Data],
+				    dbo_Team = #"IntellaTriage DW"{[Schema="dbo",Item="Team"]}[Data]
+				in
+				    dbo_Team
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

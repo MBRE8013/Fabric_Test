@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "connecteam tests"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "fcd84441-8cf5-96d4-4456-b60d26741c37"
+  }
+}

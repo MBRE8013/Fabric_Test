@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "68bca544b51cbb092570",
+  "position": {
+    "x": 10,
+    "y": 0,
+    "z": 0,
+    "height": 280,
+    "width": 280,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Data"
+                        }
+                      },
+                      "Hierarchy": "Hour Hierarchy"
+                    }
+                  },
+                  "Level": "Hour"
+                }
+              },
+              "queryRef": "Data.Hour Hierarchy.Hour",
+              "nativeQueryRef": "Hour Hierarchy Hour"
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Data"
+                        }
+                      },
+                      "Hierarchy": "Hour Hierarchy"
+                    }
+                  },
+                  "Level": "Time of Day"
+                }
+              },
+              "queryRef": "Data.Hour Hierarchy.Time of Day",
+              "nativeQueryRef": "Hour Hierarchy Time of Day"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

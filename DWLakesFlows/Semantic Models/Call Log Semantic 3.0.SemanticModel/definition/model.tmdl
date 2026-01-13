@@ -1,0 +1,41 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["fact_nicecxone_completed_contacts","dim_Team","dim_Customer","DateDim","RangeStart","RangeEnd"]
+
+ref table fact_nicecxone_completed_contacts
+ref table DateTableTemplate_fffa493e-15b2-47ee-83c2-429ea8e3f0ee
+ref table LocalDateTable_7923faaf-6815-4b50-a1a6-7fbef21d3088
+ref table LocalDateTable_7c65e09c-ac53-4f68-b196-4d5555c03078
+ref table LocalDateTable_06419d6d-bcdf-44b3-bf3b-046b59587438
+ref table LocalDateTable_7e12b328-ee4e-4c63-b7df-e38d70a420a2
+ref table LocalDateTable_f76fbb4d-b111-4627-92d3-301e2d5fc4ad
+ref table LocalDateTable_f4f0db14-8e5d-46e7-a708-956d937f8a02
+ref table LocalDateTable_8b94a288-1c73-41df-a812-0cf025c8fd4a
+ref table LocalDateTable_2338578a-f87f-454d-ab02-e0e8399d051e
+ref table LocalDateTable_5f892722-1a08-4857-8c65-4aff18873e72
+ref table LocalDateTable_2b4f1fa7-9b17-4404-a18f-29fb02066312
+ref table LocalDateTable_9b2a59db-8ee5-4468-a299-973a72d1c103
+ref table dim_Team
+ref table LocalDateTable_933904a5-641c-4221-859b-61b414b1cb15
+ref table dim_Customer
+ref table LocalDateTable_805fbb65-c8b7-4025-80b4-2746212ecf09
+ref table LocalDateTable_dade5759-66d6-41f2-aec9-8f7ff7bc3d99
+ref table LocalDateTable_ff9fe155-3a61-418c-8298-acbcc7221a01
+ref table DateDim
+ref table LocalDateTable_dc456b5c-f772-4c35-99e9-bf2b6e7158a0
+ref table 'Nurse Call / Hour Goal'
+ref table PeriodDateBridge
+ref table PeriodParameter
+ref table 'Rounding Threshold'
+ref table Slices
+
+ref cultureInfo en-US
+

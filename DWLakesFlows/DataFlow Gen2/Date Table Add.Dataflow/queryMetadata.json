@@ -1,0 +1,32 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {},
+  "name": "Date Table Add",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "Query": {
+      "queryId": "4d91d545-67de-4f5e-8e2a-5b6c936f6178",
+      "queryName": "Query",
+      "loadEnabled": false
+    },
+    "Query_DataDestination": {
+      "queryId": "b5993e8e-393d-44c0-a98b-a3d36af10d33",
+      "queryName": "Query_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"84598d40-9643-4d48-a4d4-ca525ede8f20\",\"DatasourceId\":\"d9e03e41-1714-4226-8bec-f53d17715408\"}"
+    },
+    {
+      "path": "Warehouse",
+      "kind": "Warehouse",
+      "connectionId": "{\"ClusterId\":\"84598d40-9643-4d48-a4d4-ca525ede8f20\",\"DatasourceId\":\"87610e3b-cc37-474d-9c21-11172b07ddf5\"}"
+    }
+  ]
+}

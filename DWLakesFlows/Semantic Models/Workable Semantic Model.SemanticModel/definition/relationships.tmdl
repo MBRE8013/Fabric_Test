@@ -1,0 +1,72 @@
+relationship 2f2035ee-2747-4476-8967-001bb50db4c9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_workable_jobs.job_created_at
+	toColumn: LocalDateTable_5f23ac51-dd19-4b56-875c-226c9a4f82fb.Date
+
+relationship 1d5b469e-1304-4ef0-8126-fbb6069743ca
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_workable_jobs.etl_loaded_at
+	toColumn: LocalDateTable_d7a81e20-bbf4-422f-b7ee-9502022e34b5.Date
+
+relationship AutoDetected_6c3f850c-7ef6-4d0b-bfc6-e592a3016f3a
+	fromColumn: workable_candidates.job_shortcode
+	toColumn: dim_workable_jobs.job_shortcode
+
+relationship 03071fa6-8d4a-4ae8-acf8-27bfa652f2c0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DateDim.Date
+	toColumn: LocalDateTable_8cafb3a4-37a3-40e5-af52-32ba87af34d6.Date
+
+relationship 4c898c6d-eb4a-db8d-cfb1-b294633e8173
+	crossFilteringBehavior: bothDirections
+	fromColumn: PeriodDateBridge.Date
+	toColumn: DateDim.Date
+
+relationship 9111afde-398e-4fb3-57e7-b1d5780e3cc7
+	fromColumn: PeriodDateBridge.Period
+	toColumn: PeriodParameter.Period
+
+relationship 28c9a75e-6dd1-4ad6-9b8f-1bdea2e2a7be
+	joinOnDateBehavior: datePartOnly
+	fromColumn: workable_candidates.created_at_date
+	toColumn: LocalDateTable_637072a7-0031-4b63-8a29-523d0d0d91fb.Date
+
+relationship fa864e9d-c803-430c-b6f2-27e14dcf33ed
+	joinOnDateBehavior: datePartOnly
+	fromColumn: workable_candidates.created_at_datetime
+	toColumn: LocalDateTable_964ecc38-f14b-4505-a9ec-481e97d94b7c.Date
+
+relationship d6435fa3-03ea-401a-9af0-89efeb17510a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: workable_candidates.'Created Date'
+	toColumn: LocalDateTable_91351c13-ba84-410e-b266-aed0d7d05cfa.Date
+
+relationship e12e2053-6f6b-fc0b-cadd-4bf35d732781
+	fromColumn: workable_candidates.created_at
+	toColumn: DateDim.Date
+
+relationship 2b05a1a7-40ec-4edb-a002-9dfae79d1ec6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Phone Screen Rubric'.'Interview Date'
+	toColumn: LocalDateTable_440db51e-4a4d-4562-80dd-b6d187e07915.Date
+
+relationship 9bbef24e-abe0-4dd4-9052-240875685ddc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: '2nd Interview Rubric'.'Interview Date'
+	toColumn: LocalDateTable_4eb6c88c-681b-451e-bf80-1a154f07bd67.Date
+
+relationship 67e48a37-6abb-4098-aeb9-a84cc28ef4dc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: workable_candidates.Week
+	toColumn: LocalDateTable_e3998d9d-d0d2-4e8f-a3d7-6a1228bcff02.Date
+
+relationship 22ac1c50-5780-4926-9b36-31cc62dac54e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: '2nd Interview Rubric'.Week
+	toColumn: LocalDateTable_768efade-9d25-4d62-ba46-3857fb7e8f9b.Date
+
+relationship 88d18272-fb6b-4034-837c-fe31160686be
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Phone Screen Rubric'.Week
+	toColumn: LocalDateTable_b6cbd579-44a3-4942-ae90-14929e258d4c.Date
+

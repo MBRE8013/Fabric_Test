@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "NiceInContact_Completed_Contacts Loader"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a2f69469-7ce2-a245-40bb-cad366fee9ed"
+  }
+}

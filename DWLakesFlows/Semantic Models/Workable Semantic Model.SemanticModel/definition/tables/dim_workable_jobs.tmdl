@@ -1,0 +1,313 @@
+table dim_workable_jobs
+	lineageTag: a2858a6d-ddb5-46e5-bea9-85d381892efd
+
+	column job_id
+		dataType: string
+		lineageTag: fa5d42d2-349c-452f-ae4c-7c49422ee7ff
+		summarizeBy: none
+		sourceColumn: job_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_shortcode
+		dataType: string
+		lineageTag: acc8d61e-7295-40dc-9acc-205ee119c9c2
+		summarizeBy: none
+		sourceColumn: job_shortcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_title
+		dataType: string
+		lineageTag: a70f5509-fc2c-41f9-973d-5faee1d5de9c
+		summarizeBy: none
+		sourceColumn: job_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_title
+		dataType: string
+		lineageTag: 40e20945-d5fc-40b1-af33-7b48a86a199b
+		summarizeBy: none
+		sourceColumn: full_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_code
+		dataType: string
+		lineageTag: 01effbf5-b324-43d9-8aa3-9b533ae60b3e
+		summarizeBy: none
+		sourceColumn: job_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_state
+		dataType: string
+		lineageTag: de80d06a-4774-4744-99ff-db93eb3df464
+		summarizeBy: none
+		sourceColumn: job_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_sample
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d6b7fe5c-acf6-4e90-9b8a-684387ad0838
+		summarizeBy: none
+		sourceColumn: is_sample
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_confidential
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: cbf364fa-b6cb-4b32-b70d-acb9a7fcd188
+		summarizeBy: none
+		sourceColumn: is_confidential
+
+		annotation SummarizationSetBy = Automatic
+
+	column department_name
+		dataType: string
+		lineageTag: 3baca5b9-72c8-4fae-8195-19519d34a956
+		summarizeBy: none
+		sourceColumn: department_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column location_string
+		dataType: string
+		lineageTag: 35a5de6c-02fd-4b54-99d3-b0a8531663bf
+		summarizeBy: none
+		sourceColumn: location_string
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: 1e8fab9f-fddb-4b26-bc37-cada3883ee47
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_code
+		dataType: string
+		lineageTag: 5716387e-5db9-447d-9710-fda35ac7a270
+		summarizeBy: none
+		sourceColumn: country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 97385790-6a9f-42bf-bb4f-71a169a9c3f1
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_code
+		dataType: string
+		lineageTag: da11e995-fd47-40e3-a41e-955c7362928d
+		summarizeBy: none
+		sourceColumn: region_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 53d865e5-61e2-4c86-93b3-c2a905fd9c4d
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column zip_code
+		dataType: string
+		lineageTag: a19ee66f-cd08-4503-aff4-fe11fac61470
+		summarizeBy: none
+		sourceColumn: zip_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_telecommuting
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ded7e96e-d256-4d3a-9637-deb05d129279
+		summarizeBy: none
+		sourceColumn: is_telecommuting
+
+		annotation SummarizationSetBy = Automatic
+
+	column workplace_type
+		dataType: string
+		lineageTag: e2e82af0-283a-43f7-8495-84725361e3e9
+		summarizeBy: none
+		sourceColumn: workplace_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column salary_from
+		dataType: double
+		lineageTag: 12242e76-1ffa-4afb-adf4-6dede34a14c9
+		summarizeBy: sum
+		sourceColumn: salary_from
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column salary_to
+		dataType: double
+		lineageTag: e3cbfd72-f54d-4855-9167-5858cef06c2c
+		summarizeBy: sum
+		sourceColumn: salary_to
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column salary_currency
+		dataType: string
+		lineageTag: 2e29727b-902c-40f8-9e3b-afe85d87b513
+		summarizeBy: none
+		sourceColumn: salary_currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_url
+		dataType: string
+		lineageTag: d1819bcf-7eec-450e-9eb7-6f8a9bcb5991
+		summarizeBy: none
+		sourceColumn: job_url
+
+		annotation SummarizationSetBy = Automatic
+
+	column application_url
+		dataType: string
+		lineageTag: af6be909-06c8-4063-b7a6-16c6b0eed290
+		summarizeBy: none
+		sourceColumn: application_url
+
+		annotation SummarizationSetBy = Automatic
+
+	column shortlink
+		dataType: string
+		lineageTag: 747cf855-fc20-4f01-8da9-31af5956cc5d
+		summarizeBy: none
+		sourceColumn: shortlink
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_created_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 001d00b3-e1c3-484b-a5f0-5568d6f6ac28
+		summarizeBy: none
+		sourceColumn: job_created_at
+
+		variation Variation
+			isDefault
+			relationship: 2f2035ee-2747-4476-8967-001bb50db4c9
+			defaultHierarchy: LocalDateTable_5f23ac51-dd19-4b56-875c-226c9a4f82fb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column etl_loaded_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 53f63da0-4b61-4b25-b0f4-859c2197f522
+		summarizeBy: none
+		sourceColumn: etl_loaded_at
+
+		variation Variation
+			isDefault
+			relationship: 1d5b469e-1304-4ef0-8126-fbb6069743ca
+			defaultHierarchy: LocalDateTable_d7a81e20-bbf4-422f-b7ee-9502022e34b5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column etl_source
+		dataType: string
+		lineageTag: 8cab1518-a667-457f-a5fe-5762aee51973
+		summarizeBy: none
+		sourceColumn: etl_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_active
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e676c812-2fe5-4fca-b5dc-a41f8b293cf5
+		summarizeBy: none
+		sourceColumn: is_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_archived
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 99921bb0-c49a-45a2-824a-0d7d04113bb2
+		summarizeBy: none
+		sourceColumn: is_archived
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_salary_range
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3675e15d-a9ba-42ad-9605-00da3f05ecef
+		summarizeBy: none
+		sourceColumn: has_salary_range
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_since_created
+		dataType: int64
+		formatString: 0
+		lineageTag: 89e29430-7a50-4c52-8cd2-eae6d9e58b5a
+		summarizeBy: sum
+		sourceColumn: days_since_created
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'License Type'
+		dataType: string
+		lineageTag: 87aa76e4-9aeb-4939-a670-bb72e72700cd
+		summarizeBy: none
+		sourceColumn: License Type
+		sortByColumn: 'License Type Sort Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'License Type Sort Order'
+		dataType: int64
+		formatString: 0
+		lineageTag: 85b7053d-c0b9-44bf-9fd5-5f7e1eb695da
+		summarizeBy: sum
+		sourceColumn: License Type Sort Order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_workable_jobs = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com", "IntellaTriageLakehouse"),
+				    dbo_dim_workable_jobs = Source{[Schema="dbo",Item="dim_workable_jobs"]}[Data],
+				    #"Added Custom" = Table.AddColumn(dbo_dim_workable_jobs, "License Type", each if [department_name] = "RN Nurse Triage" then "RN"
+				else if [department_name] = "LPN Nurse Triage" then "LPN"
+				else if [department_name] = "Nurse Advice Line" and Text.Contains([full_title], "LPN") then "LPN"
+				else "RN"),
+				    #"Added Custom1" = Table.AddColumn(#"Added Custom", "License Type Sort Order", each if [License Type] = "RN" then 1 else 2),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom1",{{"License Type Sort Order", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

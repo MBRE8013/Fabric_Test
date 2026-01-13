@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "Date Table Add"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5eddd703-f1f3-ad2f-4254-17e07794d130"
+  }
+}

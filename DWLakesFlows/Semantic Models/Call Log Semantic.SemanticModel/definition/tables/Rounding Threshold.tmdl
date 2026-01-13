@@ -1,0 +1,40 @@
+table 'Rounding Threshold'
+	lineageTag: b3a17e4b-fddf-4ea8-bb6b-f16bc7d4ae00
+
+	column 'Threshold Label'
+		lineageTag: 32561e8f-00b5-4686-84b1-a419d9fb210e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Threshold Label]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Threshold Value'
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: b6b8b8f3-2726-44cc-94d9-8835cfdd79ed
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Threshold Value]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition 'Rounding Threshold' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Threshold Label", STRING,
+				    "Threshold Value", DECIMAL,
+				    {
+				        {"Normal Rounding (0.5)", 0.5},
+				        {"Round up at 0.4", 0.4},
+				        {"Round up at 0.3", 0.3},
+				        {"Round up at 0.2", 0.2},
+				        {"Round up at 0.1", 0.1}
+				    }
+				)
+
+	annotation PBI_Id = aa25d062a2e24b0295a29db05157aacc
+

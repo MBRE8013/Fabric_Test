@@ -1,0 +1,25 @@
+CREATE TABLE [stg].[connecteam_shifts_raw] (
+
+	[requestId] varchar(8000) NULL, 
+	[data.shifts.id] varchar(8000) NULL, 
+	[data.shifts.color] varchar(8000) NULL, 
+	[data.shifts.assignedUserIds] bigint NULL, 
+	[data.shifts.startTime] bigint NULL, 
+	[data.shifts.endTime] bigint NULL, 
+	[data.shifts.timezone] varchar(8000) NULL, 
+	[data.shifts.isOpenShift] bit NULL, 
+	[data.shifts.title] varchar(8000) NULL, 
+	[data.shifts.jobId] varchar(8000) NULL, 
+	[data.shifts.locationData.isReferencedToJob] bit NULL, 
+	[data.shifts.locationData.gps.address] varchar(8000) NULL, 
+	[data.shifts.isPublished] bit NULL, 
+	[data.shifts.isRequireAdminApproval] bit NULL, 
+	[data.shifts.updateTime] bigint NULL, 
+	[data.shifts.creationTime] bigint NULL, 
+	[data.shifts.openSpots] bigint NULL, 
+	[data.shifts.notes] varchar(8000) NULL, 
+	[data.shifts.statuses] varchar(8000) NULL, 
+	[data.shifts.breaks] varchar(8000) NULL, 
+	[data.shifts.shiftDetails.shiftLayers] varchar(8000) NULL, 
+	[paging.offset] bigint NULL
+);

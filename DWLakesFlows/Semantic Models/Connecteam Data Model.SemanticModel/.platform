@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Connecteam Data Model"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "71edc3d2-20e1-94f6-411b-e80b87415eba"
+  }
+}

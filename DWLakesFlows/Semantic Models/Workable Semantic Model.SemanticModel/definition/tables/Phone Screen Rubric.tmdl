@@ -1,0 +1,430 @@
+table 'Phone Screen Rubric'
+	lineageTag: 7e34ba04-69a2-4ff7-bd9a-18338861c8d5
+
+	column 'Interview Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6707f1c8-38bd-4e5c-810a-ede86aa763e6
+		summarizeBy: none
+		sourceColumn: Interview Date
+
+		variation Variation
+			isDefault
+			relationship: 2b05a1a7-40ec-4edb-a002-9dfae79d1ec6
+			defaultHierarchy: LocalDateTable_440db51e-4a4d-4562-80dd-b6d187e07915.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Recruiter
+		dataType: string
+		lineageTag: 682d55ae-8d37-4a97-9828-786f406948a8
+		summarizeBy: none
+		sourceColumn: Recruiter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Candidate Name'
+		dataType: string
+		lineageTag: 8db0a98a-7b5b-4c28-a0b5-9ca9085d9a29
+		summarizeBy: none
+		sourceColumn: Candidate Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Candidate an RN or LPN'
+		dataType: string
+		lineageTag: 18c446fe-2b7a-4d1a-ad1c-c3ff66a34ef8
+		summarizeBy: none
+		sourceColumn: Is Candidate an RN or LPN
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Position applied for'
+		dataType: string
+		lineageTag: 8dc4bd4c-e83c-4188-8a3d-3161edc61212
+		summarizeBy: none
+		sourceColumn: Position applied for
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Interview Completed'
+		dataType: string
+		lineageTag: ac2b6119-0d0c-4be8-8b2b-dc5a4ca9cbf2
+		summarizeBy: none
+		sourceColumn: Interview Completed
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		lineageTag: 0eb67d78-b549-4b4a-9130-93269b2b6990
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'License #'
+		dataType: string
+		lineageTag: 517fc0e3-a5be-4f37-a00e-a762aa2df33e
+		summarizeBy: none
+		sourceColumn: License #
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Compact License'
+		dataType: string
+		lineageTag: eecadac5-600c-44a4-9be7-8731af41032c
+		summarizeBy: none
+		sourceColumn: Compact License
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Completed Speed & Ping'
+		dataType: string
+		lineageTag: 77e547ae-7f8e-4234-833d-4b15a1337f43
+		summarizeBy: none
+		sourceColumn: Completed Speed & Ping
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Currently Employed'
+		dataType: string
+		lineageTag: d347cbc9-f12c-49d8-99ad-50815a91193e
+		summarizeBy: none
+		sourceColumn: Currently Employed
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Position'
+		dataType: string
+		lineageTag: c8492c08-703d-425c-b29d-5a2828c53be9
+		summarizeBy: none
+		sourceColumn: Current Position
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Schedule'
+		dataType: string
+		lineageTag: 7f0b1495-3b90-46c7-9ff6-e5179af715a3
+		summarizeBy: none
+		sourceColumn: Current Schedule
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Years of Nursing Experience'
+		dataType: string
+		lineageTag: 8382f45d-98a8-47db-ae60-be0c257c6e3f
+		summarizeBy: none
+		sourceColumn: Years of Nursing Experience
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Type of Nursing Experience'
+		dataType: string
+		lineageTag: f3f0fb6f-4a5e-493e-8b63-7a154083ab6e
+		summarizeBy: none
+		sourceColumn: Type of Nursing Experience
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Confirm Microbiology Class'
+		dataType: string
+		lineageTag: acad71a7-5cbf-4264-aa14-9bbbb2d668de
+		summarizeBy: none
+		sourceColumn: Confirm Microbiology Class
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Why are you interested in working at IntellaTriage?'
+		dataType: string
+		lineageTag: 2218fdab-338d-44bc-b945-299ba4d7d711
+		summarizeBy: none
+		sourceColumn: Why are you interested in working at IntellaTriage?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tell me about your hospice experience'
+		dataType: string
+		lineageTag: db850ed9-53a8-420f-89d1-58c98b43df89
+		summarizeBy: none
+		sourceColumn: Tell me about your hospice experience
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'What type of hospice patients did you take care of'
+		dataType: string
+		lineageTag: 105158bd-02e7-4a41-8058-a7d8b303555f
+		summarizeBy: none
+		sourceColumn: What type of hospice patients did you take care of
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Was it in their personal home or somewhere different'
+		dataType: string
+		lineageTag: 2e30a452-0391-44cd-85be-3ea68569a415
+		summarizeBy: none
+		sourceColumn: Was it in their personal home or somewhere different
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Can you tell me about a time there was a conflict during a routine visit or when family gave'
+		dataType: string
+		lineageTag: 1fa7c826-92f1-4239-bee7-0d31fcd91857
+		summarizeBy: none
+		sourceColumn: Can you tell me about a time there was a conflict during a routine visit or when family gave
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'If you received a call and your patient had a significant change in condition, walk me through your steps'
+		dataType: string
+		lineageTag: aae692a1-4839-4c7e-b330-5dd5bf97ed1d
+		summarizeBy: none
+		sourceColumn: If you received a call and your patient had a significant change in condition, walk me through your steps
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'What EMR''s have you used?'
+		dataType: string
+		lineageTag: f1aa29e2-d8d1-4455-a9b8-95998ca25658
+		summarizeBy: none
+		sourceColumn: What EMR's have you used?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Do you have a home computer and If so, what do you use it for'
+		dataType: string
+		lineageTag: 4f9d5dc7-fbc4-4643-978c-df24b16d58d6
+		summarizeBy: none
+		sourceColumn: Do you have a home computer and If so, what do you use it for
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Can you accommodate the 3 week training schedule?'
+		dataType: string
+		lineageTag: ef0d7d6c-0c20-4e4a-b795-e5dc7e7f53cd
+		summarizeBy: none
+		sourceColumn: Can you accommodate the 3 week training schedule?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'If selected when would you be able to start?'
+		dataType: string
+		lineageTag: 9a1a64b6-6511-41c1-8398-5a3b9f644bdb
+		summarizeBy: none
+		sourceColumn: If selected when would you be able to start?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Any time off needed in the first 90 days of employment?'
+		dataType: string
+		lineageTag: f11f7d56-4d0b-4856-bfcf-26a3667c950e
+		summarizeBy: none
+		sourceColumn: Any time off needed in the first 90 days of employment?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 1'
+		dataType: string
+		lineageTag: 92bbd373-7263-43ae-999d-285097b0f2b8
+		summarizeBy: none
+		sourceColumn: Future 1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 2'
+		dataType: string
+		lineageTag: d20c7f08-c167-4cef-af0f-ba36e36342c6
+		summarizeBy: none
+		sourceColumn: Future 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 3'
+		dataType: string
+		lineageTag: bf3f7567-1787-460c-aa3c-7aa5be6ccbf2
+		summarizeBy: none
+		sourceColumn: Future 3
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 4'
+		dataType: string
+		lineageTag: be6bebc4-dae0-4c6e-b20b-caeb87507131
+		summarizeBy: none
+		sourceColumn: Future 4
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 5'
+		dataType: string
+		lineageTag: 1dc643e7-543b-4e4d-8da7-56d732fc0f13
+		summarizeBy: none
+		sourceColumn: Future 5
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 6'
+		dataType: string
+		lineageTag: a5174fa8-62ad-4efc-b626-19c4d8a8a040
+		summarizeBy: none
+		sourceColumn: Future 6
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 7'
+		dataType: string
+		lineageTag: 2e3a9a97-1d29-4f34-a9c7-48b7b1ef4255
+		summarizeBy: none
+		sourceColumn: Future 7
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 8'
+		dataType: string
+		lineageTag: f4fb68de-9b8f-4ed8-915e-4bfc4baf234a
+		summarizeBy: none
+		sourceColumn: Future 8
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 9'
+		dataType: string
+		lineageTag: 0d2cdc2f-7e88-49b6-b34c-a7e2e96d2ebe
+		summarizeBy: none
+		sourceColumn: Future 9
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 10'
+		dataType: string
+		lineageTag: 4be10b02-be1d-4a9f-818c-723b516290e1
+		summarizeBy: none
+		sourceColumn: Future 10
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 11'
+		dataType: string
+		lineageTag: fa9fd8ef-cfec-4be6-b644-fcf9f2116eb8
+		summarizeBy: none
+		sourceColumn: Future 11
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 12'
+		dataType: string
+		lineageTag: 97ee16e0-ae5a-46b9-ab70-d879243077ca
+		summarizeBy: none
+		sourceColumn: Future 12
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 13'
+		dataType: string
+		lineageTag: af925df0-3a10-4e74-b133-afe46b59e255
+		summarizeBy: none
+		sourceColumn: Future 13
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Future 14'
+		dataType: string
+		lineageTag: 53c3c852-c533-4213-bbc9-677e1b7d0b63
+		summarizeBy: none
+		sourceColumn: Future 14
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Additional comments or concerns'
+		dataType: string
+		lineageTag: 38452d70-6a84-4fd5-8135-488096d51b15
+		summarizeBy: none
+		sourceColumn: Additional comments or concerns
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recommended for hire Y/N'
+		dataType: string
+		lineageTag: 38f01bf8-9b79-4fdf-8ad9-68beea67ba39
+		summarizeBy: none
+		sourceColumn: Recommended for hire Y/N
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'If Failed, please give reason why'
+		dataType: string
+		lineageTag: 869f93f8-a525-47a8-a90d-29ef1a2c77c4
+		summarizeBy: none
+		sourceColumn: If Failed, please give reason why
+
+		annotation SummarizationSetBy = Automatic
+
+	column '2nd interview scheduled Y/N'
+		dataType: string
+		lineageTag: 65208017-54a9-4a84-8ee0-36dd80485979
+		summarizeBy: none
+		sourceColumn: 2nd interview scheduled Y/N
+
+		annotation SummarizationSetBy = Automatic
+
+	column '2nd Interview Date'
+		dataType: string
+		lineageTag: 1fa6533d-3e60-43e3-adba-8a1ded582d94
+		summarizeBy: none
+		sourceColumn: 2nd Interview Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column47
+		dataType: string
+		lineageTag: 0cd9a0db-a514-40ad-b118-5c98702ca590
+		summarizeBy: none
+		sourceColumn: Column47
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column48
+		dataType: string
+		lineageTag: 277b5b4d-bb1d-43a9-8a3d-a01d45ae6fdb
+		summarizeBy: none
+		sourceColumn: Column48
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week =
+			
+			VAR d = 'Phone Screen Rubric'[Interview Date]
+			RETURN
+			    d - WEEKDAY(d, 2) + 1
+		formatString: General Date
+		lineageTag: f8450a91-d8bf-4428-a58b-9a66e434b6ab
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 88d18272-fb6b-4034-837c-fe31160686be
+			defaultHierarchy: LocalDateTable_b6cbd579-44a3-4942-ae90-14929e258d4c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Phone Screen Rubric' = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://intellatriage.sharepoint.com/sites/HiringandRecruiting", [ApiVersion = 15]),
+				    #"Phone Screen Rubric xlsx_https://intellatriage sharepoint com/sites/HiringandRecruiting/Shared Documents/General/" = Source{[Name="Phone Screen Rubric.xlsx",#"Folder Path"="https://intellatriage.sharepoint.com/sites/HiringandRecruiting/Shared Documents/General/"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"Phone Screen Rubric xlsx_https://intellatriage sharepoint com/sites/HiringandRecruiting/Shared Documents/General/"),
+				    #"Phone Screen Rubric_Sheet" = #"Imported Excel Workbook"{[Item="Phone Screen Rubric",Kind="Sheet"]}[Data],
+				    #"Removed Top Rows" = Table.Skip(#"Phone Screen Rubric_Sheet",2),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Top Rows", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Interview Date", type date}, {"Recruiter", type text}, {"Candidate Name", type text}, {"Is Candidate an RN or LPN", type text}, {"Position applied for", type text}, {"Interview Completed", type text}, {"Notes", type any}, {"License #", type any}, {"Compact License", type text}, {"Completed Speed & Ping", type text}, {"Currently Employed", type text}, {"Current Position", type text}, {"Current Schedule", type text}, {"Years of Nursing Experience", type text}, {"Type of Nursing Experience", type text}, {"Confirm Microbiology Class", type text}, {"Why are you interested in working at IntellaTriage?", type text}, {"Tell me about your hospice experience", type text}, {"What type of hospice patients did you take care of", type text}, {"Was it in their personal home or somewhere different", type text}, {"Can you tell me about a time there was a conflict during a routine visit or when family gave", type text}, {"If you received a call and your patient had a significant change in condition, walk me through your steps", type text}, {"What EMR's have you used?", type text}, {"Do you have a home computer and If so, what do you use it for", type text}, {"Can you accommodate the 3 week training schedule?", type text}, {"If selected when would you be able to start?", type any}, {"Any time off needed in the first 90 days of employment?", type any}, {"Future 1", type text}, {"Future 2", type text}, {"Future 3", type text}, {"Future 4", type text}, {"Future 5", type text}, {"Future 6", type text}, {"Future 7", type text}, {"Future 8", type text}, {"Future 9", type text}, {"Future 10", type text}, {"Future 11", type text}, {"Future 12", type text}, {"Future 13", type text}, {"Future 14", type text}, {"Additional comments or concerns", type text}, {"Recommended for hire Y/N", type text}, {"If Failed, please give reason why", type text}, {"2nd interview scheduled Y/N", type text}, {"2nd Interview Date", type any}, {"Column47", type any}, {"Column48", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each [Interview Date] <> null and [Interview Date] <> "")
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

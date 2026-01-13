@@ -1,0 +1,24 @@
+table Slices
+	lineageTag: 2a495754-2f92-4a39-9ea4-ef1971537a53
+
+	column Label
+		lineageTag: 5c492357-39fc-4afd-adad-56bdbeba0ef3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Label]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Slices = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE (
+				    "Label", STRING,
+				    { { "Filled" }, { "Remaining" } }
+				)
+				
+				```
+
+	annotation PBI_Id = f01c6b0b3a974338b22b26effb611fa6
+

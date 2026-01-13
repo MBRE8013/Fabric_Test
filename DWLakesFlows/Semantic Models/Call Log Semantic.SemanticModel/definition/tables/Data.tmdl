@@ -1,0 +1,949 @@
+table Data
+	lineageTag: 29d8eb2b-aa6c-45c7-bc55-c76b5793b4dc
+
+	measure 'Avg Speed to Answer' = AVERAGEX('Data', Data[Wait Seconds])
+		lineageTag: 78087a67-f65f-4895-a06c-8c26080dbb48
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG Speed' =
+			
+			VAR TotalSeconds = [Avg Speed to Answer]
+			VAR Minutes = INT (TotalSeconds / 60)
+			VAR Seconds = ROUND(MOD(Totalseconds,60),0)
+			RETURN
+			FORMAT (Minutes, "0") &":"& FORMAT(Seconds, "00")
+		lineageTag: 76a846f2-2d4e-4d05-8f9e-bcf61d5c6232
+
+	measure 'Longest Wait Time' =
+			
+			VAR TotalSeconds = [Longest Speed to Answer]
+			VAR Minutes = INT (TotalSeconds / 60)
+			VAR Seconds = ROUND(MOD(Totalseconds,60),0)
+			RETURN
+			FORMAT (Minutes, "0") &":"& FORMAT(Seconds, "00")
+		lineageTag: d4f21a01-57aa-4471-8c07-3df2b8c6844d
+
+	measure 'Longest Speed to Answer' = MAXX('Data', Data[Wait Seconds])
+		lineageTag: 301f39b8-642b-4d0e-b1d2-acd36060e035
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Talk Time' = AVERAGEX('Data', Data[Talk Seconds])
+		lineageTag: c48f8611-4cdd-47d1-9a0f-9183a9d2e805
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG Talk' =
+			
+			VAR TotalSeconds = [Avg Talk Time]
+			VAR Minutes = INT (TotalSeconds / 60)
+			VAR Seconds = ROUND(MOD(Totalseconds,60),0)
+			RETURN
+			FORMAT (Minutes, "0") &":"& FORMAT(Seconds, "00")
+		lineageTag: fd18b651-1378-4e5d-acec-5845f83ceb99
+
+	measure Pct_Under60 = ```
+			
+			VAR TotalCalls = COUNTROWS(Data)
+			VAR CallsUnder60 = CALCULATE(COUNTROWS(Data), 'Data'[Wait Seconds] < 60)
+			RETURN
+			DIVIDE(CallsUnder60, TotalCalls)
+			
+			```
+		lineageTag: ff497cb0-5651-4299-ae3c-75841f8cb1f8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Donut Value' =
+			
+			VAR lbl = SELECTEDVALUE ( Slices[Label] )
+			RETURN
+			SWITCH (
+			    TRUE(),
+			    lbl = "Filled",     [Pct_Under60],
+			    lbl = "Remaining",  1 - [Pct_Under60],
+			    BLANK()
+			)
+		lineageTag: 4be085a3-c505-4289-931b-18f55c55bd0c
+
+	measure 'Donut Color' =
+			
+			VAR lbl = SELECTEDVALUE ( Slices[Label] )
+			RETURN
+			IF (
+			    lbl = "Remaining",
+			    "#E5E5E5",                                 -- light gray
+			    SWITCH (
+			        TRUE(),
+			        [Pct_Under60] >= 0.8, "#107C10",       -- green
+			        [Pct_Under60] >= 0.7, "#FFB900",       -- yellow
+			        "#E81123"                              -- red
+			    )
+			)
+		lineageTag: 8096893e-0542-4005-87cb-6f8f9f8c87e8
+
+	measure 'Under 60 Seconds' = SUM(talk)
+		lineageTag: bff0b47f-5c09-4160-8c38-5f2e50da6a0e
+
+	measure Calls_Under60 = ```
+			
+			CALCULATE (
+			    COUNTROWS ( 'Data' ),
+			    'Data'[Wait Seconds] < 60
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 641dc754-a7e3-4e0c-ae60-98c0da02e47a
+
+	measure Calls_Above60 =
+			
+			CALCULATE (
+			    COUNTROWS ( 'Data' ),
+			    'Data'[Wait Seconds] >= 60
+			)
+		formatString: 0
+		lineageTag: e9d0ba6c-75bd-4744-8d57-686754821796
+
+	measure 'Yellow Below 60' = IF(AND([Pct_Under60]<0.8,[Pct_Under60]>=0.6),[Calls_Under60])
+		formatString: 0
+		lineageTag: 6ffca25b-368f-4ad0-8cf6-52d32fb4e0b7
+
+	measure 'Green Below 60' = IF([Pct_Under60]>=0.8,[Calls_Under60])
+		formatString: 0
+		lineageTag: 127e1bf1-a5e9-47a6-947f-08c4219d9ffa
+
+	measure 'Red Below 60' = IF([Pct_Under60]<0.6,[Calls_Under60])
+		formatString: 0
+		lineageTag: a1b52a21-68ec-48cf-836a-8f643d972ba3
+
+	measure 'Row Count' = COUnTROWS(Data)
+		formatString: 0
+		lineageTag: 054dd849-e464-4785-ba56-5ed986c9343a
+
+	measure 'New New is 3' =
+			
+			CALCULATE(
+			    COUNTROWS('Data'),
+			    'Data'[New New Skilled] = "3"
+			)
+		formatString: 0
+		lineageTag: 370a43ea-d767-4f37-a4bc-c2ee7893319a
+
+	measure 'New New is 1' =
+			
+			CALCULATE(
+			    COUNTROWS('Data'),
+			    'Data'[New New Skilled] = "1"
+			)
+		formatString: 0
+		lineageTag: 95d9d36f-a84c-41a4-8ed8-248b17183b6d
+
+	measure '%New New is 1' =
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS('Data'),
+			        'Data'[New New Skilled] = "1"
+			    ),
+			    COUNTROWS('Data'),
+			    0
+			)
+		formatString: 0
+		lineageTag: 80fa36de-55b7-462c-ae39-84a9f29eb535
+
+	measure 'Green New New' = IF([%New New is 1]>=.8,[New New is 1])
+		formatString: 0
+		lineageTag: 4ea704af-e232-4fba-8cd6-4f1c57195695
+
+	measure 'Yellow New New' = IF(AND([%New New is 1]<0.8,[%New New is 1]>=.7),[New New is 1])
+		formatString: 0
+		lineageTag: ffadc944-d22a-40d5-81bc-2cb54b6fb327
+
+	measure 'Red New New' = IF([%New New is 1]<.7,[New New is 1])
+		formatString: 0
+		lineageTag: c981861b-a0c9-4ceb-b7eb-933de4760a2e
+
+	measure '% Abandoned Calls' =
+			
+			IF(
+			    ISBLANK([Abandoned Count]) && ISBLANK([Answer Count]),
+			    0,
+			    DIVIDE([Abandoned Count] + 0, ([Answer Count] + 0) + ([Abandoned Count] + 0), 0)
+			)
+		lineageTag: 63cf1c93-e414-473e-91e4-9b485ef58df8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Answer Count' =
+			
+			CALCULATE(
+			    COUNTROWS('Data'),
+			    'Data'[Call Result] = "Answered"
+			)
+		formatString: 0
+		lineageTag: 3f466d66-5990-4104-8d00-6de4e843fcb6
+
+	measure 'Abandoned Count' =
+			
+			CALCULATE(
+			    COUNTROWS('Data'),
+			    'Data'[Call Result] = "Abandoned",
+			    'Data'[Under 60] = "0"
+			)
+		formatString: 0
+		lineageTag: ddf8f436-6a4b-405b-9c3f-8dbffaa7d179
+
+	measure 'Green Abdondon' = IF([% Abandoned Calls]<=.04,[Abandoned Count])
+		formatString: 0
+		lineageTag: 6ff796b3-64bc-47f3-80f1-590a2bbdf4bd
+
+	measure 'Yellow Abdondon' = IF(AND([% Abandoned Calls]>.04,[% Abandoned Calls]<=0.06),[Abandoned Count])
+		formatString: 0
+		lineageTag: 7db6f092-0114-40c6-81eb-e8a681774d28
+
+	measure 'Red Abdondon' = IF([% Abandoned Calls]>.06,[Abandoned Count])
+		formatString: 0
+		lineageTag: d3191cd7-c667-4d12-8c5e-18a0bd94156c
+
+	measure 'AVG Wait Time' =
+			
+			TIME(0, 0, AVERAGE('Data'[Speed of Answer]))
+		formatString: General Date
+		lineageTag: 0fc4c0b7-0bd6-4834-8b8b-4cf470e230c5
+
+	measure 'AVG Speed to Answer Minutes' = [Avg Speed to Answer]/60
+		lineageTag: 084f4c6f-6bef-403d-bcdd-ebb2749f0315
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Longest Speed to Answer Minutes' = MAXX('Data', Data[Wait Seconds])/60
+		lineageTag: 006208c6-f3b7-4c92-9ff5-8755f4763f6b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Longest Talk Time' = ```
+			
+			MAXX('Data', 'Data'[Talk Seconds])
+			
+			
+			
+			
+			```
+		lineageTag: 62434392-7dc0-48fc-8306-b2b8da2f62e6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Measure
+		lineageTag: c20539cc-3b67-445d-8194-dbe96d63ebbc
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'Longest Talk' =
+			
+			VAR TotalSeconds = [Longest Talk Time]  // Reference the measure directly
+			VAR Minutes = QUOTIENT(TotalSeconds, 60)
+			VAR Seconds = MOD(TotalSeconds, 60)
+			RETURN
+			    IF(
+			        NOT ISBLANK(TotalSeconds),
+			        FORMAT(Minutes, "0") & ":" & FORMAT(Seconds, "00"),
+			        BLANK()
+			    )
+		lineageTag: 94b0d8a0-44a5-4ba5-bb59-d87e9cde12b5
+
+	measure 'Least Talk Time' = ```
+			
+			MINX('Data', 'Data'[Talk Seconds])
+			
+			```
+		lineageTag: d4746296-1d07-42d0-9d08-5d618e622fdc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Least Talk' =
+			
+			VAR TotalSeconds = [Least Talk Time]  // Reference the measure directly
+			VAR Minutes = QUOTIENT(TotalSeconds, 60)
+			VAR Seconds = MOD(TotalSeconds, 60)
+			RETURN
+			    IF(
+			        NOT ISBLANK(TotalSeconds),
+			        FORMAT(Minutes, "0") & ":" & FORMAT(Seconds, "00"),
+			        BLANK()
+			    )
+		lineageTag: 4a288fe5-2f2d-4fdf-bac9-3f6c6601b622
+
+	column 'Pasted Date'
+		dataType: string
+		lineageTag: d9847ef4-0649-412c-b19a-cf17d224eca1
+		summarizeBy: none
+		sourceColumn: Pasted Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Media Type Name'
+		dataType: string
+		lineageTag: 1574ca65-9ba1-4f99-89c5-2cc7bee937ee
+		summarizeBy: none
+		sourceColumn: Media Type Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ANI/From
+		dataType: string
+		lineageTag: 43def1b1-7147-48ce-884a-da41afe1c08e
+		summarizeBy: none
+		sourceColumn: ANI/From
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact ID'
+		dataType: string
+		lineageTag: 37e03ae4-9d8a-4c57-a469-398d6c89b48a
+		summarizeBy: none
+		sourceColumn: Contact ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DNIS/To
+		dataType: string
+		lineageTag: febf6ff9-eb9d-430c-850b-d000658c559a
+		summarizeBy: none
+		sourceColumn: DNIS/To
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Master Contact ID'
+		dataType: string
+		lineageTag: a1806c54-bd25-441b-b9ea-60906ad96cfd
+		summarizeBy: none
+		sourceColumn: Master Contact ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Agent Name'
+		dataType: string
+		lineageTag: d578232d-3e68-4bcb-9ec1-99697041bf41
+		summarizeBy: none
+		sourceColumn: Contact Agent Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Skill Name'
+		dataType: string
+		lineageTag: a162ebf2-8e36-4322-ac96-5eaeb5c6d9fc
+		summarizeBy: none
+		sourceColumn: Contact Skill Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Start Date Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1ca067d0-caee-4556-8b3f-dfc92f2929d4
+		summarizeBy: none
+		sourceColumn: Contact Start Date Time
+
+		variation Variation
+			isDefault
+			relationship: 87e02dc9-1077-4f2c-a9a8-b3a8117d256a
+			defaultHierarchy: LocalDateTable_c70fa812-e64a-4b9b-a03b-83ebdc8f96b3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact End Date Time'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b716ec13-221d-43d2-a9b1-d16b0852abf9
+		summarizeBy: none
+		sourceColumn: Contact End Date Time
+
+		variation Variation
+			isDefault
+			relationship: a06ed5c4-07f8-4e2f-a0b8-ed61d6e25a34
+			defaultHierarchy: LocalDateTable_f86e0275-dd38-4f90-972e-cd6e0367f964.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Prequeued
+		dataType: string
+		lineageTag: cb9dacec-2e88-475a-b073-b575b914a8cd
+		summarizeBy: none
+		sourceColumn: Prequeued
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prequeue Time'
+		dataType: string
+		lineageTag: fe471cdb-3822-439b-b1e8-c788e75c1350
+		summarizeBy: none
+		sourceColumn: Prequeue Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prequeue Abandons'
+		dataType: string
+		lineageTag: b194dd40-657d-458e-9304-1f20fe70dbe2
+		summarizeBy: none
+		sourceColumn: Prequeue Abandons
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Inqueue Time'
+		dataType: string
+		lineageTag: a8d4723b-b78e-4353-8ebb-dd39212f3dad
+		summarizeBy: none
+		sourceColumn: Inqueue Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Talk Time Pasted'
+		dataType: string
+		lineageTag: 2666f946-427a-4bc3-a966-35371f6caeee
+		summarizeBy: none
+		sourceColumn: Talk Time Pasted
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ACW Time Pasted'
+		dataType: string
+		lineageTag: befcc2c4-5be7-4ee0-a41e-d91c0233fea6
+		summarizeBy: none
+		sourceColumn: ACW Time Pasted
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Postqueue Time'
+		dataType: string
+		lineageTag: 9d71a41f-bc00-4ce4-b095-1a1d4dffde00
+		summarizeBy: none
+		sourceColumn: Postqueue Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Abandon Time'
+		dataType: string
+		lineageTag: 113da68e-5ad5-410b-a6a9-35ab3f1bdeb1
+		summarizeBy: none
+		sourceColumn: Abandon Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column Abandons
+		dataType: string
+		lineageTag: 697584fd-8f69-4361-b699-40c6b3f77633
+		summarizeBy: none
+		sourceColumn: Abandons
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Duration Pasted'
+		dataType: string
+		lineageTag: df9c3cc2-92fb-4625-a6bd-6cd2ec68e53e
+		summarizeBy: none
+		sourceColumn: Contact Duration Pasted
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Speed Of Answer Pasted'
+		dataType: string
+		lineageTag: c4d83356-3ef9-4628-af26-329248966fd6
+		summarizeBy: none
+		sourceColumn: Speed Of Answer Pasted
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Call Result'
+		dataType: string
+		lineageTag: aefe20de-f68f-436f-98d3-6c6396f1324e
+		summarizeBy: none
+		sourceColumn: Call Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: string
+		lineageTag: 2bf5bfee-7f85-4dea-9443-cec7287b7337
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: string
+		lineageTag: 4a53e3ec-3522-41e3-909b-1cf7a4efa4de
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column Time
+		dataType: string
+		lineageTag: 7779aee7-b5b4-4f88-8c44-574c6d922b57
+		summarizeBy: none
+		sourceColumn: Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hour1
+		dataType: string
+		lineageTag: 1fb3f60b-1f81-4e3b-8653-9911eb7eadf3
+		summarizeBy: none
+		sourceColumn: Hour1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hour
+		dataType: string
+		lineageTag: 3580c58d-8bd6-4335-a875-0efeee6235be
+		summarizeBy: none
+		sourceColumn: Hour
+		sortByColumn: 'Hour Sort Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Minute
+		dataType: string
+		lineageTag: c02c8d7e-d2c1-4b1a-9cd6-f8debd1fe6e8
+		summarizeBy: none
+		sourceColumn: Minute
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Under 60'
+		dataType: string
+		lineageTag: 5730d6c6-9956-446d-98b8-cc72e7836809
+		summarizeBy: none
+		sourceColumn: Under 60
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skilled
+		dataType: string
+		lineageTag: 6b254aed-59ee-4921-91bc-9efe1ed68813
+		summarizeBy: none
+		sourceColumn: Skilled
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: 3ebd8868-95f9-4054-86eb-59481f73fc86
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Program
+		dataType: string
+		lineageTag: 419f7ba7-0ae7-459a-9435-2ed8c76d89f6
+		summarizeBy: none
+		sourceColumn: Program
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Reporting Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ef41472c-7aa6-48ec-b1de-415c45d7139f
+		summarizeBy: none
+		sourceColumn: Reporting Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Reporting Day'
+		dataType: string
+		lineageTag: 3e934b8e-f3fa-4a4a-99f7-5912bbad8fbe
+		summarizeBy: none
+		sourceColumn: Reporting Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		dataType: string
+		lineageTag: b2a0d640-4a75-4b23-9b6c-86da7019da85
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Speed of Answer'
+		dataType: dateTime
+		formatString: h:nn
+		lineageTag: 3c12d499-af89-4b18-b0a8-41684884ed03
+		summarizeBy: none
+		sourceColumn: Speed of Answer
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Talk Time'
+		dataType: string
+		lineageTag: af8ac08d-c2da-44b8-9d36-2e96ab6cdf1b
+		summarizeBy: none
+		sourceColumn: Talk Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ACW Time'
+		dataType: string
+		lineageTag: d1ea13d1-46c6-40eb-9330-3839024c1399
+		summarizeBy: none
+		sourceColumn: ACW Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Duration'
+		dataType: string
+		lineageTag: 2ea4097e-f24a-4ffe-bc86-414ff6729f5c
+		summarizeBy: none
+		sourceColumn: Contact Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 331b9985-669f-4e99-93fa-83a1adba195c
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'New Skilled'
+		dataType: string
+		lineageTag: 22b24871-69e1-4aa4-9a43-30856e436076
+		summarizeBy: none
+		sourceColumn: New Skilled
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'New New Skilled'
+		dataType: string
+		lineageTag: 0c0e588f-91c5-4987-8a6d-3bd11b03abb7
+		summarizeBy: none
+		sourceColumn: New New Skilled
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		lineageTag: 880cc664-1693-4b64-b351-01761ef6c428
+		summarizeBy: none
+		sourceColumn: Team
+		sortByColumn: 'Team Sort Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Minute Bucket'
+		dataType: string
+		lineageTag: f1819e51-a356-405d-baa4-72e2e4cae7d2
+		summarizeBy: none
+		sourceColumn: Minute Bucket
+
+		annotation SummarizationSetBy = Automatic
+
+	column Combo
+		dataType: string
+		lineageTag: f1910750-8a7c-4e58-9be1-5ede7698833b
+		summarizeBy: none
+		sourceColumn: Combo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adressable
+		dataType: string
+		lineageTag: ff843beb-bf29-4e96-ab11-66f09bc6aba1
+		summarizeBy: none
+		sourceColumn: Adressable
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weekday
+		dataType: string
+		lineageTag: ec417674-277f-49e3-b274-53ff4b02e2bb
+		summarizeBy: none
+		sourceColumn: Weekday
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wait Seconds' = (Data[Speed of Answer]-1)*86400
+		lineageTag: 481b8161-159b-49a8-9fc5-61115821ca48
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Talk Seconds' = (Data[Talk Time]-1)*86400
+		lineageTag: cd8b49a5-0aae-4da4-ad21-b5b8c17b353e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Hour Sort Order' =
+			
+			IF(VALUE('Data'[Hour1]) >= 5, VALUE('Data'[Hour1]) - 5, VALUE('Data'[Hour1]) + 19)
+		lineageTag: d3136285-0162-416b-b8d8-651e276b3d8c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Abv Day of Week' = FORMAT('Data'[Reporting Date], "ddd")
+		lineageTag: e2e9bf4a-cace-4e91-b90a-d067ecf3ca97
+		summarizeBy: none
+		sortByColumn: 'Abv Day Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Abv Day Sort' = WEEKDAY('Data'[Reporting Date], 2)
+		formatString: 0
+		lineageTag: 463116d3-9043-41ff-9d7b-ad5c69628539
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Conatins ROQ?' =
+			
+			IF(
+			    CONTAINSSTRING(Data[Contact Skill Name], "ROQ"),
+			    "Y",
+			    "N"
+			)
+		lineageTag: fcd9dc83-cf32-4a0f-9668-3c02f31ef290
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team Sort Order'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c2c0c96-2096-42b0-ac5d-c3ccc4145be3
+		summarizeBy: sum
+		sourceColumn: Team Sort Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Nights'
+		dataType: string
+		lineageTag: e69757a6-d353-460e-af78-05c8a8b952a5
+		summarizeBy: none
+		sourceColumn: Hour Nights
+		sortByColumn: 'Hour Nights Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Nights Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: ee1792bf-b122-4f68-8bf4-f24791f64b49
+		summarizeBy: sum
+		sourceColumn: Hour Nights Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column PeriodFlag =
+			
+			VAR CurrentDate = Data[Reporting Date]
+			VAR TodayDate = TODAY()
+			VAR ThisWeekStart = TodayDate - WEEKDAY(TodayDate, 2) + 1
+			VAR ThisWeekEnd = ThisWeekStart + 6
+			VAR LastFriday = TodayDate - WEEKDAY(TodayDate, 2) - 2
+			VAR LastSunday = LastFriday + 2
+			VAR LastWeekStart = ThisWeekStart - 7
+			VAR LastWeekEnd = ThisWeekStart - 1
+			
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        CurrentDate >= ThisWeekStart && CurrentDate <= ThisWeekEnd, "This Week",
+			        CurrentDate >= LastFriday && CurrentDate <= LastSunday, "Last Fri-Sun",
+			        CurrentDate >= LastWeekStart && CurrentDate <= LastWeekEnd, "Last Week",
+			        CurrentDate >= DATE(YEAR(TodayDate), MONTH(TodayDate), 1) && CurrentDate <= EOMONTH(TodayDate, 0), "This Month",
+			        CurrentDate >= DATE(YEAR(EOMONTH(TodayDate, -1)), MONTH(EOMONTH(TodayDate, -1)), 1) && CurrentDate <= EOMONTH(TodayDate, -1), "Last Month",
+			        CurrentDate >= DATE(YEAR(TodayDate), (QUARTER(TodayDate) - 1) * 3 + 1, 1) && CurrentDate <= EOMONTH(DATE(YEAR(TodayDate), (QUARTER(TodayDate) - 1) * 3 + 1, 1), 2), "This Quarter",
+			        CurrentDate >= DATE(YEAR(EOMONTH(TodayDate, -3)), MONTH(EOMONTH(TodayDate, -3)) - 2, 1) && CurrentDate <= EOMONTH(TodayDate, -3), "Last Quarter",
+			        CurrentDate >= DATE(YEAR(TodayDate), 1, 1) && CurrentDate <= DATE(YEAR(TodayDate), 12, 31), "This Year",
+			        CurrentDate >= DATE(YEAR(TodayDate) - 1, 1, 1) && CurrentDate <= DATE(YEAR(TodayDate) - 1, 12, 31), "Last Year",
+			        BLANK()
+			    )
+		lineageTag: 0cf6b377-8120-4d1f-98ba-dca3d0ae97ef
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day - Hour' = 'Data'[Day of Week] & " - " & FORMAT('Data'[Hour], "0")
+		lineageTag: cc240a0f-4e03-4887-bbd4-cf32d73aa359
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Time of Day' =
+			
+			VAR dt = 'Data'[Contact Start Date Time]
+			VAR h = HOUR(dt)
+			VAR m = MINUTE(dt)
+			VAR RoundedMin = FLOOR(m, 15)
+			VAR h12 = IF(MOD(h, 12) = 0, 12, MOD(h, 12))
+			VAR ampm = IF(h < 12, "a", "p")
+			VAR minText = IF(RoundedMin = 0, ":00", ":" & FORMAT(RoundedMin, "00"))
+			RETURN
+			    h12 & minText & ampm
+		lineageTag: 4492b859-6d5e-42ea-a0e3-1bed3580829d
+		summarizeBy: none
+		sortByColumn: 'Time of Day Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Time of Day Sort' =
+			
+			VAR dt = 'Data'[Contact Start Date Time]
+			VAR h = HOUR(dt)
+			VAR m = MINUTE(dt)
+			VAR RoundedMin = FLOOR(m, 15)
+			VAR SlotInDay = h * 4 + RoundedMin / 15
+			VAR AdjustedSlot = MOD(SlotInDay - 20, 96) + 1
+			RETURN
+			    AdjustedSlot
+		lineageTag: 271f930d-4e52-4eab-bc10-a6beb5efb21d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	hierarchy 'Hour Hierarchy'
+		lineageTag: 94d505bd-6215-4c41-ae21-9a1b504cc421
+
+		level Hour
+			lineageTag: 81dea0c8-27d0-4e0e-ab96-29a61f6f4aaa
+			column: Hour
+
+		level 'Time of Day'
+			lineageTag: 44b89e33-b054-4d12-9089-dc958080a368
+			column: 'Time of Day'
+
+	partition Data = m
+		mode: import
+		source =
+				let
+				    // Append all monthly queries
+				    Source = Table.Combine({
+				        #"12012025",
+				        #"11012025",
+				        #"10012025",
+				        #"09012025",
+				        #"06012025",
+				        #"03012025"
+				    }),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Contact Start Date Time", type datetime}, {"Contact End Date Time", type datetime}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Team Sort Order", each let
+				    t = [Team]
+				in
+				    // Standard Teams
+				    if t = "Team 1" then 1
+				    else if t = "Team 2" then 2
+				    else if t = "Team 3" then 3
+				    else if t = "Team 4" then 4
+				    else if t = "Team 5" then 5
+				    else if t = "Team 6" then 6
+				    else if t = "Team 7" then 7
+				    else if t = "Team 8" then 8
+				    else if t = "Team 9" then 9
+				    else if t = "Team 10" then 10
+				    else if t = "Team 11" then 11
+				    else if t = "Team 12" then 12
+				
+				    // NAL Weekend Teams
+				    else if t = "NAL Weekend Morning" then 20
+				    else if t = "NAL Weekend Day" then 21
+				    else if t = "NAL Weekend Evening" then 22
+				    else if t = "NAL Weekend Overnight" then 23
+				
+				    // WED## Teams
+				    else if t = "WED1" then 101
+				    else if t = "WED2" then 102
+				    else if t = "WED3" then 103
+				    else if t = "WED4" then 104
+				    else if t = "WED5" then 105
+				    else if t = "WED6" then 106
+				    else if t = "WED7" then 107
+				    else if t = "WED8" then 108
+				    else if t = "WED9" then 109
+				    else if t = "WED10" then 110
+				    else if t = "WED11" then 111
+				    else if t = "WED12" then 112
+				
+				    // WEM## Teams
+				    else if t = "WEM1" then 121
+				    else if t = "WEM2" then 122
+				    else if t = "WEM3" then 123
+				    else if t = "WEM4" then 124
+				    else if t = "WEM5" then 125
+				    else if t = "WEM6" then 126
+				    else if t = "WEM7" then 127
+				    else if t = "WEM8" then 128
+				    else if t = "WEM9" then 129
+				    else if t = "WEM10" then 130
+				    else if t = "WEM11" then 131
+				    else if t = "WEM12" then 132
+				
+				    // WEE## Teams
+				    else if t = "WEE1" then 141
+				    else if t = "WEE2" then 142
+				    else if t = "WEE3" then 143
+				    else if t = "WEE4" then 144
+				    else if t = "WEE5" then 145
+				    else if t = "WEE6" then 146
+				    else if t = "WEE7" then 147
+				    else if t = "WEE8" then 148
+				    else if t = "WEE9" then 149
+				    else if t = "WEE10" then 150
+				    else if t = "WEE11" then 151
+				    else if t = "WEE12" then 152
+				
+				    else 999),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Custom", "Hour", "Hour - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"Hour - Copy", "Hour Nights"}}),
+				    #"Added Custom1" = Table.AddColumn(#"Renamed Columns", "Hour Nights Sort", each let
+				    h = [Hour Nights]
+				in
+				    if h = "11 PM" then 1
+				    else if h = "12 AM" then 2
+				    else if h = "1 AM" then 3
+				    else if h = "2 AM" then 4
+				    else if h = "3 AM" then 5
+				    else if h = "4 AM" then 6
+				    else if h = "5 AM" then 7
+				    else if h = "6 AM" then 8
+				    else if h = "7 AM" then 9
+				    else 999),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom1",{{"Team Sort Order", Int64.Type}, {"Hour Nights Sort", Int64.Type}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

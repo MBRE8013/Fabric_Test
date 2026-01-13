@@ -1,0 +1,37 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["dim_workable_jobs","workable_candidates","DateDim","Phone Screen Rubric","2nd Interview Rubric"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop"]
+
+ref table DateTableTemplate_3f61b33e-455e-43c5-a35c-568e61e6e50e
+ref table dim_workable_jobs
+ref table LocalDateTable_5f23ac51-dd19-4b56-875c-226c9a4f82fb
+ref table LocalDateTable_d7a81e20-bbf4-422f-b7ee-9502022e34b5
+ref table workable_candidates
+ref table 'Funnel Stages'
+ref table PeriodParameter
+ref table PeriodDateBridge
+ref table DateDim
+ref table LocalDateTable_8cafb3a4-37a3-40e5-af52-32ba87af34d6
+ref table LocalDateTable_637072a7-0031-4b63-8a29-523d0d0d91fb
+ref table LocalDateTable_964ecc38-f14b-4505-a9ec-481e97d94b7c
+ref table LocalDateTable_91351c13-ba84-410e-b266-aed0d7d05cfa
+ref table 'Phone Screen Rubric'
+ref table LocalDateTable_440db51e-4a4d-4562-80dd-b6d187e07915
+ref table '2nd Interview Rubric'
+ref table LocalDateTable_4eb6c88c-681b-451e-bf80-1a154f07bd67
+ref table LocalDateTable_e3998d9d-d0d2-4e8f-a3d7-6a1228bcff02
+ref table LocalDateTable_768efade-9d25-4d62-ba46-3857fb7e8f9b
+ref table LocalDateTable_b6cbd579-44a3-4942-ae90-14929e258d4c
+
+ref cultureInfo en-US
+
