@@ -1,0 +1,55 @@
+table Customer
+	lineageTag: fb156af5-c526-453c-883f-9c276cd7c9e0
+
+	column Customer
+		dataType: string
+		lineageTag: 4630d856-1d0d-47de-89bf-22950e13c417
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Program
+		dataType: string
+		lineageTag: d8eb661a-2f44-465a-adce-f1f805619c6f
+		summarizeBy: none
+		sourceColumn: Program
+
+		annotation SummarizationSetBy = Automatic
+
+	column Specialty
+		dataType: string
+		lineageTag: bb36c098-d97c-4714-93df-b0e0d7b1e612
+		summarizeBy: none
+		sourceColumn: Specialty
+
+		annotation SummarizationSetBy = Automatic
+
+	column Combo
+		dataType: string
+		lineageTag: f1c3d40b-b907-4bea-8c70-f5d8f805f3e7
+		summarizeBy: none
+		sourceColumn: Combo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BAYADA Team'
+		dataType: string
+		lineageTag: 92d2d7ab-4908-4e2b-8645-4976152fb64d
+		summarizeBy: none
+		sourceColumn: BAYADA Team
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customer = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+				    #"IntellaTriage DW" = Source{[Name="IntellaTriage DW"]}[Data],
+				    dbo_Customer = #"IntellaTriage DW"{[Schema="dbo",Item="Customer"]}[Data]
+				in
+				    dbo_Customer
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,75 @@
+table dim_Customer
+	lineageTag: bf0edf37-f5f9-46d4-ac69-9c96d696777f
+
+	column Queue
+		dataType: string
+		lineageTag: f5680c29-b6da-4c87-badd-78cfbc87bb8d
+		summarizeBy: none
+		sourceColumn: Queue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		lineageTag: 9f721686-3c33-4b96-b3d0-0d0a6bfde3de
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Program
+		dataType: string
+		lineageTag: 32ca75b2-e6b1-4c6e-b68f-84d25d6fb2d5
+		summarizeBy: none
+		sourceColumn: Program
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Service Line'
+		dataType: string
+		lineageTag: 3c49e6a5-e43f-4df8-b943-1b1c7241f8e6
+		summarizeBy: none
+		sourceColumn: Service Line
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: 3e7d781a-5634-41bd-82c6-f09e1b5ce943
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skilled
+		dataType: string
+		lineageTag: 6cf6a7cb-ffe9-4549-9b34-14ca46011c3c
+		summarizeBy: none
+		sourceColumn: Skilled
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 63d79a03-9e3d-40b8-a6e4-a86456cb1bf4
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Customer = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://intellatriage.sharepoint.com/sites/PowerBIData", [ApiVersion = 15]),
+				    #"Call Log Customer Reference xlsx_https://intellatriage sharepoint com/sites/PowerBIData/Shared Documents/Reference Tables/" = Source{[Name="Call Log Customer Reference.xlsx",#"Folder Path"="https://intellatriage.sharepoint.com/sites/PowerBIData/Shared Documents/Reference Tables/"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"Call Log Customer Reference xlsx_https://intellatriage sharepoint com/sites/PowerBIData/Shared Documents/Reference Tables/"),
+				    CallLogCustomerReference_Table = #"Imported Excel Workbook"{[Item="CallLogCustomerReference",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(CallLogCustomerReference_Table,{{"Reference", "Queue"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

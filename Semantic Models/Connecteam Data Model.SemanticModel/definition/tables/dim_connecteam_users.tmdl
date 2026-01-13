@@ -1,0 +1,260 @@
+table dim_connecteam_users
+	lineageTag: c03eefcd-be87-4adb-9da8-d5cf2f2a87cc
+
+	column user_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0321e3d5-1206-409c-8e39-d29c5f0aeabd
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_name
+		dataType: string
+		lineageTag: f33bb77f-2ec7-4c5e-87c6-1c1e70048a1f
+		summarizeBy: none
+		sourceColumn: user_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_name
+		dataType: string
+		lineageTag: 87e02cf1-1c19-4c1f-87b9-735ee4035071
+		summarizeBy: none
+		sourceColumn: first_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_name
+		dataType: string
+		lineageTag: 193f6bb2-c1a6-4bd7-b674-5aece279a249
+		summarizeBy: none
+		sourceColumn: last_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 4533b47a-8bbe-45e8-9bf0-21795d18b99a
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: 06feecf9-52e8-4e15-854b-d03eacb23721
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_title
+		dataType: string
+		lineageTag: 89903969-8460-4a95-8611-a259e82330d6
+		summarizeBy: none
+		sourceColumn: job_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column department
+		dataType: string
+		lineageTag: 96f0d5c7-9f57-481c-9042-a34129a3c7f5
+		summarizeBy: none
+		sourceColumn: department
+
+		annotation SummarizationSetBy = Automatic
+
+	column employment_type
+		dataType: string
+		lineageTag: 67896f36-ca10-4d86-a8c2-8d56f6b05d98
+		summarizeBy: none
+		sourceColumn: employment_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column employment_start_date
+		dataType: string
+		lineageTag: e502e611-4580-47a1-b28b-f7b5e75f7612
+		summarizeBy: none
+		sourceColumn: employment_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column employee_id
+		dataType: string
+		lineageTag: 8cb9ae92-de25-4c00-8d47-f9fdbf67b077
+		summarizeBy: none
+		sourceColumn: employee_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column primary_team
+		dataType: string
+		lineageTag: 54216657-9943-4784-99f4-70d018fc803b
+		summarizeBy: none
+		sourceColumn: primary_team
+
+		annotation SummarizationSetBy = Automatic
+
+	column all_teams
+		dataType: string
+		lineageTag: d4199e9b-5480-4178-ab91-a6db10107bd1
+		summarizeBy: none
+		sourceColumn: all_teams
+
+		annotation SummarizationSetBy = Automatic
+
+	column direct_manager_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4db7ec38-4fb4-47f3-97c8-9b0ce79cb401
+		summarizeBy: sum
+		sourceColumn: direct_manager_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column credentials
+		dataType: string
+		lineageTag: 91e196e5-8767-48a7-a671-afe8ad179da7
+		summarizeBy: none
+		sourceColumn: credentials
+
+		annotation SummarizationSetBy = Automatic
+
+	column licensure
+		dataType: string
+		lineageTag: 139dc189-168d-4b77-909c-20a13d8abf4b
+		summarizeBy: none
+		sourceColumn: licensure
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer
+		dataType: string
+		lineageTag: 42adaa4d-30b3-44b1-bc09-d31e4b518ed6
+		summarizeBy: none
+		sourceColumn: customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_type
+		dataType: string
+		lineageTag: 9ed84887-9ed0-4f38-be28-56f9fc4a2d9e
+		summarizeBy: none
+		sourceColumn: user_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column kiosk_code
+		dataType: string
+		lineageTag: 80b46984-a0fe-4da0-928c-b6e57df974e7
+		summarizeBy: none
+		sourceColumn: kiosk_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_archived
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2fd948e8-593f-43a8-84ab-b9fb4eea0453
+		summarizeBy: none
+		sourceColumn: is_archived
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bc6fb4e6-222f-4d74-8f65-e087d7381012
+		summarizeBy: none
+		sourceColumn: created_at
+
+		variation Variation
+			isDefault
+			relationship: 13b21328-5de4-4c66-840f-8d3293910621
+			defaultHierarchy: LocalDateTable_54caf2bb-4a09-4fbe-8c15-c193cc189ef7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column modified_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: de39f439-7675-4877-8762-135106d6e408
+		summarizeBy: none
+		sourceColumn: modified_at
+
+		variation Variation
+			isDefault
+			relationship: e3f2b0c0-ebeb-4172-8b40-674c74b11d6a
+			defaultHierarchy: LocalDateTable_1c9031c9-b255-4211-ad33-37214028b5da.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_login_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9f5d92d5-fc97-4426-806d-3f8d1da38279
+		summarizeBy: none
+		sourceColumn: last_login_at
+
+		variation Variation
+			isDefault
+			relationship: ce10df44-c86e-41a8-99b7-617736808f55
+			defaultHierarchy: LocalDateTable_bead4653-7811-4882-b404-89742f8c56ab.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column etl_loaded_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b1a0fa3a-0815-4676-8cee-ca3730a35409
+		summarizeBy: none
+		sourceColumn: etl_loaded_datetime
+
+		variation Variation
+			isDefault
+			relationship: c9b4aacc-19e8-4c9e-a1f1-d50426a91c3f
+			defaultHierarchy: LocalDateTable_fb7225d4-fb81-4735-875b-4405581fccdf.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_name
+		dataType: string
+		lineageTag: 7360721e-8ba5-4f28-a8c2-39ed3290feba
+		summarizeBy: none
+		sourceColumn: full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_active
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8f61c361-7571-41ce-bddb-ca1cba0b4e3b
+		summarizeBy: none
+		sourceColumn: is_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 41d4812f-e97a-46f0-baf0-287712d2e237
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_connecteam_users = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com", "IntellaTriageLakehouse"),
+				    dbo_dim_connecteam_users = Source{[Schema="dbo",Item="dim_connecteam_users"]}[Data]
+				in
+				    dbo_dim_connecteam_users
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

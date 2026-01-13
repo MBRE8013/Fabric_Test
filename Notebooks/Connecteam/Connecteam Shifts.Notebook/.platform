@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Connecteam Shifts"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9a7a851e-b50a-9f0b-4e6f-f666b26e675f"
+  }
+}

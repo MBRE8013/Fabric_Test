@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Call Log Semantic"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "764ca966-0f50-9cfb-4a9f-bc8f6ac5eb19"
+  }
+}

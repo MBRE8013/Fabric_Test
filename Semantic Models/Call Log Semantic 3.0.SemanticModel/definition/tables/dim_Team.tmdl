@@ -1,0 +1,73 @@
+table dim_Team
+	isHidden
+	lineageTag: d1709385-c31b-4899-bb9c-6c984909b04c
+
+	column 'Reporting Day of Week'
+		dataType: string
+		isHidden
+		lineageTag: 1f2cfd90-6a9b-4b22-9c93-1666130824fb
+		summarizeBy: none
+		sourceColumn: Reporting Day of Week
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hour
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 5f891d2d-2f2e-4cca-bcff-58936bfe8611
+		summarizeBy: none
+		sourceColumn: Hour
+
+		variation Variation
+			isDefault
+			relationship: 918102ad-4813-44ef-8702-a21b2cd37972
+			defaultHierarchy: LocalDateTable_933904a5-641c-4221-859b-61b414b1cb15.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		isHidden
+		lineageTag: dda21433-7382-424c-a0d7-fde74d28f6c6
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		isHidden
+		lineageTag: 34d7e648-e89d-40fd-8acb-afdab259e347
+		summarizeBy: none
+		sourceColumn: Team
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Team = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://intellatriage.sharepoint.com/sites/PowerBIData", [ApiVersion = 15]),
+				    #"Teams Call Log xlsx_https://intellatriage sharepoint com/sites/PowerBIData/Shared Documents/Reference Tables/" = Source{[Name="Teams Call Log.xlsx",#"Folder Path"="https://intellatriage.sharepoint.com/sites/PowerBIData/Shared Documents/Reference Tables/"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"Teams Call Log xlsx_https://intellatriage sharepoint com/sites/PowerBIData/Shared Documents/Reference Tables/"),
+				    TeamTable_Table = #"Imported Excel Workbook"{[Item="TeamTable",Kind="Table"]}[Data],
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(TeamTable_Table, {"Reporting Day of Week", "Hour"}, "Attribute", "Value"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Unpivoted Other Columns",{{"Attribute", "Customer Name"}, {"Value", "Team"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,51 @@
+relationship 5f033f26-f199-44e0-8004-ecd2327dfef5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'IntellaHub Export Data'.CreatedOn
+	toColumn: LocalDateTable_fc1d42cb-f166-400a-9517-5a846a59b9cd.Date
+
+relationship 1fde9bc5-b6ac-4819-86ac-e2a4f03baf64
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'IntellaHub Export Data'.ModifiedOn
+	toColumn: LocalDateTable_47473eb1-d00b-4b59-8dd7-e9d5ec73165f.Date
+
+relationship 1a19ce10-df7e-4e27-a656-22127120fc2b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'IntellaHub Export Data'.Time
+	toColumn: LocalDateTable_8ecbf741-54c1-4573-b977-ac13395d4606.Date
+
+relationship d68c29d1-c4a0-4c2d-8dcd-f483061ad12e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'IntellaHub Export Data'.DateOfBirth
+	toColumn: LocalDateTable_0acfe599-0c1a-48ec-8f3a-e82371f8f120.Date
+
+relationship af744cce-e4be-42b6-93a1-152e71510098
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'IntellaHub Export Data'.PublishedOn
+	toColumn: LocalDateTable_c7e90c17-9d23-408e-8dee-8a35f1c1e3fe.Date
+
+relationship 281e811c-e417-49fa-b1af-6f2cf8c91d2e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'IntellaHub Export Data'.ModifiedOnClean
+	toColumn: LocalDateTable_4083c110-fd75-4f4e-9a8e-5cdcbb11d575.Date
+
+relationship AutoDetected_b5cae7f9-a681-4425-8501-e8cff3ef5133
+	fromColumn: 'IntellaHub Export Data'.ProgramName
+	toColumn: Customer.Program
+
+relationship AutoDetected_c0743483-aed8-420b-a103-62ddb4203c82
+	fromColumn: 'IntellaHub Export Data'.NatureName
+	toColumn: Nature.Nature
+
+relationship 204522d1-608f-7c26-16dd-12259cfd1bea
+	fromColumn: 'IntellaHub Export Data'.ActionsName
+	toColumn: Action.Action
+
+relationship e288f411-3e75-4585-87a0-860bad21ed75
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Date.Date
+	toColumn: LocalDateTable_4bad0537-690d-40d1-ac48-1d3370f57a03.Date
+
+relationship d62de644-d46d-f2f2-bb83-5f3b1b69fb48
+	fromColumn: 'IntellaHub Export Data'.Date
+	toColumn: Dim_Date.Date
+

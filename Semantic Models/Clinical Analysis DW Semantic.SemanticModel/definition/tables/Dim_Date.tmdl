@@ -1,0 +1,483 @@
+table Dim_Date
+	lineageTag: 4b042e13-bd6f-4ecb-a250-e0d8dfa88c8b
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7157ef27-d408-4731-a301-0bb628923fa3
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: e288f411-3e75-4585-87a0-860bad21ed75
+			defaultHierarchy: LocalDateTable_4bad0537-690d-40d1-ac48-1d3370f57a03.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: cc6e14aa-2fa1-4097-989a-a55411978a3e
+		summarizeBy: count
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 69acf261-487e-45bd-843a-040554fed547
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearShort
+		dataType: string
+		lineageTag: bd5dfc38-864d-4061-9890-6264d6ff6208
+		summarizeBy: none
+		sourceColumn: YearShort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearShortSort
+		dataType: int64
+		formatString: 0
+		lineageTag: 7364104b-ed01-4bee-9b1b-89a3410b78ac
+		summarizeBy: sum
+		sourceColumn: YearShortSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuarterNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a9835b8-cb11-4183-872e-6aeb133aef0c
+		summarizeBy: sum
+		sourceColumn: QuarterNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 6731009d-53ef-4041-b7c8-da7518416de0
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuarterSort
+		dataType: int64
+		formatString: 0
+		lineageTag: d9c2d8d0-68d2-4df5-8973-710b808a18fd
+		summarizeBy: sum
+		sourceColumn: QuarterSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearQuarter
+		dataType: string
+		lineageTag: 09c5626f-20fc-4c6b-8c25-99755693a877
+		summarizeBy: none
+		sourceColumn: YearQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearQuarterSort
+		dataType: int64
+		formatString: 0
+		lineageTag: db5e20c7-c047-409d-8921-f6d671dbf6d1
+		summarizeBy: sum
+		sourceColumn: YearQuarterSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearQuarterShort
+		dataType: string
+		lineageTag: 79d28eb1-71d0-428b-aaee-aeaa5786b112
+		summarizeBy: none
+		sourceColumn: YearQuarterShort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearQuarterShortSort
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ca23e08-299a-4377-83e5-82da38955485
+		summarizeBy: sum
+		sourceColumn: YearQuarterShortSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b8d947e-93f1-4293-a0c4-f0cca4ceb503
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: 158d8cb7-419d-4c89-9b79-14449e9da65c
+		summarizeBy: none
+		sourceColumn: MonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNameSort
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d4588c9-4bd9-4ad2-99e2-32c10e64a105
+		summarizeBy: sum
+		sourceColumn: MonthNameSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNameShort
+		dataType: string
+		lineageTag: 3f10ba1b-7022-409b-a8a5-fc85aa1f23dc
+		summarizeBy: none
+		sourceColumn: MonthNameShort
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNameShortSort
+		dataType: int64
+		formatString: 0
+		lineageTag: d94d7602-b2e1-4876-851c-49ef94146c02
+		summarizeBy: sum
+		sourceColumn: MonthNameShortSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: string
+		lineageTag: 8d2880e7-1a11-474f-a4a2-92c967e73ae9
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthSort
+		dataType: int64
+		formatString: 0
+		lineageTag: c1528a12-38e1-415d-a9b3-b948199072c6
+		summarizeBy: sum
+		sourceColumn: YearMonthSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthShort
+		dataType: string
+		lineageTag: de1c51eb-53e9-456e-8db6-b2ba45fb6e51
+		summarizeBy: none
+		sourceColumn: YearMonthShort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthShortSort
+		dataType: int64
+		formatString: 0
+		lineageTag: 40474f47-6e52-4330-9618-19de7284aa47
+		summarizeBy: sum
+		sourceColumn: YearMonthShortSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthName
+		dataType: string
+		lineageTag: 1d147ca4-5a5d-440d-af6e-8eaf365387d3
+		summarizeBy: none
+		sourceColumn: YearMonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthNameSort
+		dataType: int64
+		formatString: 0
+		lineageTag: d3f4880b-f256-409e-9b65-fd2d1f872093
+		summarizeBy: sum
+		sourceColumn: YearMonthNameSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthNameShort
+		dataType: string
+		lineageTag: 199a7be6-4a86-4ef6-b508-539650e0dea6
+		summarizeBy: none
+		sourceColumn: YearMonthNameShort
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthNameShortSort
+		dataType: int64
+		formatString: 0
+		lineageTag: 526a3ed2-228f-4432-b9ce-776f578cd800
+		summarizeBy: sum
+		sourceColumn: YearMonthNameShortSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYearName
+		dataType: string
+		lineageTag: 733846bd-1134-4f44-8f45-8afa574d7866
+		summarizeBy: none
+		sourceColumn: MonthYearName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYearNameSort
+		dataType: int64
+		formatString: 0
+		lineageTag: 54ed7529-fee6-4603-9af7-67df5f3ee4f5
+		summarizeBy: sum
+		sourceColumn: MonthYearNameSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYearNameShort
+		dataType: string
+		lineageTag: 10c3dd05-2d73-48f7-a816-30ecd94bd5b7
+		summarizeBy: none
+		sourceColumn: MonthYearNameShort
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYearNameShortSort
+		dataType: int64
+		formatString: 0
+		lineageTag: af95d9b3-4105-4bc3-b270-13355f352886
+		summarizeBy: sum
+		sourceColumn: MonthYearNameShortSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekOfYear
+		dataType: int64
+		formatString: 0
+		lineageTag: ff8dce7f-ac7a-4e1c-8839-6a35621a6d2a
+		summarizeBy: sum
+		sourceColumn: WeekOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekOfMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: d5a9b4ae-bc0a-4e45-a66f-b8e6a7943586
+		summarizeBy: sum
+		sourceColumn: WeekOfMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: a4a31018-0d86-48d7-ab57-1780bd1d3985
+		summarizeBy: sum
+		sourceColumn: DayNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e769ca3-9360-403a-be16-789fd3504e08
+		summarizeBy: sum
+		sourceColumn: DayOfWeekNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekName
+		dataType: string
+		lineageTag: 6447c261-301d-4aa9-aafb-596b862fb775
+		summarizeBy: none
+		sourceColumn: DayOfWeekName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekNameSort
+		dataType: int64
+		formatString: 0
+		lineageTag: d7652ba8-3c04-4fc7-bbe9-a57851d8d13f
+		summarizeBy: sum
+		sourceColumn: DayOfWeekNameSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekNameShort
+		dataType: string
+		lineageTag: 1c3cd370-2a61-48d9-ac4d-099ea7ec9c04
+		summarizeBy: none
+		sourceColumn: DayOfWeekNameShort
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekNameShortSort
+		dataType: int64
+		formatString: 0
+		lineageTag: bb72e22a-65ef-4962-8f5d-0b6e27a87d20
+		summarizeBy: sum
+		sourceColumn: DayOfWeekNameShortSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekAbbr
+		dataType: string
+		lineageTag: 04b77149-3917-4be8-8366-35c6098e75f5
+		summarizeBy: none
+		sourceColumn: DayOfWeekAbbr
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekAbbrSort
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f664780-760e-442c-9242-108ddc03c9e4
+		summarizeBy: sum
+		sourceColumn: DayOfWeekAbbrSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 779b426f-9bc8-4a64-b8c9-214c99f698fe
+		summarizeBy: sum
+		sourceColumn: DayOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f6d48df-1a49-4998-ba55-499e0811ba23
+		summarizeBy: sum
+		sourceColumn: FiscalYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalQuarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 726970df-6f8f-4df0-9af3-03471430d6fa
+		summarizeBy: sum
+		sourceColumn: FiscalQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalQuarterName
+		dataType: string
+		lineageTag: 5e0d6565-6834-42b5-b8fa-45df4becce71
+		summarizeBy: none
+		sourceColumn: FiscalQuarterName
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalQuarterNameSort
+		dataType: int64
+		formatString: 0
+		lineageTag: c5d2d8e2-1d01-45e5-939d-3f290dc5d953
+		summarizeBy: sum
+		sourceColumn: FiscalQuarterNameSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d27f14d-39bd-4e2d-b2af-fe881aee8a63
+		summarizeBy: sum
+		sourceColumn: FiscalMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsWeekend
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6f2004c8-1b43-495c-a924-c47287841c0e
+		summarizeBy: none
+		sourceColumn: IsWeekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsWeekday
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e2557304-2e0e-4191-a1b6-0f687551ad9e
+		summarizeBy: none
+		sourceColumn: IsWeekday
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsCurrentMonth
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3c43b7ec-674e-4a4c-a54e-85cd809aa10b
+		summarizeBy: none
+		sourceColumn: IsCurrentMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsCurrentQuarter
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 132f8a3a-600c-4670-9ea0-eb903c576b46
+		summarizeBy: none
+		sourceColumn: IsCurrentQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsCurrentYear
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d5006316-70de-485a-823d-619769975760
+		summarizeBy: none
+		sourceColumn: IsCurrentYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthOffset
+		dataType: int64
+		formatString: 0
+		lineageTag: ec3aaeab-50c5-405a-a8a5-47c6d1a33035
+		summarizeBy: sum
+		sourceColumn: MonthOffset
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuarterOffset
+		dataType: int64
+		formatString: 0
+		lineageTag: ac7aee7d-a759-4cf4-84c0-6f887c1de6d2
+		summarizeBy: sum
+		sourceColumn: QuarterOffset
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearOffset
+		dataType: int64
+		formatString: 0
+		lineageTag: 760d22d0-6b41-427f-ac62-b86aa723bdd5
+		summarizeBy: sum
+		sourceColumn: YearOffset
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Date = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+				    #"IntellaTriage DW" = Source{[Name="IntellaTriage DW"]}[Data],
+				    dbo_Dim_Date = #"IntellaTriage DW"{[Schema="dbo",Item="Dim_Date"]}[Data]
+				in
+				    dbo_Dim_Date
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

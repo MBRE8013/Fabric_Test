@@ -1,0 +1,36 @@
+table '24x7 Toggle'
+	lineageTag: 26e1b1b0-03f8-4234-8452-44bccda6ea6e
+
+	column 'Toggle Option'
+		lineageTag: ab75806f-a2e2-44d0-9470-ac15e8f68bdd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Toggle Option]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Toggle Order'
+		formatString: 0
+		lineageTag: deb98b51-d898-4f6f-9427-404ebe90cb93
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Toggle Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '24x7 Toggle' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Toggle Option", STRING,
+				    "Toggle Order", INTEGER,
+				    {
+				        {"All", 1},
+				        {"After Hours Only", 2},
+				        {"Business Hours Only", 3}
+				    }
+				)
+
+	annotation PBI_Id = 0a816bc1fd804f5594fb6131b0668987
+

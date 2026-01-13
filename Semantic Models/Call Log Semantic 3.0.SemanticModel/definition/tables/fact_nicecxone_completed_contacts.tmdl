@@ -1,0 +1,860 @@
+table fact_nicecxone_completed_contacts
+	lineageTag: b12bdd05-1df8-4908-b42b-a5fec2292134
+
+	column abandoned
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0b45bd99-92e4-4e7f-8e28-4e941191aafc
+		summarizeBy: none
+		sourceColumn: abandoned
+
+		annotation SummarizationSetBy = Automatic
+
+	column abandon_seconds
+		dataType: double
+		lineageTag: 24185ccf-30e9-48cb-8dd1-da930aa37fb4
+		summarizeBy: sum
+		sourceColumn: abandon_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column acw_seconds
+		dataType: double
+		lineageTag: 100c666b-00e7-416d-90a5-6c89af177646
+		summarizeBy: sum
+		sourceColumn: acw_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column agent_id
+		dataType: double
+		lineageTag: 6f60e723-ad04-489b-88f3-eb5bc07b2caa
+		summarizeBy: sum
+		sourceColumn: agent_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column agent_seconds
+		dataType: double
+		lineageTag: 5295201c-2679-43f0-a3fc-eaac853a3c67
+		summarizeBy: sum
+		sourceColumn: agent_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column campaign_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 22c918e5-c8cc-47d6-a517-01d6db7d2b1e
+		summarizeBy: sum
+		sourceColumn: campaign_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_name
+		dataType: string
+		lineageTag: b0d7e6cc-ba96-4362-ae87-c2f65fdaa048
+		summarizeBy: none
+		sourceColumn: campaign_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column conference_seconds
+		dataType: double
+		lineageTag: bd5a0a21-27ae-4e75-8944-ab37ba1186bc
+		summarizeBy: sum
+		sourceColumn: conference_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column contact_id
+		dataType: int64
+		formatString: 0
+		lineageTag: e1258ddb-e9ee-4d7f-a3a8-18772a07e020
+		summarizeBy: sum
+		sourceColumn: contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column disposition_notes
+		dataType: string
+		lineageTag: df1b68d7-b167-4609-b27e-4e3405d42e93
+		summarizeBy: none
+		sourceColumn: disposition_notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_reason
+		dataType: string
+		lineageTag: a16c73a3-0334-4a03-94dd-1ebc2133d7fd
+		summarizeBy: none
+		sourceColumn: end_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_name
+		dataType: string
+		lineageTag: 1e78c909-ae9c-4d4a-a951-31d79d04edd0
+		summarizeBy: none
+		sourceColumn: first_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column from_address
+		dataType: string
+		lineageTag: 1610e518-597e-4f2e-a391-9e0d0f6bdb39
+		summarizeBy: none
+		sourceColumn: from_address
+
+		annotation SummarizationSetBy = Automatic
+
+	column high_proficiency
+		dataType: int64
+		formatString: 0
+		lineageTag: c023e5e9-d21a-4339-b029-4c7d7d977402
+		summarizeBy: sum
+		sourceColumn: high_proficiency
+
+		annotation SummarizationSetBy = Automatic
+
+	column hold_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 97d4043e-5bb4-4ab7-b609-81c23944bfc4
+		summarizeBy: sum
+		sourceColumn: hold_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column hold_seconds
+		dataType: double
+		lineageTag: b721c704-d7b7-41ec-851c-b97a28b08721
+		summarizeBy: sum
+		sourceColumn: hold_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column in_queue_seconds
+		dataType: double
+		lineageTag: 4434e41a-8b3c-4051-9869-0f998af3f8bc
+		summarizeBy: sum
+		sourceColumn: in_queue_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column is_analytics_processed
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4b84ea4c-ef4d-4eb7-9170-fc2b55f2cc2c
+		summarizeBy: none
+		sourceColumn: is_analytics_processed
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_logged
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 30c229d1-d762-4478-8971-9754d9b0acc7
+		summarizeBy: none
+		sourceColumn: is_logged
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_outbound
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1229dca9-b927-4cdf-a04c-9c5c59fecab6
+		summarizeBy: none
+		sourceColumn: is_outbound
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_refused
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1bc1a193-007a-4ca8-88fb-e85812267cd1
+		summarizeBy: none
+		sourceColumn: is_refused
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_short_abandon
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0b10235d-711b-4c2b-ab3a-7644021b98cc
+		summarizeBy: none
+		sourceColumn: is_short_abandon
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_takeover
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d7a56163-2604-4335-8450-cb2616ec19f2
+		summarizeBy: none
+		sourceColumn: is_takeover
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_name
+		dataType: string
+		lineageTag: 1a71c9d5-183b-432f-92c5-c997338e14a0
+		summarizeBy: none
+		sourceColumn: last_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column low_proficiency
+		dataType: int64
+		formatString: 0
+		lineageTag: a0d48aeb-b21f-4805-a865-4960f34f0f6a
+		summarizeBy: sum
+		sourceColumn: low_proficiency
+
+		annotation SummarizationSetBy = Automatic
+
+	column master_contact_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d6b8235a-06e1-46cf-b542-e1ba1a76a31d
+		summarizeBy: sum
+		sourceColumn: master_contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column media_sub_type_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a031a51-fa5b-4ddb-be8f-2dabc474fc2c
+		summarizeBy: sum
+		sourceColumn: media_sub_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column media_sub_type_name
+		dataType: string
+		lineageTag: f269a52e-ff3f-444d-ba5f-23ff78d5a1ea
+		summarizeBy: none
+		sourceColumn: media_sub_type_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column media_type_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9efac0a0-0e17-4327-a7b3-7905fc826226
+		summarizeBy: sum
+		sourceColumn: media_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column media_type_name
+		dataType: string
+		lineageTag: 21113eec-f18d-4ca4-b7e8-a5f9a14755f9
+		summarizeBy: none
+		sourceColumn: media_type_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column point_of_contact_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f466d99-abea-4c7c-90a4-151c8dadf4f1
+		summarizeBy: sum
+		sourceColumn: point_of_contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column point_of_contact_name
+		dataType: string
+		lineageTag: 0adba9f1-9ebe-4fb2-a5bf-3e8bc0892342
+		summarizeBy: none
+		sourceColumn: point_of_contact_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column post_queue_seconds
+		dataType: double
+		lineageTag: fa00326b-1046-43f4-a1c3-ea2762121642
+		summarizeBy: sum
+		sourceColumn: post_queue_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pre_queue_seconds
+		dataType: double
+		lineageTag: d557a245-697c-47de-a9b4-68244672e87b
+		summarizeBy: sum
+		sourceColumn: pre_queue_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column primary_disposition_id
+		dataType: double
+		lineageTag: bf5c19b7-f111-447f-9bb5-5c92f2b6970b
+		summarizeBy: sum
+		sourceColumn: primary_disposition_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column refuse_reason
+		dataType: string
+		lineageTag: 2184e947-b3fc-4175-96d7-c7b5b27d503b
+		summarizeBy: none
+		sourceColumn: refuse_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column release_seconds
+		dataType: double
+		lineageTag: a0306e7a-c0b6-4dfc-8a3b-a3c58e739553
+		summarizeBy: sum
+		sourceColumn: release_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column routing_attribute
+		dataType: int64
+		formatString: 0
+		lineageTag: 826be320-e374-439f-904a-d01f4bdc844b
+		summarizeBy: sum
+		sourceColumn: routing_attribute
+
+		annotation SummarizationSetBy = Automatic
+
+	column routing_time
+		dataType: int64
+		formatString: 0
+		lineageTag: c0fe5f75-13f0-4e33-9de0-fd58d79925e1
+		summarizeBy: sum
+		sourceColumn: routing_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column secondary_disposition_id
+		dataType: double
+		lineageTag: 4783d1ea-34b9-478c-b5ca-114036534537
+		summarizeBy: sum
+		sourceColumn: secondary_disposition_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column service_level_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: d60d6822-da99-41fb-828f-f2af433740b0
+		summarizeBy: sum
+		sourceColumn: service_level_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 694dfc22-5481-4e09-b4b2-859fd2091d5b
+		summarizeBy: sum
+		sourceColumn: skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_name
+		dataType: string
+		lineageTag: 06b3f2f5-5605-4d75-8f89-8c1d003fb600
+		summarizeBy: none
+		sourceColumn: skill_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column team_id
+		dataType: double
+		lineageTag: b79003ef-37dc-4a35-912d-fa19c7e4e8ba
+		summarizeBy: sum
+		sourceColumn: team_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column team_name
+		dataType: string
+		lineageTag: 09f47b43-9b4f-424c-98d5-99f49c09d893
+		summarizeBy: none
+		sourceColumn: team_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column to_address
+		dataType: string
+		lineageTag: a906c732-8bc0-4bd4-b09f-f52f82a67f0b
+		summarizeBy: none
+		sourceColumn: to_address
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_duration_seconds
+		dataType: double
+		lineageTag: 7f6934c7-9f23-44cb-8eea-b6be73efa139
+		summarizeBy: sum
+		sourceColumn: total_duration_seconds
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column transfer_indicator_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 58711960-400f-42c6-8ba9-2c3b2243176e
+		summarizeBy: sum
+		sourceColumn: transfer_indicator_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column transfer_indicator_name
+		dataType: string
+		lineageTag: b4fb44c6-6247-4323-9750-654fcf64c773
+		summarizeBy: none
+		sourceColumn: transfer_indicator_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column analytics_processed_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4a3005cb-ae4f-4bb8-b70f-726d28d1dfbb
+		summarizeBy: none
+		sourceColumn: analytics_processed_date
+
+		variation Variation
+			isDefault
+			relationship: 4b0ea96e-5889-4da7-8e1f-d1ebecd9f417
+			defaultHierarchy: LocalDateTable_7923faaf-6815-4b50-a1a6-7fbef21d3088.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column callback_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7f5f310f-b9ee-4e0c-ae81-22d17eef857a
+		summarizeBy: none
+		sourceColumn: callback_time
+
+		variation Variation
+			isDefault
+			relationship: bf2ba4bb-6c66-40d7-9a39-c967856eaef8
+			defaultHierarchy: LocalDateTable_7c65e09c-ac53-4f68-b196-4d5555c03078.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_start_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6e6bba3b-f39f-4653-9997-6ab521bc61ec
+		summarizeBy: none
+		sourceColumn: contact_start_date
+
+		variation Variation
+			isDefault
+			relationship: 92b3b3b1-dd93-4c82-a369-8ed9d36a3034
+			defaultHierarchy: LocalDateTable_06419d6d-bcdf-44b3-bf3b-046b59587438.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_a_c_w_warehoused
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 78e3acc2-2105-4093-983c-bf1a5b9b0c84
+		summarizeBy: none
+		sourceColumn: date_a_c_w_warehoused
+
+		variation Variation
+			isDefault
+			relationship: 543ab1a3-19d9-4ee5-852a-4fa64cb9ff05
+			defaultHierarchy: LocalDateTable_7e12b328-ee4e-4c63-b7df-e38d70a420a2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_contact_warehoused
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c824ceb7-5453-403a-8987-51f31baf37ec
+		summarizeBy: none
+		sourceColumn: date_contact_warehoused
+
+		variation Variation
+			isDefault
+			relationship: 25a7dc4b-0d00-4a29-a48c-f47226a01593
+			defaultHierarchy: LocalDateTable_f76fbb4d-b111-4627-92d3-301e2d5fc4ad.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_update_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b6bbad91-7373-4599-a153-02c17bca1d96
+		summarizeBy: none
+		sourceColumn: last_update_time
+
+		variation Variation
+			isDefault
+			relationship: 7a944953-2cbe-47e9-afda-edb20c36c3d4
+			defaultHierarchy: LocalDateTable_f4f0db14-8e5d-46e7-a708-956d937f8a02.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column refuse_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 06b65547-5fc2-4dcf-8e9f-cae6742a83ea
+		summarizeBy: none
+		sourceColumn: refuse_time
+
+		variation Variation
+			isDefault
+			relationship: 211d2589-f63e-45bb-898a-88197792d55f
+			defaultHierarchy: LocalDateTable_8b94a288-1c73-41df-a812-0cf025c8fd4a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column etl_loaded_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 641443b8-b048-470d-9c12-ce90cf029120
+		summarizeBy: none
+		sourceColumn: etl_loaded_datetime
+
+		variation Variation
+			isDefault
+			relationship: 25f1d48f-ac75-4899-a612-c5e17d47f19d
+			defaultHierarchy: LocalDateTable_2338578a-f87f-454d-ab02-e0e8399d051e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_start
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: eb6a2f52-9a2b-4014-9bff-b34d60231f03
+		summarizeBy: none
+		sourceColumn: window_start
+
+		variation Variation
+			isDefault
+			relationship: 7b7bc409-8f09-44f2-b7d2-3c8540953b3a
+			defaultHierarchy: LocalDateTable_5f892722-1a08-4857-8c65-4aff18873e72.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column window_end
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2fa3a3d9-6412-41ab-aca3-681db06be4fd
+		summarizeBy: none
+		sourceColumn: window_end
+
+		variation Variation
+			isDefault
+			relationship: 5e225d83-cd11-45b3-8a69-9236c4feca07
+			defaultHierarchy: LocalDateTable_2b4f1fa7-9b17-4404-a18f-29fb02066312.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e1361355-0f81-4077-abb3-54dbeb4cede5
+		summarizeBy: none
+		sourceColumn: contact_date
+
+		variation Variation
+			isDefault
+			relationship: 375dd776-b2a9-4ffc-bbda-8f9a3ac81526
+			defaultHierarchy: LocalDateTable_9b2a59db-8ee5-4468-a299-973a72d1c103.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Hour =
+			
+			DATE(1899, 12, 31) + TIME(HOUR([contact_start_date]), 0, 0)
+		formatString: General Date
+		lineageTag: 1987a60e-646f-4633-b96b-57ae3712ddea
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 9205a9d2-a347-4978-bb8d-b5b3e231abb5
+			defaultHierarchy: LocalDateTable_805fbb65-c8b7-4025-80b4-2746212ecf09.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team =
+			
+			VAR CustomerName = RELATED(dim_Customer[Customer])
+			VAR FactHour = [Hour]
+			VAR FactDayOfWeek = [Day of Week]
+			RETURN
+			    LOOKUPVALUE(
+			        dim_Team[Team],
+			        dim_Team[Customer Name], CustomerName,
+			        dim_Team[Hour], FactHour,
+			        dim_Team[Reporting Day of Week], FactDayOfWeek
+			    )
+		lineageTag: f490935a-d8e0-402d-88c7-4e5461311acb
+		summarizeBy: none
+		sortByColumn: 'Team Sort Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week' =
+			
+			FORMAT([contact_start_date], "ddd")
+		lineageTag: a1510c25-e8e7-4184-ac51-34d94ad6931f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Formatted' =
+			
+			FORMAT([Hour], "h AM/PM")
+		lineageTag: 6b22d2c5-b51d-4676-aa5b-4f7c5d960b07
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3aac6604-8a56-4db3-a50f-30faf726e999
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 367f1ea5-4b9c-4ce6-9e06-5276d8d6cd0a
+			defaultHierarchy: LocalDateTable_dade5759-66d6-41f2-aec9-8f7ff7bc3d99.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Hour1
+		dataType: int64
+		formatString: 0
+		lineageTag: 635b70f6-155c-4608-a4a8-b424dfe5c335
+		summarizeBy: sum
+		sourceColumn: Hour1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Reporting Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b8b29f51-694b-4d40-9999-ae004d8b05db
+		summarizeBy: none
+		sourceColumn: Reporting Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Call Result'
+		dataType: string
+		lineageTag: 990125fd-3406-43ec-a206-9eb44d73b4c1
+		summarizeBy: none
+		sourceColumn: Call Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team Sort Order' = ```
+			
+			VAR CustomerName = RELATED(dim_Customer[Customer])
+			VAR FactHour = [Hour]
+			VAR FactDayOfWeek = [Day of Week]
+			VAR TeamValue = 
+			    LOOKUPVALUE(
+			        dim_Team[Team],
+			        dim_Team[Customer Name], CustomerName,
+			        dim_Team[Hour], FactHour,
+			        dim_Team[Reporting Day of Week], FactDayOfWeek
+			    )
+			RETURN
+			SWITCH(
+			    TeamValue,
+			    // Standard Teams
+			    "Team 1", 1,
+			    "Team 2", 2,
+			    "Team 3", 3,
+			    "Team 4", 4,
+			    "Team 5", 5,
+			    "Team 6", 6,
+			    "Team 7", 7,
+			    "Team 8", 8,
+			    "Team 9", 9,
+			    "Team 10", 10,
+			    "Team 11", 11,
+			    "Team 12", 12,
+			    // NAL Weekend Teams
+			    "NAL Weekend Morning", 20,
+			    "NAL Weekend Day", 21,
+			    "NAL Weekend Evening", 22,
+			    "NAL Weekend Overnight", 23,
+			    // WED## Teams
+			    "WED1", 101,
+			    "WED2", 102,
+			    "WED3", 103,
+			    "WED4", 104,
+			    "WED5", 105,
+			    "WED6", 106,
+			    "WED7", 107,
+			    "WED8", 108,
+			    "WED9", 109,
+			    "WED10", 110,
+			    "WED11", 111,
+			    "WED12", 112,
+			    // WEM## Teams
+			    "WEM1", 121,
+			    "WEM2", 122,
+			    "WEM3", 123,
+			    "WEM4", 124,
+			    "WEM5", 125,
+			    "WEM6", 126,
+			    "WEM7", 127,
+			    "WEM8", 128,
+			    "WEM9", 129,
+			    "WEM10", 130,
+			    "WEM11", 131,
+			    "WEM12", 132,
+			    // WEE## Teams
+			    "WEE1", 141,
+			    "WEE2", 142,
+			    "WEE3", 143,
+			    "WEE4", 144,
+			    "WEE5", 145,
+			    "WEE6", 146,
+			    "WEE7", 147,
+			    "WEE8", 148,
+			    "WEE9", 149,
+			    "WEE10", 150,
+			    "WEE11", 151,
+			    "WEE12", 152,
+			    // Default
+			    999
+			)
+			```
+		formatString: 0
+		lineageTag: 5066dce0-5906-4532-af6a-b9f8948e3730
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Nights' = [Hour]
+		formatString: General Date
+		lineageTag: e767be3c-3c3d-4d85-b7a3-3aef89794e9a
+		summarizeBy: none
+		sortByColumn: 'Hour Nights Sort'
+
+		variation Variation
+			isDefault
+			relationship: 45db137f-9c9c-4c04-8654-a5a54fc5edaf
+			defaultHierarchy: LocalDateTable_ff9fe155-3a61-418c-8298-acbcc7221a01.'Date Hierarchy'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Nights Sort' =
+			
+			SWITCH(
+			    [Hour Formatted],
+			    "11 PM", 1,
+			    "12 AM", 2,
+			    "1 AM", 3,
+			    "2 AM", 4,
+			    "3 AM", 5,
+			    "4 AM", 6,
+			    "5 AM", 7,
+			    "6 AM", 8,
+			    "7 AM", 9,
+			    999
+			)
+		formatString: 0
+		lineageTag: 7a358e0a-9b3c-4de2-991c-956c46999dc3
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_nicecxone_completed_contacts = m
+		mode: import
+		source = ```
+				let
+				    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+				    IntellaTriageLakehouse = Source{[Name="IntellaTriageLakehouse"]}[Data],
+				    dbo_fact_nicecxone_completed_contacts = IntellaTriageLakehouse{[Schema="dbo",Item="fact_nicecxone_completed_contacts"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(dbo_fact_nicecxone_completed_contacts, each not Text.Contains([skill_name], "TEST") and not Text.Contains([skill_name], "Do Not Assign")),
+				    
+				    // Add Date
+				    #"Added Date" = Table.AddColumn(#"Filtered Rows", "Date", 
+				        each Date.From([contact_start_date]), 
+				        type date),
+				    
+				    // Add Hour1
+				    #"Added Hour1" = Table.AddColumn(#"Added Date", "Hour1", 
+				        each Time.Hour([contact_start_date]), 
+				        Int64.Type),
+				    
+				    // Add Reporting Date
+				    #"Added Reporting Date" = Table.AddColumn(#"Added Hour1", "Reporting Date", 
+				        each if [Hour1] < 5 then Date.AddDays([Date], -1) else [Date],
+				        type date),
+				    
+				    // Add Call Result
+				    #"Added Call Result" = Table.AddColumn(#"Added Reporting Date", "Call Result", 
+				        each 
+				            let
+				                skill = try [skill_name] otherwise "",
+				                abandonedFlag = try [abandoned] otherwise false,
+				                abandonSeconds = try [abandon_seconds] otherwise 0,
+				                agentSeconds = try [agent_seconds] otherwise 0,
+				                hasAbandoned = (abandonedFlag = true) or (abandonSeconds > 0),
+				                hasTalkTime = (agentSeconds > 0)
+				            in
+				                if skill = "Manual Outbound" then "Outbound"
+				                else if hasAbandoned then "Abandoned"
+				                else if hasTalkTime then "Answered"
+				                else "Abandoned",  // No talk time = Abandoned
+				        type text)
+				in
+				    #"Added Call Result"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

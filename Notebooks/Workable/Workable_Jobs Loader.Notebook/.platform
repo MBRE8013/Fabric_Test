@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Workable_Jobs Loader"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "45eda137-1653-8712-498a-a4229c75ea21"
+  }
+}

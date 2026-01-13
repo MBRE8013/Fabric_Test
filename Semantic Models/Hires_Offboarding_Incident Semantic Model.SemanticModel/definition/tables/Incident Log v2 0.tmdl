@@ -1,0 +1,360 @@
+table 'Incident Log v2 0'
+	lineageTag: 9149e659-a1dd-4354-9c92-9a1c51c4e13b
+
+	column Title
+		dataType: string
+		lineageTag: 26d4f1fc-4fb7-4921-b4b3-a5c32df12926
+		summarizeBy: none
+		sourceColumn: Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Incident Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 98612fb9-da91-4dc5-a831-f0182ced316c
+		summarizeBy: none
+		sourceColumn: Incident Date
+
+		variation Variation
+			isDefault
+			relationship: 7311a435-8455-4258-96ba-cc3e5c8780d0
+			defaultHierarchy: LocalDateTable_784a023c-912f-454d-8388-c4fd6966aba5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Reported Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c0e50adf-08a5-4a06-9b63-29fafe7512fa
+		summarizeBy: none
+		sourceColumn: Reported Date
+
+		variation Variation
+			isDefault
+			relationship: 446de1c0-bdae-4120-994c-3fa4a364b094
+			defaultHierarchy: LocalDateTable_6bf5ee5d-f8ae-4cec-84c3-c7d0081e9592.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Incident Source'
+		dataType: string
+		lineageTag: 5a2db5b6-3e23-482c-a116-122f75cf7ada
+		summarizeBy: none
+		sourceColumn: Incident Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		lineageTag: 9a1f6a20-4599-4816-aab1-263da7702678
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Program
+		dataType: string
+		lineageTag: 8f2b5b66-5b18-45b3-b7a4-dd071f5513ce
+		summarizeBy: none
+		sourceColumn: Program
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		lineageTag: ca1109de-56a5-4389-ba9e-4d11c8d02ba2
+		summarizeBy: none
+		sourceColumn: Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Incident Type'
+		dataType: string
+		lineageTag: 6a4668c3-69b2-40e0-8501-2da6c2eed6df
+		summarizeBy: none
+		sourceColumn: Incident Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Employee
+		dataType: string
+		lineageTag: 1cfa4f33-4362-4d59-80a4-93babb7af652
+		summarizeBy: none
+		sourceColumn: Employee
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team Lead'
+		dataType: string
+		lineageTag: 2ddfa97d-87ca-47e5-bd93-e292f0da79dc
+		summarizeBy: none
+		sourceColumn: Team Lead
+
+		annotation SummarizationSetBy = Automatic
+
+	column '90 Day'
+		dataType: string
+		lineageTag: f3a044d4-9555-4f4d-9931-993a58a7b018
+		summarizeBy: none
+		sourceColumn: 90 Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Complaint Nature'
+		dataType: string
+		lineageTag: 25059052-56e1-4ce8-b45d-e8591f50cfda
+		summarizeBy: none
+		sourceColumn: Complaint Nature
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Incident Summary'
+		dataType: string
+		lineageTag: 57d9de11-302c-4842-87b4-b7dbe88a34ac
+		summarizeBy: none
+		sourceColumn: Incident Summary
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Action Taken'
+		dataType: string
+		lineageTag: bbb3fb48-6a1f-45c1-84f4-08ce9e1598be
+		summarizeBy: none
+		sourceColumn: Action Taken
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 96481a5b-73e8-4e37-8a47-b0c8235a0828
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Old Employee'
+		dataType: string
+		lineageTag: 8ffa7551-07ca-4b3f-aaef-3b08676e4f27
+		summarizeBy: none
+		sourceColumn: Old Employee
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rollover
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1b57c734-9e55-4d87-bade-b9fea23fae0f
+		summarizeBy: none
+		sourceColumn: Rollover
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Completed Date by QA'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8083364d-7987-45a3-9f05-df09ca077b04
+		summarizeBy: none
+		sourceColumn: Completed Date by QA
+
+		variation Variation
+			isDefault
+			relationship: 7015bb35-c581-4a70-b97d-85af7f73eacb
+			defaultHierarchy: LocalDateTable_772534bc-ad23-48ba-9fcd-993cc09d4a1a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 56159584-522e-4bd2-a382-e343928d8282
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Content Type'
+		dataType: string
+		lineageTag: fe4e5789-dca8-4969-b3c3-570702eb5103
+		summarizeBy: none
+		sourceColumn: Content Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Modified
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ae447165-af2a-4112-a399-17bbb7e16ccd
+		summarizeBy: none
+		sourceColumn: Modified
+
+		variation Variation
+			isDefault
+			relationship: 243bffc8-e1f1-40bc-8829-8e961646559b
+			defaultHierarchy: LocalDateTable_6db38677-1fae-4eea-b148-ba14f99cdb45.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3d68b517-e2fd-4a1f-b3cd-0bf4b708cdaa
+		summarizeBy: none
+		sourceColumn: Created
+
+		variation Variation
+			isDefault
+			relationship: a6794bc6-324b-4fc6-9cef-ced5ed6ba0c1
+			defaultHierarchy: LocalDateTable_00d185c0-9aed-47b9-80ee-7f725eadaa08.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created By'
+		dataType: string
+		lineageTag: 1d892f2d-c1ef-4581-882e-cdb8c48bcbd8
+		summarizeBy: none
+		sourceColumn: Created By
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Modified By'
+		dataType: string
+		lineageTag: 61637038-70b6-46e4-9e60-59727313a015
+		summarizeBy: none
+		sourceColumn: Modified By
+
+		annotation SummarizationSetBy = Automatic
+
+	column Version
+		dataType: string
+		lineageTag: c6db81fd-bdc0-4b24-a185-a4ba717a38ca
+		summarizeBy: none
+		sourceColumn: Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attachments
+		dataType: string
+		lineageTag: 1fb55e82-9453-4f7c-a162-4dc386bf4c83
+		summarizeBy: none
+		sourceColumn: Attachments
+
+		annotation SummarizationSetBy = Automatic
+
+	column Edit
+		dataType: string
+		lineageTag: efadb212-00d9-45a8-a3e4-ae8ce01724c7
+		summarizeBy: none
+		sourceColumn: Edit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: 06cd5978-fbd4-47c4-a498-485fe208240c
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Item Child Count'
+		dataType: string
+		lineageTag: 6d445b3f-2fb6-463e-bab8-6e24e2ac1dc4
+		summarizeBy: none
+		sourceColumn: Item Child Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder Child Count'
+		dataType: string
+		lineageTag: a056a6ab-08c2-49fa-9e5d-665bfd978a6a
+		summarizeBy: none
+		sourceColumn: Folder Child Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Label setting'
+		dataType: string
+		lineageTag: 13d36daf-ea05-44b2-8e8d-eec8e03d3fa5
+		summarizeBy: none
+		sourceColumn: Label setting
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Retention label'
+		dataType: string
+		lineageTag: 9618f621-fce7-44b8-bc11-9e0841c37b3d
+		summarizeBy: none
+		sourceColumn: Retention label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Retention label Applied'
+		dataType: string
+		lineageTag: 558fa468-9eb3-4aa3-9ef5-fc1492451a1e
+		summarizeBy: none
+		sourceColumn: Retention label Applied
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Label applied by'
+		dataType: string
+		lineageTag: 8c808b0e-7378-4cf3-a7d7-6f651e808ff9
+		summarizeBy: none
+		sourceColumn: Label applied by
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'App Created By'
+		dataType: string
+		lineageTag: af906909-1523-45c9-b3c1-5f44022ee782
+		summarizeBy: none
+		sourceColumn: App Created By
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'App Modified By'
+		dataType: string
+		lineageTag: 3a04d5eb-8e4e-4298-9b09-9735e8ff6683
+		summarizeBy: none
+		sourceColumn: App Modified By
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Compliance Asset Id'
+		dataType: string
+		lineageTag: c61d2586-bc23-4f3d-9cc7-42287a01f368
+		summarizeBy: none
+		sourceColumn: Compliance Asset Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Color Tag'
+		dataType: string
+		lineageTag: 4e84daa8-27d9-42b9-9a34-8b8ded1f1fb5
+		summarizeBy: none
+		sourceColumn: Color Tag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Item is a Record'
+		dataType: string
+		lineageTag: d28be385-380f-49e5-a45d-09160786014b
+		summarizeBy: none
+		sourceColumn: Item is a Record
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Incident Log v2 0' = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Tables("https://intellatriage.sharepoint.com/sites/IncidentLog", [Implementation="2.0", ViewMode="All"]),
+				    #"abf3e537-f4a2-4771-9072-a7e786995dc1" = Source{[Id="abf3e537-f4a2-4771-9072-a7e786995dc1"]}[Items]
+				in
+				    #"abf3e537-f4a2-4771-9072-a7e786995dc1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

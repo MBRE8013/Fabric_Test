@@ -1,0 +1,188 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "RestSource",
+            "requestMethod": "GET",
+            "additionalHeaders": {
+              "Authorization": {
+                "value": "Bearer @{variables('v_bearerToken')}",
+                "type": "Expression"
+              }
+            },
+            "paginationRules": {
+              "supportRFC5988": "true"
+            },
+            "httpRequestTimeout": "00:01:40",
+            "requestInterval": "00.00:00:00.010",
+            "datasetSettings": {
+              "type": "RestResource",
+              "typeProperties": {
+                "relativeUrl": {
+                  "value": "@{concat(\n  '/incontactapi/services/v27.0/skills/sla-summary?',\n  'startDate=',\n  uriComponent(\n    formatDateTime(\n      convertTimeZone(\n        addHours(\n          startOfDay(convertTimeZone(utcNow(),'UTC','Central Standard Time')),\n          5\n        ),\n        'Central Standard Time','UTC'\n      ),\n      'yyyy-MM-ddTHH:mm:ssZ'\n    )\n  ),\n  '&endDate=',\n  uriComponent(\n    formatDateTime(utcNow(),'yyyy-MM-ddTHH:mm:ssZ')\n  )\n)}\n",
+                  "type": "Expression"
+                }
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "6c6e75cc-032f-4332-9642-ad1d08e7aee6"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "DelimitedTextSink",
+            "formatSettings": {
+              "type": "DelimitedTextWriteSettings",
+              "fileExtension": ".txt"
+            },
+            "storeSettings": {
+              "type": "LakehouseWriteSettings"
+            },
+            "datasetSettings": {
+              "type": "DelimitedText",
+              "typeProperties": {
+                "location": {
+                  "type": "LakehouseLocation",
+                  "folderPath": {
+                    "value": "cxone/sla-summary/ingest_date=@{formatDateTime(utcNow(),'yyyy-MM-dd')}",
+                    "type": "Expression"
+                  }
+                },
+                "columnDelimiter": "|",
+                "quoteChar": "\"",
+                "escapeChar": "\\",
+                "firstRowAsHeader": true
+              },
+              "schema": [],
+              "connectionSettings": {
+                "name": "IntellaTriageLakehouse",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "bdb59e68-44f9-9f71-4089-709bf594b6ab",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Files"
+                  },
+                  "externalReferences": {
+                    "connection": "d9e03e41-1714-4226-8bec-f53d17715408"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            },
+            "columnFlattenSettings": {
+              "treatArrayAsString": false,
+              "treatStructAsString": false,
+              "flattenColumnDelimiter": "."
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "CopyData to Lakehouse Files",
+        "dependsOn": [
+          {
+            "activity": "SetToken",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "WebActivity",
+        "typeProperties": {
+          "method": "POST",
+          "relativeUrl": "/authentication/v1/token/access-key",
+          "headers": {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          "body": {
+            "value": "{\n  \"accessKeyId\": \"@{pipeline().parameters.p_accessKeyId}\",\n  \"accessKeySecret\": \"@{pipeline().parameters.p_accessKeySecret}\"\n}\n",
+            "type": "Expression"
+          }
+        },
+        "externalReferences": {
+          "connection": "eaef5d39-dcc3-427d-a83e-c27021856633"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Auth",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "v_bearerToken",
+          "value": {
+            "value": "@activity('Auth').output.access_token",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "SetToken",
+        "dependsOn": [
+          {
+            "activity": "Auth",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "p_accessKeyId": {
+        "type": "string",
+        "defaultValue": "NJT54WFT5ZWVYLOBJFGYFZGBWPVW6SISFJMGOLFD4BW4GQVI2BZA===="
+      },
+      "p_accessKeySecret": {
+        "type": "string",
+        "defaultValue": "3Q5YCNMV4J74YPRNHWGCFACDDYWUDNESCIKVMW3LOK4N2NL3Y2EQ===="
+      },
+      "p_region": {
+        "type": "string",
+        "defaultValue": "na1"
+      }
+    },
+    "variables": {
+      "v_bearerToken": {
+        "type": "String"
+      },
+      "v_apiEndpoint": {
+        "type": "String"
+      },
+      "v_apiBase": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+table 'Funnel Stages'
+	lineageTag: 103c4ba4-98fb-4583-b421-700602ca4145
+
+	column 'Funnel Stage'
+		lineageTag: f1cea4b1-d127-43c8-9380-5f36a1799ca5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Funnel Stage]
+		sortByColumn: 'Sort Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort Order'
+		formatString: 0
+		lineageTag: 73a617e7-8dab-4b63-9f61-ac3ae5a689e9
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Funnel Stages' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Funnel Stage", STRING,
+				    "Sort Order", INTEGER,
+				    {
+				        {"Applied", 1},
+				        {"Rejected", 2},
+				        {"Auto Disqualify", 3},
+				        {"Phone Screen Invite", 4},
+				        {"No Response", 5},
+				        {"Accepted - No Show", 6},
+				        {"PS Conducted", 7},
+				        {"Failed Screen", 8},
+				        {"Offer Sent", 9},
+				        {"Rescinded", 10},
+				        {"Pending Acceptance", 11},
+				        {"Declined", 12},
+				        {"Hired", 13}
+				    }
+				)
+
+	annotation PBI_Id = 45b28142356540cd8b4ffa2391b52ba1
+

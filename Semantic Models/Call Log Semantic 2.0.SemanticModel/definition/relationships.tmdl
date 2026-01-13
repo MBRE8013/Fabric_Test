@@ -1,0 +1,87 @@
+relationship 87e02dc9-1077-4f2c-a9a8-b3a8117d256a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.'Contact Start Date Time'
+	toColumn: LocalDateTable_c70fa812-e64a-4b9b-a03b-83ebdc8f96b3.Date
+
+relationship a06ed5c4-07f8-4e2f-a0b8-ed61d6e25a34
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.'Contact End Date Time'
+	toColumn: LocalDateTable_f86e0275-dd38-4f90-972e-cd6e0367f964.Date
+
+relationship 413e39be-9e8d-4d4b-bbab-f5b5baeec97d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DateDim.Date
+	toColumn: LocalDateTable_d1bdd89e-ad01-43d3-b149-b81e9169a637.Date
+
+relationship 5f12166f-3e2b-4b04-b4e1-15d33ea448e0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.Date
+	toColumn: LocalDateTable_bcac9e68-85df-4a6e-9c21-384df1bf2533.Date
+
+relationship ccb76bb2-5f57-d19c-de56-e55b91135736
+	fromColumn: Data.'Reporting Date'
+	toColumn: DateDim.Date
+
+relationship 481a8654-f02b-e980-c3c3-ab7b1e233f5d
+	fromColumn: Data.'Reporting Day'
+	toColumn: 'Day of Week Filter'.'Day Number'
+
+relationship 01e2ec31-c56d-4efb-9680-25e74f6ccd61
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.analytics_processed_date
+	toColumn: LocalDateTable_2e855cd5-4991-4f2c-a648-a77ef837a5c0.Date
+
+relationship 176b5dad-0c14-49ec-973e-effedcc68a6a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.callback_time
+	toColumn: LocalDateTable_c3e8798f-4bb8-47fa-910b-145fbdc2c225.Date
+
+relationship 25e6e9a6-2b8b-463a-9f45-25aea8901720
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.date_a_c_w_warehoused
+	toColumn: LocalDateTable_dfb227f2-5d0a-49c9-bd7e-3e301e4fffc7.Date
+
+relationship 42ed49cd-a080-4b52-8bdd-9fc844cbfd1c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.date_contact_warehoused
+	toColumn: LocalDateTable_2d4fa3ff-061e-46b4-a607-0c5963afdc1b.Date
+
+relationship f0a6670c-e7e6-4532-936f-862169b497cc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.last_update_time
+	toColumn: LocalDateTable_c82dd007-30f6-45cf-b909-857c35e2c646.Date
+
+relationship e810e9b1-6b49-4093-8b1f-c68f6665d615
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.refuse_time
+	toColumn: LocalDateTable_d23a5366-239d-451b-94ed-82fdb726ed22.Date
+
+relationship 1436d58f-c2e8-4c58-8327-c7e2344a5f44
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.etl_loaded_datetime
+	toColumn: LocalDateTable_aadcbc63-c317-4582-a59b-8b41e5751440.Date
+
+relationship cc7fa555-2858-4564-9065-6888356d05ff
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.window_start
+	toColumn: LocalDateTable_947f377f-1186-4268-a101-894b6f0cbfcb.Date
+
+relationship f2b265a2-5149-467a-855e-99d607d5ada6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.window_end
+	toColumn: LocalDateTable_08b323d6-d081-4b5c-ab89-20720bcf3f9e.Date
+
+relationship 42dc3fd4-583b-4504-9e36-1cc44e3946b3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Data.contact_date
+	toColumn: LocalDateTable_e6affc95-4d90-4e53-97fa-e8c4e4503070.Date
+
+relationship 92e7288f-61ab-c40d-ea4d-5448f5a16e41
+	crossFilteringBehavior: bothDirections
+	fromColumn: PeriodDateBridge.Date
+	toColumn: DateDim.Date
+
+relationship 8151e051-1059-76b0-55b7-dd7e8f26ed05
+	fromColumn: PeriodDateBridge.Period
+	toColumn: PeriodParameter.Period
+

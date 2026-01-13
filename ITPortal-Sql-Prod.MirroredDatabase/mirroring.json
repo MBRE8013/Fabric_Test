@@ -1,0 +1,888 @@
+{
+  "properties": {
+    "source": {
+      "type": "AzureSqlDatabase",
+      "typeProperties": {
+        "connection": "af6c769e-7531-4d4b-9e02-6ac81abd134a",
+        "landingZone": {
+          "type": "MountedRelationalDatabase",
+          "typeProperties": {}
+        }
+      }
+    },
+    "target": {
+      "type": "MountedRelationalDatabase",
+      "typeProperties": {
+        "defaultSchema": "dbo",
+        "format": "Delta",
+        "retentionInDays": 1
+      }
+    },
+    "mountedTables": [
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "AccessFlow"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ActionAssignedClientPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Actions"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "AgentCallLog"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "AlertBannerConfig"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "AlertBannerConfigAssignedClientPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Announcements"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "AOCSchedules"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "AspNetUsers"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CallLog"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CallLogKPI"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClearTriageAuditLog"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientActions"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientAcuityEmailConfig"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientAcuityEmailConfigAssignedClientPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientAcuityEmailConfigAssignedClientWorkGroups"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientAcuityLevels"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientADC"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientConfigurations"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientContacts"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientDARConfiguration"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientEmergencyCoverageConfig"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientEmergencyCoverageConfigAssignedClientPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientEncounters"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientIncidentLog"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientProgramCallCenter"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientProgramOnCallSchedule"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Clients"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CLientSpecialRequest"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientWorkGroupAssignedClientPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientWorkGroupAssignedClients"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientWorkGroupAssignedUsers"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientWorkGroups"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientWorkGroupStatus"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ClientWorkGroupStatusAssignedClients"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CompanyDocuments"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CPTimeZone"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CTAdviceTopicDetails"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CTAdviceTopics"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CTCallProtocolHandoutsSent"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CTCallProtocolOTCRecommendations"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CTCallProtocolQuestions"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CTCallProtocols"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CTCallSummaries"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "CustomerReference"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "DARCategories"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "DARMethods"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "DimDate"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Disposition"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "EMRTypeLookup"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "EncounterPriorityLU"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Encounters"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "EncounterStatusLU"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "EncounterStatusLUAssignedClientPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "EncTypesLU"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "HCHBDocumentTypes"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "IntegrationTypeLU"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ListOfValues"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "NatureCategories"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Natures"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallResource"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallResourceIdentifierAssignedClientPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallResourceIdentifiers"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallResourcePrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallResources"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallResourceType"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallRoles"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallSchedules"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallScheduleTemplateDays"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OnCallScheduleTemplates"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "OpenEncounterTransferLog"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientAllergies"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientCareGivers"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientDiagnosis"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientExtendedData"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientMedications"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientPlanOfCare"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientProviders"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Patients"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientScheduleDisplayColor"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientSchedules"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientStatusArchive"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PatientStatusLU"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PowerBIConfig"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Programs"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ProtocolWorkflowClientProgram"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "ProtocolWorkflows"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "PublishUnpublishLog"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "QIReportNatureLU"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "QIReports"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Relationships"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "RequestTypes"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "SecondCallConfigurationAssignedClientPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "SecondCallConfigurations"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "SharedCalendarPrograms"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "SharedCalendars"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Shifts"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "SourceLU"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "SpecialtyLU"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "Status"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "UserClients"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "UserProgram"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "WorkGroupAssignedClients"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "WorkGroupAssignedUsers"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "WorkGroups"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "WorkGroupTypes"
+          }
+        }
+      },
+      {
+        "source": {
+          "typeProperties": {
+            "schemaName": "dbo",
+            "tableName": "WorkGroupTypesLU"
+          }
+        }
+      }
+    ]
+  }
+}

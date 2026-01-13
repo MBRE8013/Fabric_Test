@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Clinical Analysis DW Semantic"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6419617d-f883-b67e-4d3c-7ce4c927d492"
+  }
+}

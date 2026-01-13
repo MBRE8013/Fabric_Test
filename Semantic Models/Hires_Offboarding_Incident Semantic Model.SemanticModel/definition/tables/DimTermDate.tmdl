@@ -1,0 +1,227 @@
+table DimTermDate
+	lineageTag: 780f71d5-5d23-4f80-9636-e6fb089363fd
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 77348279-a1d0-4bad-a28a-dcf3d60948ac
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 3c6dfc90-37f9-46e7-b1ec-97be59a5bc73
+			defaultHierarchy: LocalDateTable_cbd26fcd-dc50-4121-85c9-aef2b7b84320.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: a4a09009-7013-48dd-ad38-fc9a45ee7f04
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 739e0d20-6343-481e-9b2a-246d5afeccaf
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 25a3df55-8aea-4551-85c7-ce3157f0f181
+		summarizeBy: sum
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsThisWeek
+		dataType: int64
+		formatString: 0
+		lineageTag: 726a0fda-da71-4e5a-9f10-c229f93298d1
+		summarizeBy: sum
+		sourceColumn: IsThisWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsLastFriSun
+		dataType: int64
+		formatString: 0
+		lineageTag: 1148dd8c-d0ec-43a8-b0e7-f8da7f646069
+		summarizeBy: sum
+		sourceColumn: IsLastFriSun
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsLastWeek
+		dataType: int64
+		formatString: 0
+		lineageTag: 7be781ad-f235-4cc9-9255-2963f171a0f5
+		summarizeBy: sum
+		sourceColumn: IsLastWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsThisMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: bfff8f7c-8fe9-4ab7-9157-5bf05b567e66
+		summarizeBy: sum
+		sourceColumn: IsThisMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsLastMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: 842655fb-539b-4a03-8e47-8b4536902485
+		summarizeBy: sum
+		sourceColumn: IsLastMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsThisQuarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 5fe38f53-192a-4865-aeea-c842c688ab35
+		summarizeBy: sum
+		sourceColumn: IsThisQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsLastQuarter
+		dataType: int64
+		formatString: 0
+		lineageTag: e3b7deec-674c-4a43-a585-84ba89b06469
+		summarizeBy: sum
+		sourceColumn: IsLastQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsThisYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 0bf7e62a-e84b-4d99-ae46-ebb6a197a5e9
+		summarizeBy: sum
+		sourceColumn: IsThisYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsLastYear
+		dataType: int64
+		formatString: 0
+		lineageTag: e687028e-d6c4-4b08-bb0e-047557d6fe31
+		summarizeBy: sum
+		sourceColumn: IsLastYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsLast30Days
+		dataType: int64
+		formatString: 0
+		lineageTag: cde568a1-fdcb-4d37-82d2-ef0d631c283a
+		summarizeBy: sum
+		sourceColumn: IsLast30Days
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekEndingDate =
+			
+			VAR DayOfWeek = WEEKDAY(DimTermDate[Date], 2)  // Monday = 1, Sunday = 7
+			VAR DaysUntilSunday = 7 - DayOfWeek
+			RETURN
+			DimTermDate[Date] + DaysUntilSunday
+		formatString: General Date
+		lineageTag: 7942ee2d-2bdf-46eb-9fa9-fd22fabcb949
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 205b634f-1e7c-4454-a58a-05ca59161ce6
+			defaultHierarchy: LocalDateTable_821b600b-a087-41bf-9b90-f18ad187f7ef.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimTermDate = m
+		mode: import
+		source = ```
+				let
+				    // Create base date table
+				    StartDate = #date(2020, 1, 1),
+				    EndDate = #date(2030, 12, 31),
+				    NumberOfDays = Duration.Days(EndDate - StartDate) + 1,
+				    DateList = List.Dates(StartDate, NumberOfDays, #duration(1, 0, 0, 0)),
+				    DateTable = Table.FromList(DateList, Splitter.SplitByNothing(), {"Date"}, null, ExtraValues.Error),
+				    ChangedType = Table.TransformColumnTypes(DateTable, {{"Date", type date}}),
+				    
+				    // Get today's date
+				    TodayDate = Date.From(DateTime.LocalNow()),
+				    
+				    // Calculate week boundaries (Monday-Sunday)
+				    ThisWeekStart = Date.AddDays(TodayDate, - Date.DayOfWeek(TodayDate, Day.Monday)),
+				    ThisWeekEnd = Date.AddDays(ThisWeekStart, 6),
+				    LastFriday = Date.AddDays(ThisWeekStart, -3),
+				    LastSunday = Date.AddDays(LastFriday, 2),
+				    LastWeekStart = Date.AddDays(ThisWeekStart, -7),
+				    LastWeekEnd = Date.AddDays(ThisWeekStart, -1),
+				    
+				    // Calculate Last 30 Days boundaries
+				    Last30DaysStart = Date.AddDays(TodayDate, -29),
+				    Last30DaysEnd = TodayDate,
+				    
+				    // Add basic date attributes
+				    AddYear = Table.AddColumn(ChangedType, "Year", each Date.Year([Date]), Int64.Type),
+				    AddMonth = Table.AddColumn(AddYear, "Month", each Date.Month([Date]), Int64.Type),
+				    AddQuarter = Table.AddColumn(AddMonth, "Quarter", each Date.QuarterOfYear([Date]), Int64.Type),
+				    
+				    // Add period indicator columns
+				    AddIsThisWeek = Table.AddColumn(AddQuarter, "IsThisWeek", each if [Date] >= ThisWeekStart and [Date] <= ThisWeekEnd then 1 else 0, Int64.Type),
+				    
+				    AddIsLastFriSun = Table.AddColumn(AddIsThisWeek, "IsLastFriSun", each if [Date] >= LastFriday and [Date] <= LastSunday then 1 else 0, Int64.Type),
+				    
+				    AddIsLastWeek = Table.AddColumn(AddIsLastFriSun, "IsLastWeek", each if [Date] >= LastWeekStart and [Date] <= LastWeekEnd then 1 else 0, Int64.Type),
+				    
+				    AddIsLast30Days = Table.AddColumn(AddIsLastWeek, "IsLast30Days", each if [Date] >= Last30DaysStart and [Date] <= Last30DaysEnd then 1 else 0, Int64.Type),
+				    
+				    AddIsThisMonth = Table.AddColumn(AddIsLast30Days, "IsThisMonth", each if Date.Year([Date]) = Date.Year(TodayDate) and Date.Month([Date]) = Date.Month(TodayDate) then 1 else 0, Int64.Type),
+				    
+				    AddIsLastMonth = Table.AddColumn(AddIsThisMonth, "IsLastMonth", each 
+				        let
+				            LastMonthDate = Date.AddMonths(Date.StartOfMonth(TodayDate), -1)
+				        in
+				            if Date.Year([Date]) = Date.Year(LastMonthDate) and Date.Month([Date]) = Date.Month(LastMonthDate) then 1 else 0, Int64.Type),
+				    
+				    AddIsThisQuarter = Table.AddColumn(AddIsLastMonth, "IsThisQuarter", each 
+				        let
+				            ThisQuarterStart = Date.StartOfQuarter(TodayDate),
+				            ThisQuarterEnd = Date.EndOfQuarter(TodayDate)
+				        in
+				            if [Date] >= ThisQuarterStart and [Date] <= ThisQuarterEnd then 1 else 0, Int64.Type),
+				    
+				    AddIsLastQuarter = Table.AddColumn(AddIsThisQuarter, "IsLastQuarter", each 
+				        let
+				            LastQuarterStart = Date.StartOfQuarter(Date.AddQuarters(TodayDate, -1)),
+				            LastQuarterEnd = Date.EndOfQuarter(Date.AddQuarters(TodayDate, -1))
+				        in
+				            if [Date] >= LastQuarterStart and [Date] <= LastQuarterEnd then 1 else 0, Int64.Type),
+				    
+				    AddIsThisYear = Table.AddColumn(AddIsLastQuarter, "IsThisYear", each if Date.Year([Date]) = Date.Year(TodayDate) then 1 else 0, Int64.Type),
+				    
+				    AddIsLastYear = Table.AddColumn(AddIsThisYear, "IsLastYear", each if Date.Year([Date]) = Date.Year(TodayDate) - 1 then 1 else 0, Int64.Type)
+				in
+				    AddIsLastYear
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

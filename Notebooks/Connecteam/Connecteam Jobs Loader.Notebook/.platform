@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Connecteam Jobs Loader"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c62fada5-57b1-9f39-4339-b1fedc448f12"
+  }
+}

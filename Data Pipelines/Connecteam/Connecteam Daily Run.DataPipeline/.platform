@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "Connecteam Daily Run"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "12d017ba-e464-a2be-42bd-8fb256c50fa3"
+  }
+}

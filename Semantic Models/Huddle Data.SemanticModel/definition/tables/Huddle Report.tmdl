@@ -1,0 +1,226 @@
+table 'Huddle Report'
+	lineageTag: 680eadc5-717d-4191-94ed-5452c01852f8
+
+	column 'Source Sheet'
+		dataType: string
+		lineageTag: e08ae99d-c649-434d-8389-cec3a180ddd2
+		summarizeBy: none
+		sourceColumn: Source Sheet
+
+		annotation SummarizationSetBy = Automatic
+
+	column Progress
+		dataType: string
+		lineageTag: 6fbe0f53-2797-4244-820a-0818e769f141
+		summarizeBy: none
+		sourceColumn: Progress
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column2
+		dataType: string
+		lineageTag: eae8cdfb-aac2-426b-9f91-5f39aeed07b2
+		summarizeBy: none
+		sourceColumn: Column2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a69568a0-b29d-4cf9-9126-4f2c82bf8ac3
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: d51c2182-063d-4b26-869c-132398403931
+			defaultHierarchy: LocalDateTable_1ae87f80-09b8-403c-9d79-788c8958b611.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Time
+		dataType: string
+		lineageTag: 1e734aff-79c3-4c6e-b4d5-4b587de0560c
+		summarizeBy: none
+		sourceColumn: Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nature
+		dataType: string
+		lineageTag: 0af94dcc-13aa-41f1-898c-1678d2a3018e
+		summarizeBy: none
+		sourceColumn: Nature
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Call Off Specification'
+		dataType: string
+		lineageTag: daccd6f1-787b-4f61-8b47-71ffa41dbf26
+		summarizeBy: none
+		sourceColumn: Call Off Specification
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Entered By'
+		dataType: string
+		lineageTag: 11f889f2-2bca-42f2-a9e7-bab4fd8a0753
+		summarizeBy: none
+		sourceColumn: Entered By
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nurse
+		dataType: string
+		lineageTag: 0526765c-13a0-4621-a3bd-1dad9ea1ad13
+		summarizeBy: none
+		sourceColumn: Nurse
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		lineageTag: 4248c756-4013-422c-9017-1890d2452b22
+		summarizeBy: none
+		sourceColumn: Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column Client
+		dataType: string
+		lineageTag: 9919f844-dba7-4fa8-ac19-82b65b3dcaed
+		summarizeBy: none
+		sourceColumn: Client
+
+		annotation SummarizationSetBy = Automatic
+
+	column Comments
+		dataType: string
+		lineageTag: 2551954c-26db-4117-b4dc-046e36a7be1d
+		summarizeBy: none
+		sourceColumn: Comments
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Action Taken'
+		dataType: string
+		lineageTag: 60830461-dbaf-4de4-9db0-47348c61c5c8
+		summarizeBy: none
+		sourceColumn: Action Taken
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IT questions (temp column)'
+		dataType: string
+		lineageTag: 8f7fa320-8b91-41c1-bf0c-1c477238b223
+		summarizeBy: none
+		sourceColumn: IT questions (temp column)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column1
+		dataType: string
+		lineageTag: 2e91f35d-cf3a-40b8-8d55-d54cdc9634dd
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Relative Date' = 'Huddle Report'[Date]
+		formatString: General Date
+		lineageTag: d5349489-0be8-4974-8454-62f5676dc3d0
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 1139aa7f-11c0-4fc5-a47e-13463fb804da
+			defaultHierarchy: LocalDateTable_0d3f7708-eefd-464d-beab-7738049f2c02.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'is yesterday' =
+			
+			IF(
+			    'Huddle Report'[Date] = TODAY() - 1,
+			    TRUE(),
+			    FALSE()
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 12fbdb58-09dd-46cb-96e2-5a2ea38aa14d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'is last Friday-Sun' =
+			
+			VAR TodayDayOfWeek = WEEKDAY(TODAY(), 2)  // Monday=1, Sunday=7
+			VAR DaysBackToLastSunday = IF(TodayDayOfWeek = 7, 7, TodayDayOfWeek)  // Days to most recent completed Sunday
+			VAR LastSunday = TODAY() - DaysBackToLastSunday
+			VAR LastFriday = LastSunday - 2
+			VAR CurrentDate = 'Huddle Report'[Date]
+			RETURN
+			    CurrentDate >= LastFriday && CurrentDate <= LastSunday
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 988bc6ec-be0e-477d-96f5-b1dfe82279cd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week' = FORMAT('Huddle Report'[Date], "ddd")
+		lineageTag: 811cc991-6f96-44e2-9703-80315bcac7ba
+		summarizeBy: none
+		sortByColumn: 'Day of Week Order'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week Order' = WEEKDAY('Huddle Report'[Date], 2)
+		formatString: 0
+		lineageTag: 7ed89607-717b-4057-b3a8-3ddcaae2a42f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Huddle Report' = m
+		mode: import
+		source = ```
+				let
+				    Source = SharePoint.Files("https://intellatriage.sharepoint.com/sites/AOC", [ApiVersion = 15]),
+				    #"Huddle Report v2 0 xlsx_https://intellatriage sharepoint com/sites/AOC/Shared Documents/Huddle Report/" = Source{[Name="Huddle Report v2.0.xlsx",#"Folder Path"="https://intellatriage.sharepoint.com/sites/AOC/Shared Documents/Huddle Report/"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"Huddle Report v2 0 xlsx_https://intellatriage sharepoint com/sites/AOC/Shared Documents/Huddle Report/"),
+				    
+				    // Filter to only sheets matching the "Huddle Report (Month Year)" pattern
+				    #"Filtered Sheets" = Table.SelectRows(#"Imported Excel Workbook", each [Kind] = "Sheet" and Text.StartsWith([Name], "Huddle Report (")),
+				    
+				    // Add custom column to process each sheet's data
+				    #"Added Custom" = Table.AddColumn(#"Filtered Sheets", "ProcessedData", each 
+				        let
+				            SheetData = [Data],
+				            RemovedTopRows = Table.Skip(SheetData, 9),
+				            PromotedHeaders = Table.PromoteHeaders(RemovedTopRows, [PromoteAllScalars=true]),
+				            FilteredRows = Table.SelectRows(PromotedHeaders, each [Call Off Specification] <> null and [Call Off Specification] <> "")
+				        in
+				            FilteredRows
+				    ),
+				    
+				    // Expand the processed data
+				    #"Expanded ProcessedData" = Table.ExpandTableColumn(#"Added Custom", "ProcessedData", Table.ColumnNames(#"Added Custom"{0}[ProcessedData])),
+				    
+				    // Keep the Name column to track which month the data came from, then remove other metadata columns
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded ProcessedData",{{"Name", "Source Sheet"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns", List.Combine({{"Source Sheet"}, Table.ColumnNames(#"Added Custom"{0}[ProcessedData])})),
+				    
+				    // Safe date conversion - invalid dates become null
+				    #"Changed Type" = Table.TransformColumns(#"Removed Other Columns", {{"Date", each try Date.From(_) otherwise null, type nullable date}})
+				in
+				    #"Changed Type"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

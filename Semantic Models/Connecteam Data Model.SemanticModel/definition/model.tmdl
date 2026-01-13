@@ -1,0 +1,37 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["dim_connecteam_users","dim_connecteam_jobs","connecteam_shift_statuses","connecteam_shifts_exploded"]
+
+ref table dim_connecteam_users
+ref table DateTableTemplate_c1f112dc-0f65-4b2f-9d7b-7fb119092d2c
+ref table LocalDateTable_54caf2bb-4a09-4fbe-8c15-c193cc189ef7
+ref table LocalDateTable_1c9031c9-b255-4211-ad33-37214028b5da
+ref table LocalDateTable_bead4653-7811-4882-b404-89742f8c56ab
+ref table LocalDateTable_fb7225d4-fb81-4735-875b-4405581fccdf
+ref table dim_connecteam_jobs
+ref table LocalDateTable_5b65a981-1373-4ddf-abc8-fb535d8206ab
+ref table connecteam_shift_statuses
+ref table LocalDateTable_be1905b0-4b5a-4fd7-9d53-03e377595f8d
+ref table LocalDateTable_cee7895c-932a-489b-89ec-b2093ce3427e
+ref table LocalDateTable_46b041e2-d815-4d13-a5a2-9cf1c81a754f
+ref table LocalDateTable_d53ac5f4-af9f-4a95-b60d-fbc1b6504e18
+ref table connecteam_shifts_exploded
+ref table LocalDateTable_433ddaf1-1364-4e80-8c3b-29d12249b2b2
+ref table LocalDateTable_4d24db97-a780-4f4b-a269-2f39071b92e7
+ref table LocalDateTable_df3fe303-5834-4e53-a776-8846d3ea5925
+ref table LocalDateTable_067e3a36-c245-4a14-b9b1-dfe91a8b66de
+ref table LocalDateTable_0d65bb25-ef42-4466-a8e5-6b9694ef3de6
+ref table LocalDateTable_75bfe2f6-fc43-40e6-a19a-00dd527bcad5
+ref table LocalDateTable_baefcff6-8519-447a-9f80-35f1d0f05861
+ref table LocalDateTable_7bca4731-e432-4529-8f57-8e2155a23ac1
+
+ref cultureInfo en-US
+

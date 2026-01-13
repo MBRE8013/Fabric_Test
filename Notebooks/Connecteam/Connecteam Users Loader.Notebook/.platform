@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Connecteam Users Loader"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "054172d4-73a2-a579-4a44-be933ad86e86"
+  }
+}

@@ -1,0 +1,33 @@
+table Action
+	lineageTag: 7beba46a-fe4d-4c55-970c-8b1bdabda37e
+
+	column Action
+		dataType: string
+		lineageTag: caa27f4c-e49c-4d12-8245-fdfc291d329c
+		summarizeBy: none
+		sourceColumn: Action
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resolution
+		dataType: string
+		lineageTag: b578f4ae-8502-4f63-8c5a-896792ab5be6
+		summarizeBy: none
+		sourceColumn: Resolution
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Action = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+				    #"IntellaTriage DW" = Source{[Name="IntellaTriage DW"]}[Data],
+				    dbo_Action = #"IntellaTriage DW"{[Schema="dbo",Item="Action"]}[Data]
+				in
+				    dbo_Action
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

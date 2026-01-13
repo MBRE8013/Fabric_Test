@@ -1,0 +1,178 @@
+table dim_connecteam_jobs
+	lineageTag: 2947eb64-f711-49d7-94b8-22d00ec7bdf7
+
+	column job_id
+		dataType: string
+		lineageTag: 740186fc-0515-4f26-b707-8667ad04af48
+		summarizeBy: none
+		sourceColumn: job_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		lineageTag: 9f4185dd-fc3a-4f5d-b4b8-e9a6390911fc
+		summarizeBy: none
+		sourceColumn: Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_code
+		dataType: string
+		lineageTag: 8d872035-0f49-4b12-93b9-2aaa2918ddd2
+		summarizeBy: none
+		sourceColumn: job_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_color
+		dataType: string
+		lineageTag: d0912591-c8c4-4d9f-8a83-895dc82dd665
+		summarizeBy: none
+		sourceColumn: job_color
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_description
+		dataType: string
+		lineageTag: 3cb6c9c0-3a2c-4cf1-a52a-c5fb92cbf849
+		summarizeBy: none
+		sourceColumn: job_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_address
+		dataType: string
+		lineageTag: ea8244af-813c-4522-904c-0b8f6c9899f0
+		summarizeBy: none
+		sourceColumn: job_address
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_deleted
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: fd7a3668-2796-4630-b0ae-12ae304c1eac
+		summarizeBy: none
+		sourceColumn: is_deleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column assign_type
+		dataType: string
+		lineageTag: 528cbe37-c066-409c-ac59-f1d19441b778
+		summarizeBy: none
+		sourceColumn: assign_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_user_ids
+		dataType: string
+		lineageTag: 2341dfbe-6349-4fe8-b0a0-34309db62e22
+		summarizeBy: none
+		sourceColumn: assigned_user_ids
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_group_ids
+		dataType: string
+		lineageTag: 60485290-0328-4dda-868e-0eb87535ad61
+		summarizeBy: none
+		sourceColumn: assigned_group_ids
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_user_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 53a1be45-238d-4004-a077-81aa4635ac04
+		summarizeBy: sum
+		sourceColumn: assigned_user_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column assigned_group_count
+		dataType: int64
+		formatString: 0
+		lineageTag: bb89767f-0c6b-4659-a4a4-b7d6b2dcc4d8
+		summarizeBy: sum
+		sourceColumn: assigned_group_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column use_parent_data
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e0967bb3-0dd7-476d-80f4-8f07d6aa8b8a
+		summarizeBy: none
+		sourceColumn: use_parent_data
+
+		annotation SummarizationSetBy = Automatic
+
+	column instance_ids
+		dataType: string
+		lineageTag: f8909eeb-5330-4562-8228-12c91f6536b4
+		summarizeBy: none
+		sourceColumn: instance_ids
+
+		annotation SummarizationSetBy = Automatic
+
+	column instance_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 9852e849-eccf-4d9a-888c-9cd7af7235e8
+		summarizeBy: sum
+		sourceColumn: instance_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column etl_loaded_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 572fa83b-ad28-4914-9b4f-08ece604fba8
+		summarizeBy: none
+		sourceColumn: etl_loaded_datetime
+
+		variation Variation
+			isDefault
+			relationship: 46357b3a-01d3-43b2-ae23-fc8902cfc663
+			defaultHierarchy: LocalDateTable_5b65a981-1373-4ddf-abc8-fb535d8206ab.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team Short Name' =
+			
+			TRIM(
+			    LEFT(
+			        dim_connecteam_jobs[Team],
+			        SEARCH("-", dim_connecteam_jobs[Team], 1, LEN(dim_connecteam_jobs[Team]) + 1) - 1
+			    )
+			)
+		lineageTag: 8effd73e-3269-44f9-8cec-1c7b3261a07b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Team Short Name Hierarchy'
+		lineageTag: aa2b9373-8dc7-4aa9-bf18-178e3a3de035
+
+		level 'Team Short Name'
+			lineageTag: bcab546f-c983-4fde-9658-5087a3e44720
+			column: 'Team Short Name'
+
+		level Team
+			lineageTag: bc9ecee2-5956-4821-b2e6-a741212ba937
+			column: Team
+
+	partition dim_connecteam_jobs = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com", "IntellaTriageLakehouse"),
+				    dbo_dim_connecteam_jobs = Source{[Schema="dbo",Item="dim_connecteam_jobs"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(dbo_dim_connecteam_jobs,{{"job_title", "Team"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Huddle Data"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8fd12ac6-d64d-a009-4820-2d2617dccac2"
+  }
+}

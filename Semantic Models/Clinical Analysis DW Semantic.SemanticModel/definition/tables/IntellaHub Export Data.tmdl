@@ -1,0 +1,389 @@
+table 'IntellaHub Export Data'
+	lineageTag: d1afccdb-f318-4ab5-bc7f-01e79d1e4aaf
+
+	column ClientCallUID
+		dataType: string
+		lineageTag: 9e47f62c-1b95-40c1-9368-e49212c13329
+		summarizeBy: none
+		sourceColumn: ClientCallUID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedOn
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 95f3643e-8b77-4954-b1c1-9bc95153c9c7
+		summarizeBy: none
+		sourceColumn: CreatedOn
+
+		variation Variation
+			isDefault
+			relationship: 5f033f26-f199-44e0-8004-ecd2327dfef5
+			defaultHierarchy: LocalDateTable_fc1d42cb-f166-400a-9517-5a846a59b9cd.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedOn
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1a9e3081-b186-4de3-8112-b54e3560416a
+		summarizeBy: none
+		sourceColumn: ModifiedOn
+
+		variation Variation
+			isDefault
+			relationship: 1fde9bc5-b6ac-4819-86ac-e2a4f03baf64
+			defaultHierarchy: LocalDateTable_47473eb1-d00b-4b59-8dd7-e9d5ec73165f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 4e835b08-6485-4376-a9da-21ab11527fd6
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimeZone
+		dataType: string
+		lineageTag: ea2cbf8d-25b8-4db5-a741-f9ad678e0cc8
+		summarizeBy: none
+		sourceColumn: TimeZone
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedBy
+		dataType: string
+		lineageTag: 855a68be-fa24-4310-992a-791b2f9dd88f
+		summarizeBy: none
+		sourceColumn: ModifiedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4e02be6c-ec9f-4112-959c-170ed92f6fb6
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a6adca22-0277-4e92-8b65-5d7cc8fbd988
+		summarizeBy: none
+		sourceColumn: Time
+
+		variation Variation
+			isDefault
+			relationship: 1a19ce10-df7e-4e27-a656-22127120fc2b
+			defaultHierarchy: LocalDateTable_8ecbf741-54c1-4573-b977-ac13395d4606.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CallerName
+		dataType: string
+		lineageTag: 51b1e341-6b06-42b7-9cf2-f87f8f772f30
+		summarizeBy: none
+		sourceColumn: CallerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column PatientName
+		dataType: string
+		lineageTag: 9293eb93-1775-4c8c-a9d4-1dd956095a8e
+		summarizeBy: none
+		sourceColumn: PatientName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientField1
+		dataType: string
+		lineageTag: c4bd3f86-ef39-407e-b0e2-2b3144dda3bf
+		summarizeBy: none
+		sourceColumn: ClientField1
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientField2
+		dataType: string
+		lineageTag: 2e535dc6-15bd-4628-be40-57635c5156bb
+		summarizeBy: none
+		sourceColumn: ClientField2
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientField3
+		dataType: string
+		lineageTag: 7ad53d72-e18a-4712-b593-5606aa6566c4
+		summarizeBy: none
+		sourceColumn: ClientField3
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientField4
+		dataType: string
+		lineageTag: 124a5814-091d-4dc5-a784-113115670814
+		summarizeBy: none
+		sourceColumn: ClientField4
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientField5
+		dataType: string
+		lineageTag: c1e92cc7-b835-4283-9928-93bc3ce19c13
+		summarizeBy: none
+		sourceColumn: ClientField5
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientName
+		dataType: string
+		lineageTag: 1de68f94-9e40-45d2-b372-569ce4ac7b83
+		summarizeBy: none
+		sourceColumn: ClientName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProgramName
+		dataType: string
+		lineageTag: b1d6bb1f-1912-4eb3-a76b-9df9a7c817b3
+		summarizeBy: none
+		sourceColumn: ProgramName
+
+		annotation SummarizationSetBy = Automatic
+
+	column RelationshipName
+		dataType: string
+		lineageTag: f458c227-23ac-4f91-9141-1d3bb93bb196
+		summarizeBy: none
+		sourceColumn: RelationshipName
+
+		annotation SummarizationSetBy = Automatic
+
+	column NatureName
+		dataType: string
+		lineageTag: 8f43e8d6-284a-4d23-b978-ec7633889ace
+		summarizeBy: none
+		sourceColumn: NatureName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActionsName
+		dataType: string
+		lineageTag: 7c1b5c23-3450-4f88-829b-f4ab832f2937
+		summarizeBy: none
+		sourceColumn: ActionsName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateOfBirth
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 40ef6831-04d0-4114-9260-89f3890668c3
+		summarizeBy: none
+		sourceColumn: DateOfBirth
+
+		variation Variation
+			isDefault
+			relationship: d68c29d1-c4a0-4c2d-8dcd-f483061ad12e
+			defaultHierarchy: LocalDateTable_0acfe599-0c1a-48ec-8f3a-e82371f8f120.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CallBackNumber
+		dataType: string
+		lineageTag: 58054874-c001-4365-85da-ec46a6a78d4c
+		summarizeBy: none
+		sourceColumn: CallBackNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column PublishedBy
+		dataType: string
+		lineageTag: 5b0f7f6d-b284-47c6-8e9a-e8044ebdc8c2
+		summarizeBy: none
+		sourceColumn: PublishedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column PublishedOn
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d26632be-39b8-4bc8-a2a5-0881cb02eef1
+		summarizeBy: none
+		sourceColumn: PublishedOn
+
+		variation Variation
+			isDefault
+			relationship: af744cce-e4be-42b6-93a1-152e71510098
+			defaultHierarchy: LocalDateTable_c7e90c17-9d23-408e-8dee-8a35f1c1e3fe.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientProgramCombo
+		dataType: string
+		lineageTag: 869bc004-a631-4582-94dd-fcbc5e35a682
+		summarizeBy: none
+		sourceColumn: ClientProgramCombo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: double
+		formatString: 0
+		lineageTag: 1b0ff291-9b74-47db-b0f6-4a4885203928
+		summarizeBy: sum
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hour
+		dataType: double
+		formatString: 0
+		lineageTag: 515d1226-6b46-43e4-a889-0faf26c1fa80
+		summarizeBy: sum
+		sourceColumn: Hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team.Team Code'
+		dataType: string
+		lineageTag: c4f15d40-5a8b-4c93-ae76-382ac85c02a7
+		summarizeBy: none
+		sourceColumn: Team.Team Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActionsName_Clean
+		dataType: string
+		lineageTag: 6541f1cc-a9af-4d22-ad80-79b1a908d90a
+		summarizeBy: none
+		sourceColumn: ActionsName_Clean
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedOnClean
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7c5b4b47-b9e5-4049-b4b3-bc756ec8d809
+		summarizeBy: none
+		sourceColumn: ModifiedOnClean
+
+		variation Variation
+			isDefault
+			relationship: 281e811c-e417-49fa-b1af-6f2cf8c91d2e
+			defaultHierarchy: LocalDateTable_4083c110-fd75-4f4e-9a8e-5cdcbb11d575.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Specialty_FromCustomer
+		dataType: string
+		lineageTag: cc00bf60-04c2-4d6e-80de-7df631fb78d7
+		summarizeBy: none
+		sourceColumn: Specialty_FromCustomer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weekday
+		dataType: string
+		lineageTag: 28c2f7bc-f2f5-42a5-a15c-3a5667192a38
+		summarizeBy: none
+		sourceColumn: Weekday
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: string
+		lineageTag: 84994145-0dd0-4e02-89bb-63378cd7ad02
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column '24x7 Breakout'
+		dataType: string
+		lineageTag: 201d8a13-c4b2-4024-b86f-7d9c52b44535
+		summarizeBy: none
+		sourceColumn: 24x7 Breakout
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Expected Result'
+		dataType: string
+		lineageTag: d2b07cf3-64ab-4766-a700-b66056de92b8
+		summarizeBy: none
+		sourceColumn: Expected Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Label' = ```
+			
+			VAR HourNum = 'IntellaHub Export Data'[hour]
+			VAR Period = IF(HourNum < 12, "AM", "PM")
+			VAR DisplayHour = 
+			    SWITCH(
+			        TRUE(),
+			        HourNum = 0, 12,
+			        HourNum <= 12, HourNum,
+			        HourNum - 12
+			    )
+			RETURN DisplayHour & " " & Period
+			```
+		lineageTag: 26773935-ee82-4b67-8336-a1f09d3e20ff
+		summarizeBy: none
+		sortByColumn: 'Hour Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Sort' =
+			
+			IF(
+			    'IntellaHub Export Data'[hour] >= 5,
+			    'IntellaHub Export Data'[hour] - 5,
+			    'IntellaHub Export Data'[hour] + 19
+			)
+		lineageTag: 0395e08c-ee19-40ae-b6ee-17148ec40248
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Abv Day of Week' = FORMAT('IntellaHub Export Data'[Date], "ddd")
+		lineageTag: e2e37ca1-fcb8-49e9-a7ec-b6eefa2f50b8
+		summarizeBy: none
+		sortByColumn: 'Day of Week Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week Sort' = WEEKDAY('IntellaHub Export Data'[Date], 2)
+		formatString: 0
+		lineageTag: 84eb1c82-55d9-4867-b7cc-df6f50dbd79a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'IntellaHub Export Data' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+				    #"IntellaTriage DW" = Source{[Name="IntellaTriage DW"]}[Data],
+				    #"dbo_IntellaHub Export Data" = #"IntellaTriage DW"{[Schema="dbo",Item="IntellaHub Export Data"]}[Data]
+				in
+				    #"dbo_IntellaHub Export Data"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

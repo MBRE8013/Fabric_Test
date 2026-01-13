@@ -1,0 +1,199 @@
+table '2nd Interview Rubric'
+	lineageTag: fe6e64b4-b7fc-4331-8474-03cafaecc017
+
+	column 'Interview Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: aaa09acb-37cd-4888-a31a-afbd6fbbf61e
+		summarizeBy: none
+		sourceColumn: Interview Date
+
+		variation Variation
+			isDefault
+			relationship: 9bbef24e-abe0-4dd4-9052-240875685ddc
+			defaultHierarchy: LocalDateTable_4eb6c88c-681b-451e-bf80-1a154f07bd67.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Interviewer Name'
+		dataType: string
+		lineageTag: b1295cb7-1279-47dc-9659-b38c28d1d9b0
+		summarizeBy: none
+		sourceColumn: Interviewer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Candidate Name'
+		dataType: string
+		lineageTag: 46707565-4043-4d8b-8e1f-9be5ad0c8d01
+		summarizeBy: none
+		sourceColumn: Candidate Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Candidate an RN or LPN'
+		dataType: string
+		lineageTag: 84d3288c-e217-462a-bf66-7078ab1792d2
+		summarizeBy: none
+		sourceColumn: Is Candidate an RN or LPN
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Interview Completed'
+		dataType: string
+		lineageTag: 07a572f8-d664-41f3-8344-223f05e79a6e
+		summarizeBy: none
+		sourceColumn: Interview Completed
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Currently Employed'
+		dataType: string
+		lineageTag: 1d61bbe1-771b-4ee7-a162-b19bc57cf22d
+		summarizeBy: none
+		sourceColumn: Currently Employed
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Position'
+		dataType: string
+		lineageTag: fe84d88d-614a-44fb-9b94-79b5d3469aff
+		summarizeBy: none
+		sourceColumn: Current Position
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Schedule'
+		dataType: string
+		lineageTag: d3279c78-64c4-4c02-b054-392d35753a14
+		summarizeBy: none
+		sourceColumn: Current Schedule
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'What schedule did the recruiter talk to you about for IntellaTriage?'
+		dataType: string
+		lineageTag: 76b2377f-4023-4bb9-8d91-0db6d4b34d9c
+		summarizeBy: none
+		sourceColumn: What schedule did the recruiter talk to you about for IntellaTriage?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Why are you interested in working at IntellaTriage?'
+		dataType: string
+		lineageTag: 9f19c266-6c30-40bb-a789-66b512d0cd14
+		summarizeBy: none
+		sourceColumn: Why are you interested in working at IntellaTriage?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Clinical Assessment'
+		dataType: string
+		lineageTag: 73052b13-5495-45e7-9da2-8c849183cf5a
+		summarizeBy: none
+		sourceColumn: Clinical Assessment
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Triage Ability'
+		dataType: string
+		lineageTag: 3f9ce1c8-5edc-4eb1-986b-be38f6a9e2d1
+		summarizeBy: none
+		sourceColumn: Triage Ability
+
+		annotation SummarizationSetBy = Automatic
+
+	column Reliability
+		dataType: string
+		lineageTag: 4699c790-b286-420f-8e09-723c8d7ccd6a
+		summarizeBy: none
+		sourceColumn: Reliability
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tech Skills'
+		dataType: string
+		lineageTag: 95a191a3-7214-439c-b399-a2948d28db1a
+		summarizeBy: none
+		sourceColumn: Tech Skills
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cultural Fit'
+		dataType: string
+		lineageTag: 4e164b2e-12cf-4e44-a026-1bf11d32207e
+		summarizeBy: none
+		sourceColumn: Cultural Fit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recommended for hire Y/N'
+		dataType: string
+		lineageTag: 494fa70f-4f4a-418e-b041-3d8df9d0537c
+		summarizeBy: none
+		sourceColumn: Recommended for hire Y/N
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'If Failed, please give reason(s) why'
+		dataType: string
+		lineageTag: 6bce6d63-3197-4fbb-8f98-0a0668c555c8
+		summarizeBy: none
+		sourceColumn: If Failed, please give reason(s) why
+
+		annotation SummarizationSetBy = Automatic
+
+	column NOTES
+		dataType: string
+		lineageTag: 9ba83c52-31d8-4d2d-9710-0b300ea7060e
+		summarizeBy: none
+		sourceColumn: NOTES
+
+		annotation SummarizationSetBy = Automatic
+
+	column Outcome
+		dataType: string
+		lineageTag: add2f452-66be-4372-8c9d-2af89ac9ca3b
+		summarizeBy: none
+		sourceColumn: Outcome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week =
+			
+			VAR d = '2nd Interview Rubric'[Interview Date]
+			RETURN
+			    d - WEEKDAY(d, 2) + 1
+		formatString: General Date
+		lineageTag: 45d29fa2-f5c5-4aef-922f-0641fe9582e8
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 22ac1c50-5780-4926-9b36-31cc62dac54e
+			defaultHierarchy: LocalDateTable_768efade-9d25-4d62-ba46-3857fb7e8f9b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '2nd Interview Rubric' = m
+		mode: import
+		source =
+				let
+				    Source = SharePoint.Files("https://intellatriage.sharepoint.com/sites/HiringandRecruiting", [ApiVersion = 15]),
+				    #"2nd Interview Rubric xlsx_https://intellatriage sharepoint com/sites/HiringandRecruiting/Shared Documents/General/" = Source{[Name="2nd Interview Rubric.xlsx",#"Folder Path"="https://intellatriage.sharepoint.com/sites/HiringandRecruiting/Shared Documents/General/"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"2nd Interview Rubric xlsx_https://intellatriage sharepoint com/sites/HiringandRecruiting/Shared Documents/General/"),
+				    #"Phone Screen Rubric_Sheet" = #"Imported Excel Workbook"{[Item="Phone Screen Rubric",Kind="Sheet"]}[Data],
+				    #"Removed Top Rows" = Table.Skip(#"Phone Screen Rubric_Sheet",1),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Top Rows", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Interview Date", type date}, {"Interviewer Name", type text}, {"Candidate Name", type text}, {"Is Candidate an RN or LPN", type text}, {"Interview Completed", type text}, {"Currently Employed", type text}, {"Current Position", type text}, {"Current Schedule", type text}, {"What schedule did the recruiter talk to you about for IntellaTriage?", type text}, {"Why are you interested in working at IntellaTriage?", type text}, {"Clinical Assessment", type text}, {"Triage Ability", type text}, {"Reliability", type text}, {"Tech Skills", type text}, {"Cultural Fit", type text}, {"Recommended for hire Y/N", type text}, {"If Failed, please give reason(s) why", type text}, {"NOTES", type text}, {"Outcome", type text}, {"Week", type any}, {"Column21", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Week", "Column21"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each [Interview Date] <> null and [Interview Date] <> "")
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,97 @@
+relationship 13b21328-5de4-4c66-840f-8d3293910621
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_connecteam_users.created_at
+	toColumn: LocalDateTable_54caf2bb-4a09-4fbe-8c15-c193cc189ef7.Date
+
+relationship e3f2b0c0-ebeb-4172-8b40-674c74b11d6a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_connecteam_users.modified_at
+	toColumn: LocalDateTable_1c9031c9-b255-4211-ad33-37214028b5da.Date
+
+relationship ce10df44-c86e-41a8-99b7-617736808f55
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_connecteam_users.last_login_at
+	toColumn: LocalDateTable_bead4653-7811-4882-b404-89742f8c56ab.Date
+
+relationship c9b4aacc-19e8-4c9e-a1f1-d50426a91c3f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_connecteam_users.etl_loaded_datetime
+	toColumn: LocalDateTable_fb7225d4-fb81-4735-875b-4405581fccdf.Date
+
+relationship 46357b3a-01d3-43b2-ae23-fc8902cfc663
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_connecteam_jobs.etl_loaded_datetime
+	toColumn: LocalDateTable_5b65a981-1373-4ddf-abc8-fb535d8206ab.Date
+
+relationship 6e5745b1-3303-4e24-9cbd-bce3fc1fb35c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shift_statuses.creation_datetime
+	toColumn: LocalDateTable_be1905b0-4b5a-4fd7-9d53-03e377595f8d.Date
+
+relationship fed58ae5-f2fd-4181-94ed-402e4e1b9eae
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shift_statuses.update_datetime
+	toColumn: LocalDateTable_cee7895c-932a-489b-89ec-b2093ce3427e.Date
+
+relationship 3c87eec8-0ac0-45fc-a587-05465b5bddb0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shift_statuses.window_start
+	toColumn: LocalDateTable_46b041e2-d815-4d13-a5a2-9cf1c81a754f.Date
+
+relationship 8e6f4ca8-05e3-46de-a4b6-3cf40cde22be
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shift_statuses.window_end
+	toColumn: LocalDateTable_d53ac5f4-af9f-4a95-b60d-fbc1b6504e18.Date
+
+relationship 00ab539f-31a3-4e07-ba7e-69866c15d2cc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shifts_exploded.shift_start_datetime
+	toColumn: LocalDateTable_433ddaf1-1364-4e80-8c3b-29d12249b2b2.Date
+
+relationship 01bbd626-12b4-4563-8b00-3bf9ec2593bf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shifts_exploded.shift_end_datetime
+	toColumn: LocalDateTable_4d24db97-a780-4f4b-a269-2f39071b92e7.Date
+
+relationship 3c415f40-b9c6-4699-b772-85cf8acabf3f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shifts_exploded.created_datetime
+	toColumn: LocalDateTable_df3fe303-5834-4e53-a776-8846d3ea5925.Date
+
+relationship c9b02382-5244-4248-9d99-64c0ee869349
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shifts_exploded.updated_datetime
+	toColumn: LocalDateTable_067e3a36-c245-4a14-b9b1-dfe91a8b66de.Date
+
+relationship e95f73aa-24fd-43e0-9943-4843db0d34fc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shifts_exploded.shift_date
+	toColumn: LocalDateTable_0d65bb25-ef42-4466-a8e5-6b9694ef3de6.Date
+
+relationship 9767aacb-1b8c-4788-9081-b41691587927
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shifts_exploded.etl_loaded_datetime
+	toColumn: LocalDateTable_75bfe2f6-fc43-40e6-a19a-00dd527bcad5.Date
+
+relationship 4db42ffe-dfeb-4c43-bb28-641f2b1ac7cb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shifts_exploded.window_start
+	toColumn: LocalDateTable_baefcff6-8519-447a-9f80-35f1d0f05861.Date
+
+relationship 7dc231f3-905a-4334-8271-18e515276058
+	joinOnDateBehavior: datePartOnly
+	fromColumn: connecteam_shifts_exploded.window_end
+	toColumn: LocalDateTable_7bca4731-e432-4529-8f57-8e2155a23ac1.Date
+
+relationship AutoDetected_d81750a7-fc08-4bd9-9b69-7d7b5d08211e
+	fromColumn: connecteam_shifts_exploded.job_id
+	toColumn: dim_connecteam_jobs.job_id
+
+relationship 01e0be24-6d66-311d-69d8-e9abaa07612c
+	fromColumn: connecteam_shifts_exploded.assigned_user_id
+	toColumn: dim_connecteam_users.user_id
+
+relationship c4604b75-9547-39ce-2ba3-e49bdca2db2c
+	fromColumn: connecteam_shift_statuses.shift_assignment_key
+	toColumn: connecteam_shifts_exploded.shift_assignment_key
+

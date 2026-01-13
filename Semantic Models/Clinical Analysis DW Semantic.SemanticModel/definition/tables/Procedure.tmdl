@@ -1,0 +1,55 @@
+table Procedure
+	lineageTag: 4cb10429-c4f0-41d7-85a3-26f6c3736ff7
+
+	column Client
+		dataType: string
+		lineageTag: bcdf5668-305f-4f1b-9a11-32d9456dc8a6
+		summarizeBy: none
+		sourceColumn: Client
+
+		annotation SummarizationSetBy = Automatic
+
+	column Specialty
+		dataType: string
+		lineageTag: b242e03a-b063-490b-8b5d-07fe99fdb725
+		summarizeBy: none
+		sourceColumn: Specialty
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subcategory
+		dataType: string
+		lineageTag: d38f97ef-261a-4a09-81df-dfdf1bff774a
+		summarizeBy: none
+		sourceColumn: Subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Expected Result'
+		dataType: string
+		lineageTag: 284df2c5-1bbe-48e5-bde2-a7a4aa1c835b
+		summarizeBy: none
+		sourceColumn: Expected Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientSpecialtySubcategory
+		dataType: string
+		lineageTag: 1bdced4e-6915-47a1-adb9-e40cbb2a41cf
+		summarizeBy: none
+		sourceColumn: ClientSpecialtySubcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Procedure = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("xcw6jyrd7wyupgr6hyhdgeb62y-tkhwq332pddenadirvxir3oqke.datawarehouse.fabric.microsoft.com"),
+				    #"IntellaTriage DW" = Source{[Name="IntellaTriage DW"]}[Data],
+				    dbo_Procedure = #"IntellaTriage DW"{[Schema="dbo",Item="Procedure"]}[Data]
+				in
+				    dbo_Procedure
+
+	annotation PBI_ResultType = Table
+

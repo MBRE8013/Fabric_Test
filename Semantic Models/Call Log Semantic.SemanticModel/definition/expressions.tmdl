@@ -1,0 +1,78 @@
+expression 09012025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://intellatriage.sharepoint.com/sites/OperationsLeadership/Shared%20Documents/Dashboards/Call%20Log%2009.01.25.xlsx"), null, true),
+		    Data_Table = Source{[Item="Data",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Data_Table,{{"Speed of Answer", type number}, {"Reporting Date", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: 131686c3-00b6-4614-bc76-fad42b69a3ca
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 06012025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://intellatriage.sharepoint.com/sites/OperationsLeadership/Shared%20Documents/Dashboards/Archived%20Dashboards/2025/Call%20Log%2006.01.25.xlsx"), null, true),
+		    Data_Table = Source{[Item="Data",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Data_Table,{{"Speed of Answer", type number}, {"Reporting Date", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: e0b677bd-95b7-4551-aa87-4efb00f41ff2
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 10012025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://intellatriage.sharepoint.com/sites/OperationsLeadership/Shared%20Documents/Dashboards/Call%20Log%2010.01.25.xlsx"), null, true),
+		    Data_Table = Source{[Item="Data",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Data_Table,{{"Speed of Answer", type number}, {"Reporting Date", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: c961e5cf-3ccf-4264-a14c-5d08d6981b1b
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 03012025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://intellatriage.sharepoint.com/sites/OperationsLeadership/Shared%20Documents/Dashboards/Archived%20Dashboards/2025/Call%20Log%2003.01.25.xlsx"), null, true),
+		    Data_Table = Source{[Item="Data",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Data_Table,{{"Speed of Answer", type number}, {"Reporting Date", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: 3578442b-2cfe-44d0-97e5-363b5e83abb2
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 11012025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://intellatriage.sharepoint.com/sites/OperationsLeadership/Shared%20Documents/Dashboards/Call%20Log%2011.01.25.xlsx"), null, true),
+		    Data_Table = Source{[Item="Data",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Data_Table,{{"Speed of Answer", type number}, {"Reporting Date", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: e2d978c3-b99a-4d75-b6f8-094d871e56cb
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 12012025 =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://intellatriage.sharepoint.com/sites/OperationsLeadership/Shared%20Documents/Dashboards/Call%20Log%2012.01.25.xlsx"), null, true),
+		    Data_Table = Source{[Item="Data",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Data_Table,{{"Speed of Answer", type number}, {"Reporting Date", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: 33e105ff-cd0a-4a73-8c63-7c513d45b8fd
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

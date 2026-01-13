@@ -1,0 +1,83 @@
+relationship 1a01086d-2c1b-42cd-bbf3-1e83d1c6ff6b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'New Hire Tracking'.'Start Date'
+	toColumn: LocalDateTable_b7a53b36-adbe-4f47-82cc-663840353b6c.Date
+
+relationship b886cb82-0098-49fc-bc1b-6a23ab546458
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'New Hire Tracking'.'Graduation Date'
+	toColumn: LocalDateTable_a5f0c277-cdaf-4efe-afd3-dc3d51e0fc03.Date
+
+relationship 8b82ecc2-c1f7-4c01-9558-dc869c4007c6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'New Hire Tracking'.Created
+	toColumn: LocalDateTable_9c842cec-f0ff-4ccf-b0c6-5517c42baab0.Date
+
+relationship f3ca4c67-6d76-4273-8467-ae59ac033c9b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'New Hire Tracking'.Modified
+	toColumn: LocalDateTable_8e910357-2b94-47ae-8a55-f54c535c8936.Date
+
+relationship 2adc121e-5c6c-42e8-8a4f-4377f4ca40f3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Off Boarding'.'Notice Date'
+	toColumn: LocalDateTable_c0201de4-9967-4c67-877d-b981bd3e9083.Date
+
+relationship 1b90284c-891e-44b9-9cdf-2489f97c9432
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Off Boarding'.Created
+	toColumn: LocalDateTable_c62419c0-d37c-401d-be0c-9c178f93d43f.Date
+
+relationship 7311a435-8455-4258-96ba-cc3e5c8780d0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Incident Log v2 0'.'Incident Date'
+	toColumn: LocalDateTable_784a023c-912f-454d-8388-c4fd6966aba5.Date
+
+relationship 446de1c0-bdae-4120-994c-3fa4a364b094
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Incident Log v2 0'.'Reported Date'
+	toColumn: LocalDateTable_6bf5ee5d-f8ae-4cec-84c3-c7d0081e9592.Date
+
+relationship 7015bb35-c581-4a70-b97d-85af7f73eacb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Incident Log v2 0'.'Completed Date by QA'
+	toColumn: LocalDateTable_772534bc-ad23-48ba-9fcd-993cc09d4a1a.Date
+
+relationship 243bffc8-e1f1-40bc-8829-8e961646559b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Incident Log v2 0'.Modified
+	toColumn: LocalDateTable_6db38677-1fae-4eea-b148-ba14f99cdb45.Date
+
+relationship a6794bc6-324b-4fc6-9cef-ced5ed6ba0c1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Incident Log v2 0'.Created
+	toColumn: LocalDateTable_00d185c0-9aed-47b9-80ee-7f725eadaa08.Date
+
+relationship b4526da7-237f-4119-9f9c-aab09ac09bf0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Off Boarding'.'Start Date'
+	toColumn: LocalDateTable_5c9ef5f8-3b98-47fd-b55e-bc174b050614.Date
+
+relationship 3c6dfc90-37f9-46e7-b1ec-97be59a5bc73
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimTermDate.Date
+	toColumn: LocalDateTable_cbd26fcd-dc50-4121-85c9-aef2b7b84320.Date
+
+relationship dc222195-7e15-c255-8688-ec41b7604b3f
+	fromColumn: 'Off Boarding'.'Term Effective'
+	toColumn: DimTermDate.Date
+
+relationship 5f647ae1-3c07-811a-9df5-b76a521f24ce
+	crossFilteringBehavior: bothDirections
+	fromColumn: PeriodDateBridge.Date
+	toColumn: DimTermDate.Date
+
+relationship 4042ce85-97f1-98f0-8e43-cb2482dbd08a
+	fromColumn: PeriodDateBridge.Period
+	toColumn: PeriodParameter.Period
+
+relationship 205b634f-1e7c-4454-a58a-05ca59161ce6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimTermDate.WeekEndingDate
+	toColumn: LocalDateTable_821b600b-a087-41bf-9b90-f18ad187f7ef.Date
+

@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Data","09012025","06012025","10012025","03012025","11012025","12012025","DateDim"]
+
+annotation PBI_ProTooling = ["CopilotTooling"]
+
+ref table Data
+ref table Slices
+ref table DateTableTemplate_8a34a348-311a-4490-98b1-8172930e6f87
+ref table LocalDateTable_c70fa812-e64a-4b9b-a03b-83ebdc8f96b3
+ref table LocalDateTable_f86e0275-dd38-4f90-972e-cd6e0367f964
+ref table 'Nurse Call / Hour Goal'
+ref table 'Rounding Threshold'
+ref table 'Day of Week Filter'
+ref table PeriodParameter
+ref table DateDim
+ref table LocalDateTable_d1bdd89e-ad01-43d3-b149-b81e9169a637
+ref table PeriodDateBridge
+
+ref cultureInfo en-US
+

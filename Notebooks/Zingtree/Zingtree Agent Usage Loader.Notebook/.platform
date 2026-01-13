@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Zingtree Agent Usage Loader"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "163da563-6da8-abc4-4f34-19965e5a5074"
+  }
+}

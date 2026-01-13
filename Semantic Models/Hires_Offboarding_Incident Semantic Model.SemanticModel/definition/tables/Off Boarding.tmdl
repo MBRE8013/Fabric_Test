@@ -1,0 +1,366 @@
+table 'Off Boarding'
+	lineageTag: 8cbd9719-6f5c-4746-ae80-85bb46ff36b2
+
+	measure 'Date Range (Shown)' =
+			
+			VAR MinD =
+			    CALCULATE ( MIN ( 'Off Boarding'[Term Effective] ), ALLSELECTED ( 'Off Boarding' ) )
+			VAR MaxD =
+			    CALCULATE ( MAX ( 'Off Boarding'[Term Effective]  ), ALLSELECTED ( 'Off Boarding' ) )
+			RETURN
+			IF (
+			    ISBLANK ( MinD ) || ISBLANK ( MaxD ),
+			    "No data",
+			    IF (
+			        MinD = MaxD,
+			        FORMAT ( MinD, "[$-en-US]mm/dd/yy" ),
+			        FORMAT ( MinD, "[$-en-US]mm/dd/yy" ) & " – " &
+			        FORMAT ( MaxD, "[$-en-US]mm/dd/yy" )
+			    )
+			)
+		lineageTag: 843aa5ed-3d47-430f-bd27-cf76e8fbe4eb
+
+	column 'Employee Last Name'
+		dataType: string
+		lineageTag: cb410e4e-6c2b-4133-a2bc-edc455e31f9a
+		summarizeBy: none
+		sourceColumn: Employee Last Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee First Name'
+		dataType: string
+		lineageTag: 5535284c-e44d-47da-874a-7372c86be284
+		summarizeBy: none
+		sourceColumn: Employee First Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Term Effective'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 36f60bd3-c607-49b8-9165-4a94fdf94150
+		summarizeBy: none
+		sourceColumn: Term Effective
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Term Comments'
+		dataType: string
+		lineageTag: 28cd968a-dfee-41a9-bf50-ad750f90b528
+		summarizeBy: none
+		sourceColumn: Term Comments
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Notice provided'
+		dataType: string
+		lineageTag: ad2aa95f-1462-4c64-a90a-2330ed2a0a63
+		summarizeBy: none
+		sourceColumn: Notice provided
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Notice Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1463b734-2301-4bad-93ad-670858d00a3e
+		summarizeBy: none
+		sourceColumn: Notice Date
+
+		variation Variation
+			isDefault
+			relationship: 2adc121e-5c6c-42e8-8a4f-4377f4ca40f3
+			defaultHierarchy: LocalDateTable_c0201de4-9967-4c67-877d-b981bd3e9083.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ADP/HR
+		dataType: string
+		lineageTag: e132bf13-bc6b-4129-9d7f-eebef85ad92c
+		summarizeBy: none
+		sourceColumn: ADP/HR
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 239f04ca-2d7f-4e00-8fa4-86216fe07f07
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e9806f53-c397-4853-a194-4fb8188f867d
+		summarizeBy: none
+		sourceColumn: Created
+
+		variation Variation
+			isDefault
+			relationship: 1b90284c-891e-44b9-9cdf-2489f97c9432
+			defaultHierarchy: LocalDateTable_c62419c0-d37c-401d-be0c-9c178f93d43f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Personal Email Address'
+		dataType: string
+		lineageTag: e6fdb582-4da4-4e63-83a5-20a21c4df863
+		summarizeBy: none
+		sourceColumn: Personal Email Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IntellaTriage Email Address'
+		dataType: string
+		lineageTag: ccb2417c-a749-4778-829e-68aaaae9d886
+		summarizeBy: none
+		sourceColumn: IntellaTriage Email Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f18e194a-e0a9-4749-8b22-b50b7a28d25d
+		summarizeBy: none
+		sourceColumn: Start Date
+
+		variation Variation
+			isDefault
+			relationship: b4526da7-237f-4119-9f9c-aab09ac09bf0
+			defaultHierarchy: LocalDateTable_5c9ef5f8-3b98-47fd-b55e-bc174b050614.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nurse Type'
+		dataType: string
+		lineageTag: c2fda76a-3630-41d3-aecf-7a54c8a5c3d0
+		summarizeBy: none
+		sourceColumn: Nurse Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Primary Team'
+		dataType: string
+		lineageTag: 2fb24271-b363-4880-9fb6-d3865ec21d05
+		summarizeBy: none
+		sourceColumn: Primary Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Team Lead'
+		dataType: string
+		lineageTag: 6f68b797-d4f8-49e9-8d33-c3cbc2ea374e
+		summarizeBy: none
+		sourceColumn: Team Lead
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cross Training Level'
+		dataType: string
+		lineageTag: 25d1da6e-baf8-438d-85aa-84f16586dd87
+		summarizeBy: none
+		sourceColumn: Cross Training Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Term Type'
+		dataType: string
+		lineageTag: e539fef7-9c0f-45f5-838e-db1d44612af7
+		summarizeBy: none
+		sourceColumn: Term Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Term Subtype'
+		dataType: string
+		lineageTag: b00dc928-1e44-4ec4-a633-1fa322e8f7e9
+		summarizeBy: none
+		sourceColumn: Term Subtype
+
+		annotation SummarizationSetBy = Automatic
+
+	column Non-Start
+		dataType: string
+		lineageTag: 3cc11d2c-aea7-495f-a4ca-61dc7af79735
+		summarizeBy: none
+		sourceColumn: Non-Start
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: d67df293-53fd-4dfb-8bc1-ac28c1faba49
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Term Within 90?' =
+			
+			VAR DaysBetween = DATEDIFF([Start Date], [Term Effective], DAY)
+			RETURN
+			IF(
+			    NOT ISBLANK([Term Effective]) && NOT ISBLANK([Start Date]),
+			    IF(DaysBetween <= 90, "Yes", "No"),
+			    BLANK()
+			)
+		lineageTag: 33462fa1-a702-4ee8-9aff-ba78353e5336
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Term Within 30?' =
+			
+			VAR DaysBetween = DATEDIFF([Start Date], [Term Effective], DAY)
+			RETURN
+			IF(
+			    NOT ISBLANK([Term Effective]) && NOT ISBLANK([Start Date]),
+			    IF(DaysBetween <= 30, "Yes", "No"),
+			    BLANK()
+			)
+		lineageTag: 5fb6ed76-8500-4b82-ada6-dfd01b1ee501
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days Employed' =
+			
+			DATEDIFF([Start Date], [Term Effective], DAY)
+		formatString: 0
+		lineageTag: be0d5e6e-bacb-402e-b696-c9c821ea8ee7
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Range' =
+			
+			VAR WeekStart = [Term Effective] - WEEKDAY([Term Effective], 2) + 1
+			VAR WeekEnd = WeekStart + 4
+			RETURN
+			FORMAT(WeekStart, "M/D") & " - " & FORMAT(WeekEnd, "M/D/YY")
+		lineageTag: 71f04526-f0e2-48dd-a8ef-f305ebf3232b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name = 'Off Boarding'[Employee Last Name]&", "& 'Off Boarding'[Employee First Name]
+		lineageTag: d9823a3f-1315-454f-9087-bf620fb8e170
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 519b0a66-3696-4099-a8e6-5c96eb2df211
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Term Category' =
+			
+			VAR DaysBetween = DATEDIFF([Start Date], [Term Effective], DAY)
+			RETURN
+			IF(
+			    NOT ISBLANK([Term Effective]) && NOT ISBLANK([Start Date]),
+			    SWITCH(
+			        TRUE(),
+			        DaysBetween <= 30, "30-day",
+			        DaysBetween <= 90, "90-day",
+			        "> 90"
+			    ),
+			    BLANK()
+			)
+		lineageTag: 4b2b7a98-bbbb-4f46-b5aa-3c0485832bb8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Off Boarding' = m
+		mode: import
+		source = ```
+				let
+				    // Source data
+				    Source = SharePoint.Tables("https://intellatriage.sharepoint.com/sites/PeoplePrograms", [Implementation="2.0", ViewMode="Default"]),
+				    #"67bed17d-d32f-45a6-a3e7-a60f49454933" = Source{[Id="67bed17d-d32f-45a6-a3e7-a60f49454933"]}[Items],
+				    
+				    // Prepare New Hire Tracking - deduplicate to prevent cartesian products
+				    NewHirePrep = 
+				        let
+				            // Check if FirstNameStartDateConcat exists, if not create it
+				            HasConcatColumn = Table.HasColumns(#"New Hire Tracking", "FirstNameStartDateConcat"),
+				            AddConcatIfNeeded = if HasConcatColumn then #"New Hire Tracking" 
+				                else Table.AddColumn(#"New Hire Tracking", "FirstNameStartDateConcat", each 
+				                    if [first name] <> null and [start date] <> null 
+				                    then [first name] & DateTime.ToText([start date],"MM/dd/yyyy") 
+				                    else null),
+				            
+				            // Add name key for matching
+				            AddNameKey = Table.AddColumn(AddConcatIfNeeded, "NameKey", each 
+				                if [first name] <> null and [last name] <> null 
+				                then Text.Lower(Text.Trim([first name])) & "|" & Text.Lower(Text.Trim([last name])) 
+				                else null),
+				            
+				            // Remove complete duplicates first
+				            RemoveDupes = Table.Distinct(AddNameKey),
+				            
+				            // Filter to only rows with non-null, non-empty state values
+				            FilterValidState = Table.SelectRows(RemoveDupes, each [state] <> null and [state] <> ""),
+				            
+				            // Deduplicate by email - keep first record per email
+				            DedupeByEmail = Table.Distinct(FilterValidState, {"email"}),
+				            
+				            // Deduplicate by FirstNameStartDateConcat - keep first record per concat key
+				            DedupeByConcat = Table.Distinct(DedupeByEmail, {"FirstNameStartDateConcat"}),
+				            
+				            // Deduplicate by NameKey - keep first record per name
+				            DedupeByName = Table.Distinct(DedupeByConcat, {"NameKey"})
+				        in
+				            DedupeByName,
+				    
+				    // Add matching keys to SharePoint data
+				    AddConcatKey = Table.AddColumn(#"67bed17d-d32f-45a6-a3e7-a60f49454933", "SP_FirstNameStartDateConcat", 
+				        each [Employee First Name] & DateTime.ToText([Start Date],"MM/dd/yyyy")),
+				    AddNameKey = Table.AddColumn(AddConcatKey, "SP_NameKey", 
+				        each Text.Lower(Text.Trim([Employee First Name])) & "|" & Text.Lower(Text.Trim([Employee Last Name]))),
+				    
+				    // Join by email (highest priority)
+				    MergedByEmail = Table.NestedJoin(AddNameKey, {"Personal Email Address"}, NewHirePrep, {"email"}, "EmailMatch", JoinKind.LeftOuter),
+				    ExpandEmail = Table.ExpandTableColumn(MergedByEmail, "EmailMatch", {"state"}, {"State_Email"}),
+				    
+				    // Join by FirstNameStartDateConcat (second priority)
+				    MergedByConcat = Table.NestedJoin(ExpandEmail, {"SP_FirstNameStartDateConcat"}, NewHirePrep, {"FirstNameStartDateConcat"}, "ConcatMatch", JoinKind.LeftOuter),
+				    ExpandConcat = Table.ExpandTableColumn(MergedByConcat, "ConcatMatch", {"state"}, {"State_Concat"}),
+				    
+				    // Join by Name (lowest priority)
+				    MergedByName = Table.NestedJoin(ExpandConcat, {"SP_NameKey"}, NewHirePrep, {"NameKey"}, "NameMatch", JoinKind.LeftOuter),
+				    ExpandName = Table.ExpandTableColumn(MergedByName, "NameMatch", {"state"}, {"State_Name"}),
+				    
+				    // Coalesce state values with priority: Email > Concat > Name
+				    AddFinalState = Table.AddColumn(ExpandName, "State", each 
+				        if [State_Email] <> null and [State_Email] <> "" then [State_Email]
+				        else if [State_Concat] <> null and [State_Concat] <> "" then [State_Concat]
+				        else if [State_Name] <> null and [State_Name] <> "" then [State_Name]
+				        else null),
+				    
+				    // Clean up working columns
+				    RemovedColumns = Table.RemoveColumns(AddFinalState, {
+				        "SP_FirstNameStartDateConcat", "SP_NameKey", 
+				        "State_Email", "State_Concat", "State_Name"
+				    }),
+				    
+				    // Final deduplication by ID (should be unnecessary now but acts as safety net)
+				    RemovedDuplicates = Table.Distinct(RemovedColumns, {"ID"})
+				in
+				    RemovedDuplicates
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

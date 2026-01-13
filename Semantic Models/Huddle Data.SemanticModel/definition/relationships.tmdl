@@ -1,0 +1,10 @@
+relationship d51c2182-063d-4b26-869c-132398403931
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Huddle Report'.Date
+	toColumn: LocalDateTable_1ae87f80-09b8-403c-9d79-788c8958b611.Date
+
+relationship 1139aa7f-11c0-4fc5-a47e-13463fb804da
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Huddle Report'.'Relative Date'
+	toColumn: LocalDateTable_0d3f7708-eefd-464d-beab-7738049f2c02.Date
+
